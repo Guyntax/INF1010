@@ -1,7 +1,11 @@
 # Ignore everything
+
 *
 
 # But not these files...
+
 !.gitignore
+
 !.h
+
 !.cpp
