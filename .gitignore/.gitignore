@@ -3,5 +3,5 @@
 
 # But not these files...
 !.gitignore
-!.cpp
-!.h
+!TP2-E20/src
+!TP2-E20/include
