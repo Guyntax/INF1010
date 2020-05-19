@@ -4,34 +4,42 @@
 #include <string>
 #include "Patient.h"
 #include <memory>
+#include <vector>
+#include <sstream>
 
 
 class GestionnairePatients
 {
 public:
     GestionnairePatients();
+    GestionnairePatients(const GestionnairePatients& gestPat);
+    GestionnairePatients& operator=(const GestionnairePatients& gestionnairePatient);
 
-    bool ajouterPatient(const Patient& patient);
+    // opérateur+= qui remplace ajouterPatient
+    bool operator+=(const std::shared_ptr<Patient>& patient);
+
     Patient* chercherPatient(const std::string& numeroAssuranceMaladie);
     bool chargerDepuisFichier(const std::string& nomFichier);
-    void afficher(std::ostream& stream) const;
-
-    // TODO : signature des opérateurs à surcharger.
-    // opérateur<< qui remplace afficher
-    // opérateur+= qui remplace ajouterPatient
 
 
-    size_t getNbPatients() const;
-    // TODO : signature de getPatients()  retourne une reference constante vers le vecteur patients_
+
+
+
+    //signature de getPatients()  retourne une reference constante vers le vecteur patients_
+    std::vector<std::shared_ptr<Patient>> getPatients() const;
 
     static constexpr size_t NB_PATIENT_MAX = 16;
+
+    friend void operator<<(std::stringstream& stream, const GestionnairePatients& gestionnairePatients);
 
 private:
     bool lireLignePatient(const std::string& ligne);
 
     //TODO : remplacer le tableau par un vecteur de shared_ptr de Patient
-    Patient patients_[NB_PATIENT_MAX];
-    size_t nbPatients_;
+    std::vector<std::shared_ptr<Patient>> patients_;// (NB_PATIENT_MAX);
+
 };
 
 #endif // GESTIONNAIREPATIENTS_H
+
+

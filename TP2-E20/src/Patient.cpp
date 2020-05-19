@@ -2,6 +2,7 @@
 
 #include "Patient.h"
 #include <iostream>
+#include <sstream>
 #include <string>
 
 //! Constructeur par paramètre  de la classe Patient
@@ -10,25 +11,26 @@
 //! \param numeroAssuranceMaladie	Le numero d'assurance maladie du patient
 Patient::Patient(const std::string& nom, const std::string& dateDeNaissance, const std::string& numeroAssuranceMaladie)
 	: nom_(nom)
-	, numeroAssuranceMaladie_(numeroAssuranceMaladie)
 	, dateDeNaissance_(dateDeNaissance)
+	, numeroAssuranceMaladie_(numeroAssuranceMaladie)
 {
 }
 
 
-// TODO : La methode afficher doit être remplacée par l’opérateur << 
-//! Méthode qui affiche les informations d'un patient
-//! \param stream Le stream dans lequel afficher.
-void Patient::afficher(std::ostream& stream) const
-{
-	
-	stream << "Patient: " << nom_ << " | Date de naissance: " << dateDeNaissance_
-		<< " | Numero d\'assurance maladie: " << numeroAssuranceMaladie_;
-}
+
 
 // TODO : Opérateur == qui compare un string avec le numero d'assurance maladie du patient avec patient comme opérande de gauche
-
+bool Patient::operator==(const std::string& string) const {
+	if (numeroAssuranceMaladie_ == string) {
+		return true;
+	};
+	return false;
+}
 // TODO : Opérateur == qui compare le numero d'assurance maladie du patient avec le numero d'assurance comme opérande de gauche.
+
+
+
+
 
 //! Méthode qui retourne le nom du patient
 //! \return le nom du patient 
@@ -73,4 +75,35 @@ void Patient::setNumeroAssuranceMaladie(const std::string& numeroAssuranceMaladi
 void Patient::setDateDeNaissance(const std::string& dateDeNaissance)
 {
 	dateDeNaissance_ = dateDeNaissance;
+}
+
+
+
+
+
+// opérateur<< qui remplace afficherstd::stringstream operator<<(std::ostream& stream,const Patient& patient);
+//! Méthode qui affiche les informations d'un patient
+//! \param stream Le stream dans lequel afficher
+
+/*
+std::stringstream& operator<<(std::stringstream& stream, const Patient& patient) {
+	return stream << "Patient: " << patient.nom_ << " | Date de naissance: " << patient.dateDeNaissance_
+		<< " | Numero d\'assurance maladie: " << patient.numeroAssuranceMaladie_;
+}
+*/
+
+std::stringstream& operator<<(std::stringstream& stream, const Patient& patient){
+	 return stream << "Patient: " << patient.getNom() << " | Date de naissance: " << patient.getDateDeNaissance()
+		<< " | Numero d\'assurance maladie: " << patient.getNumeroAssuranceMaladie();
+}
+
+
+// opérateur== qi compare un string avec le numéro d'assurance de maladie d'un patient
+// (par exemple, pour "TREMR124520" == patient)
+
+bool operator==(const std::string& string, const Patient& patient) {
+	if (patient.numeroAssuranceMaladie_ == string) {
+		return true;
+	};
+	return false;
 }

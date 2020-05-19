@@ -7,9 +7,22 @@
 #include <sstream>
 
 //! Constructeur par defaut de la classe GestionnairePatients
-GestionnairePatients::GestionnairePatients()
-	: nbPatients_(0)
-{
+GestionnairePatients::GestionnairePatients(){}
+
+GestionnairePatients::GestionnairePatients(const GestionnairePatients& gestionnairePatient) {
+	//for(Patient pat : gestPat)
+	for (int i = 0; i < gestionnairePatient.getPatients().size(); i++) {
+		patients_.push_back(gestionnairePatient.getPatients()[i]);
+	}
+}
+
+GestionnairePatients& GestionnairePatients::operator=(const GestionnairePatients& gestionnairePatient) {
+	if (this != &gestionnairePatient) {
+		for (int i = 0; i < gestionnairePatient.getPatients().size(); i++) {
+			patients_.push_back(gestionnairePatient.getPatients()[i]);
+		}
+	}
+	return *this;
 }
 
 
@@ -18,12 +31,12 @@ GestionnairePatients::GestionnairePatients()
 //! \return Un pointeur vers le patient. Le pointeur est nullptr si le patient n'existe pas dans la liste des patients.
 Patient* GestionnairePatients::chercherPatient(const std::string& numeroAssuranceMaladie)
 {
-	for (Patient patient : patients_)
+	for (std::shared_ptr<Patient> patient : patients_)
 	{
 		// À adapter au vecteur et pour l'opérateur==
-		if (patient.getNumeroAssuranceMaladie() == numeroAssuranceMaladie)
+		if (*patient == numeroAssuranceMaladie)
 		{
-			return &patient;
+			return &(*patient);  // this is weird
 		}
 	}
 
@@ -38,8 +51,9 @@ bool GestionnairePatients::chargerDepuisFichier(const std::string& nomFichier)
 	std::ifstream fichier(nomFichier);
 	if (fichier)
 	{
-		// À adapter au vecteur
-		nbPatients_ = 0;
+		for (int i =0; i < patients_.size(); i++){
+			patients_.pop_back();
+		}
 		std::string ligne;
 		while (getline(fichier, ligne))
 		{
@@ -62,37 +76,23 @@ bool GestionnairePatients::chargerDepuisFichier(const std::string& nomFichier)
 //! Méthode qui ajoute un patient à la liste des patients
 //! \param patient Le patient à ajouter
 //! \return       Un bool qui indique si l'opération a bien fonctionnée
-bool GestionnairePatients::ajouterPatient(const Patient& patient)
+bool GestionnairePatients::operator+=(const std::shared_ptr<Patient>& patient)
 {
-	if (nbPatients_ >= NB_PATIENT_MAX)
-	{
-		return false;
-	}
+	if (patients_.size() >= NB_PATIENT_MAX){return false;}
 
-	patients_[nbPatients_++] = patient;
+	patients_.push_back(patient);
 	return true;
 }
 
-// TODO : La methode afficher  doit être remplacée L’opérateur << 
-//! Méthode pour afficher la liste des patients
-//! \param stream Le stream dans lequel afficher
-void GestionnairePatients::afficher(std::ostream& stream) const
-{
-	for (size_t i = 0; i < nbPatients_; i++)
-	{
-		patients_[i].afficher(stream);
-		stream << '\n';
-	}
-}
 
-//! Méthode qui retourne le nombre des patients dans la liste
-//! \return Le nombre de patients dans la liste
-size_t GestionnairePatients::getNbPatients() const
-{
-	return nbPatients_;
-}
+
+
 
 // TODO : getPatients()  retourne une reference constante vers le vecteur patients_
+std::vector<std::shared_ptr<Patient>>  GestionnairePatients::getPatients() const {
+	return patients_;
+};
+
 
 //! Méthode qui lit les attributs d'un patient
 //! \param ligne  Le string qui contient les attributs
@@ -107,10 +107,29 @@ bool GestionnairePatients::lireLignePatient(const std::string& ligne)
 	// Pour extraire ce qui se trouve entre "" dans un stream,
 	// il faut faire stream >> quoted(variable)
 
-	if (stream >> quoted(nomPatient) >> quoted(anneeDeNaissance) >> quoted(numeroAssuranceMaladie))
+	if (stream >> std::quoted(nomPatient) >> std::quoted(anneeDeNaissance) >> std::quoted(numeroAssuranceMaladie))
 	{
 		// Adapter cette méthode pour utiliser l'opérateur+=
-		return ajouterPatient(Patient(nomPatient, anneeDeNaissance, numeroAssuranceMaladie));
+
+		Patient pat(nomPatient, anneeDeNaissance, numeroAssuranceMaladie );
+		std::shared_ptr<Patient> patient = std::make_shared<Patient>(pat);
+		//const std::string& nomPatient, const std::string& anneeDeNaissance, const std::string& numeroAssuranceMaladie)
+
+		*this += patient;
+		return true;
 	}
 	return false;
+}
+
+
+// opérateur<< qui remplace afficher
+//! Méthode pour afficher la liste des patients
+//! \param stream Le stream dans lequel afficher
+void operator<<(std::stringstream& stream, const GestionnairePatients& gestionnairePatients)
+{
+	for (int i = 0; i < gestionnairePatients.patients_.size(); i++)
+	{
+		stream << *(gestionnairePatients.patients_[i]);
+		stream << '\n';
+	}
 }

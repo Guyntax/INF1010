@@ -11,9 +11,9 @@
 #include <vector>
 #include "Patient.h"
 #include "debogageMemoire.h"
-#include "GestionnairePatients.h"
-#include "Medecin.h"
-#include "GestionnaireMedecins.h"
+//#include "GestionnairePatients.h"
+//#include "Medecin.h"
+//#include "GestionnaireMedecins.h"
 #include "typesafe_enum.h"
 #include "Consultation.h"
 #include "Hopital.h"
@@ -26,10 +26,10 @@ int main()
 {
 	initDebogageMemoire();
 
-	GestionnaireMedecins gestionnaireMedecins;
+	//GestionnaireMedecins gestionnaireMedecins;
 	GestionnairePatients gestionnairePatients;
 	Patient patientTest = Patient("Simon", "25/10/92", "1000000");
-	Medecin medecinTest = Medecin("Tamard", "1000000", Medecin::Specialite::Cardiologue);
+	//Medecin medecinTest = Medecin("Tamard", "1000000", Medecin::Specialite::Cardiologue);
 
 	std::vector<bool> tests;
 
@@ -59,7 +59,7 @@ int main()
 #endif
 
 // Test 2 : tester la classe Medecin
-#if true
+#if false
 
 	// Tester l'affichage du medecin
 	std::stringstream medecinStream;
@@ -130,7 +130,7 @@ int main()
 #endif
 
 // Test 3 : tester la classe GestionnairePatients
-#if true
+#if false
 	
 	// Tester le chargement de fichier
 	bool resultatLecturePatients = gestionnairePatients.chargerDepuisFichier("patients.txt") &&
@@ -216,7 +216,7 @@ int main()
 #endif
 
 // Test 4 : tester la classe GestionnaireMedecins
-#if true
+#if false
 	
 	// Tester le chargement de fichier
 	bool resultatLectureMedecins = gestionnaireMedecins.chargerDepuisFichier("medecins.txt") &&
@@ -315,7 +315,7 @@ int main()
 #endif
 
 // Test 5 : tester la classe Consultation
-#if true
+#if false
 	Consultation consultation = Consultation(medecinTest, patientTest, "05/05/2020");
 	
 	// Tester le constructeur de Consultation
@@ -343,7 +343,7 @@ int main()
 #endif
 
 // Test 6 : tester la classe Hopital
-#if true
+#if false
 	Hopital hopital = Hopital("CHUM", "1051 Rue Sanguinet, Montréal, QC H2X 3E4");
 
 	// Tester le chargement de la base de données
