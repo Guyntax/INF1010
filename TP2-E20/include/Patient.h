@@ -2,7 +2,7 @@
 #define PATIENT_H
 
 #include <string>
-#include <sstream>
+
 class Patient
 {
 public:
@@ -21,7 +21,7 @@ public:
     void setNumeroAssuranceMaladie(const std::string& numeroAssuranceMaladie);
     void setDateDeNaissance(const std::string& dateDeNaissance);
 
-   friend std::stringstream& operator<<(std::stringstream& stream, const Patient& patient);
+   friend std::ostream& operator<<(std::ostream& stream, const Patient& patient);
    friend bool operator==(const std::string& string, const Patient& patient);
 private:
     std::string nom_;

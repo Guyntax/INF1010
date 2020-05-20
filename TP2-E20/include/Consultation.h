@@ -2,6 +2,7 @@
 #define CONSULTATION_H
 
 #include <string>
+#include<sstream>
 #include "Medecin.h"
 #include "Patient.h"
 
@@ -13,6 +14,7 @@ public:
 
     // TODO : la signature de l'opérateur à surcharger
     // opérateur<< pour afficher 
+    std::stringstream& operator<<(std::stringstream& string);
 
     Medecin* getMedecin() const;
     Patient* getPatient() const;

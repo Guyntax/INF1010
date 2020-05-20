@@ -12,6 +12,16 @@ Hopital::Hopital(const std::string& nom, const std::string& adresse):nom_(nom), 
 // TODO : chargerBaseDeDonnees(const std::string& nomFichierMedecins, const std::string& nomFichierPatients)
 // Permet de charger les médecins et les patients depuis les fichiers passés en paramètres.
 // Retourne true si les fichiers sont bien chargés , false si non.
+bool Hopital::chargerBaseDeDonnees(const std::string& nomFichierMedecins, const std::string& nomFichierPatients) {
+	bool chargeMedecins;
+	bool chargePatients;
+
+	chargeMedecins = gestionnaireMedecins_.chargerDepuisFichier(nomFichierMedecins);
+	chargePatients = gestionnairePatients_.chargerDepuisFichier(nomFichierPatients);
+
+	if (chargeMedecins && chargePatients) { return true; };
+	return false;
+}
 
 
 // TODO : Operateur += qui permet d'ajouter une consultation à la liste consutltations_ 
@@ -58,7 +68,9 @@ GestionnairePatients& Hopital::getGestionnairePatients()
 }
 
 // TODO : getConsultations() retourne une reference constante vers le vecteur consultation.
-
+const std::vector<Consultation>& Hopital::getConsultations() {
+	return consultation_;
+}
 
 //! Méthode qui permet de mettre à jour le nom de l'hopital
 //! \Param nom Le nom de l'hopital

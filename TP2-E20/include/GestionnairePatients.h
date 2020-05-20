@@ -5,7 +5,7 @@
 #include "Patient.h"
 #include <memory>
 #include <vector>
-#include <sstream>
+
 
 
 class GestionnairePatients
@@ -30,7 +30,7 @@ public:
 
     static constexpr size_t NB_PATIENT_MAX = 16;
 
-    friend void operator<<(std::stringstream& stream, const GestionnairePatients& gestionnairePatients);
+    friend std::ostream& operator<<(std::ostream& stream, const GestionnairePatients& gestionnairePatients);
 
 private:
     bool lireLignePatient(const std::string& ligne);

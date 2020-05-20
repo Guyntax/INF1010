@@ -28,6 +28,7 @@ public:
     GestionnairePatients& getGestionnairePatients();
 
     // TODO : la signature de getConsultations()
+    const std::vector<Consultation>& getConsultations();
 
 
 
@@ -42,7 +43,7 @@ private:
     GestionnairePatients gestionnairePatients_;
 
     //TODO : vecteur de shared_ptr de Consultation consultations_
-
+    std::vector<Consultation> consultation_;
 };
 
 #endif // HOPITAL_H

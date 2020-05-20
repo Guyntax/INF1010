@@ -4,7 +4,6 @@
 #include <fstream>
 #include <iomanip>
 #include <iostream>
-#include <sstream>
 
 //! Constructeur par defaut de la classe GestionnairePatients
 GestionnairePatients::GestionnairePatients(){}
@@ -125,7 +124,7 @@ bool GestionnairePatients::lireLignePatient(const std::string& ligne)
 // opérateur<< qui remplace afficher
 //! Méthode pour afficher la liste des patients
 //! \param stream Le stream dans lequel afficher
-void operator<<(std::stringstream& stream, const GestionnairePatients& gestionnairePatients)
+std::ostream& operator<<(std::ostream& stream, const GestionnairePatients& gestionnairePatients)
 {
 	for (int i = 0; i < gestionnairePatients.patients_.size(); i++)
 	{

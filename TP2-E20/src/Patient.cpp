@@ -3,7 +3,6 @@
 #include "Patient.h"
 #include <iostream>
 #include <sstream>
-#include <string>
 
 //! Constructeur par paramètre  de la classe Patient
 //! \param nom						Nom du patient
@@ -92,9 +91,9 @@ std::stringstream& operator<<(std::stringstream& stream, const Patient& patient)
 }
 */
 
-std::stringstream& operator<<(std::stringstream& stream, const Patient& patient){
-	 return stream << "Patient: " << patient.getNom() << " | Date de naissance: " << patient.getDateDeNaissance()
-		<< " | Numero d\'assurance maladie: " << patient.getNumeroAssuranceMaladie();
+std::ostream& operator<<(std::ostream& stream, const Patient& patient){
+	 return stream << "Patient: " << patient.nom_ << " | Date de naissance: " << patient.dateDeNaissance_
+		<< " | Numero d\'assurance maladie: " << patient.numeroAssuranceMaladie_;
 }
 
 
