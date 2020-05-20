@@ -4,6 +4,7 @@
 #include <fstream>
 #include <iomanip>
 #include <iostream>
+#include <sstream>
 
 //! Constructeur par defaut de la classe GestionnairePatients
 GestionnairePatients::GestionnairePatients(){}
@@ -93,6 +94,24 @@ std::vector<std::shared_ptr<Patient>>  GestionnairePatients::getPatients() const
 };
 
 
+//Friend
+
+// opérateur<< qui remplace afficher
+//! Méthode pour afficher la liste des patients
+//! \param stream Le stream dans lequel afficher
+std::ostream& operator<<(std::ostream& stream, const GestionnairePatients& gestionnairePatients)
+{
+	for (int i = 0; i < gestionnairePatients.patients_.size(); i++)
+	{
+		stream << *(gestionnairePatients.patients_[i]);
+		stream << '\n';
+	}
+	return stream;
+}
+
+
+//Private
+
 //! Méthode qui lit les attributs d'un patient
 //! \param ligne  Le string qui contient les attributs
 bool GestionnairePatients::lireLignePatient(const std::string& ligne)
@@ -121,14 +140,3 @@ bool GestionnairePatients::lireLignePatient(const std::string& ligne)
 }
 
 
-// opérateur<< qui remplace afficher
-//! Méthode pour afficher la liste des patients
-//! \param stream Le stream dans lequel afficher
-std::ostream& operator<<(std::ostream& stream, const GestionnairePatients& gestionnairePatients)
-{
-	for (int i = 0; i < gestionnairePatients.patients_.size(); i++)
-	{
-		stream << *(gestionnairePatients.patients_[i]);
-		stream << '\n';
-	}
-}

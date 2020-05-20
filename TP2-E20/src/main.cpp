@@ -11,12 +11,12 @@
 #include <vector>
 #include "Patient.h"
 #include "debogageMemoire.h"
-//#include "GestionnairePatients.h"
+#include "GestionnairePatients.h"
 //#include "Medecin.h"
 //#include "GestionnaireMedecins.h"
 #include "typesafe_enum.h"
-#include "Consultation.h"
-#include "Hopital.h"
+//#include "Consultation.h"
+//#include "Hopital.h"
 
 // NOTE: Pour que le programme compile, vous pouvez changer tous les #if true à des #if false,
 // et mettre en commentaire tout le code qui a été écrit pour vous. Ainsi, vous pourrez
@@ -29,12 +29,12 @@ int main()
 	//GestionnaireMedecins gestionnaireMedecins;
 	GestionnairePatients gestionnairePatients;
 	Patient patientTest = Patient("Simon", "25/10/92", "1000000");
-	Medecin medecinTest = Medecin("Tamard", "1000000", Medecin::Specialite::Cardiologue);
+	//Medecin medecinTest = Medecin("Tamard", "1000000", Medecin::Specialite::Cardiologue);
 
 	std::vector<bool> tests;
 
 // Test 1 : tester la classe Patient
-#if false
+#if true
 
 	// Tester l'affichage du patient
 	std::stringstream patientStream;
@@ -59,7 +59,7 @@ int main()
 #endif
 
 // Test 2 : tester la classe Medecin
-#if true
+#if false
 
 	// Tester l'affichage du medecin
 	std::stringstream medecinStream;
