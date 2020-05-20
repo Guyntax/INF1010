@@ -33,8 +33,10 @@ public:
     friend std::ostream& operator<< (std::ostream& stream, const Medecin& medecin);
 
     bool operator+= (Patient patient);
-    bool operator-= (std::string numeroAssuranceMaladie);
-    bool operator== (std::string numeroLicence);
+    bool operator-= (const std::string& numeroAssuranceMaladie);
+    bool operator== (const std::string& numeroLicence);
+
+    friend bool operator==(const std::string& numeroLicence, Medecin medecin);
 
     Patient* chercherPatient(const std::string& numeroAssuranceMaladie);
 

@@ -2,6 +2,7 @@
 #define GESTIONNAIREMEDECIN_H
 
 #include <memory>
+#include <vector>
 #include "Medecin.h"
 #include "GestionnairePatients.h"
 

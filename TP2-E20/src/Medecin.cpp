@@ -168,7 +168,7 @@ bool Medecin::operator+= (Patient patient)
 //! Surcharge de l'opérateur -= : Méthode pour supprimer un patient
 //! \param nummeroAssuranceMaladie Numéro d'assurance Maladie du patient à supprimer
 //! \return true si la suppression a réussi, sinon false
-bool Medecin::operator-= (std::string numeroAssuranceMaladie)
+bool Medecin::operator-= (const std::string& numeroAssuranceMaladie)
 {
 	for (size_t i = 0; i < nbPatientsAssocies_; i++)
 	{
@@ -193,15 +193,15 @@ bool Medecin::operator-= (std::string numeroAssuranceMaladie)
 //! Surcharge de l'opérateur == : qui compare un string avec le numéro de la licence du médecin avec medécin 
 //! \param numeroLicence numéro de licence à comparer
 //! \return true si le numéro de licence correspond à celui du médecin, sinon false
-bool Medecin::operator== (std::string numeroLicence)
+bool Medecin::operator== (const std::string& numeroLicence)
 {
 	return numeroLicence == numeroLicence_;
 }
 
 //! Surcharge externe de l'opérateur ==
-bool operator==(std::string numeroLicence, Medecin medecin)
+bool operator==(const std::string& numeroLicence, Medecin medecin)
 {
-	return(medecin == numeroLicence);
+	return numeroLicence == medecin.getNumeroLicence();
 }
 // TODO : Opérateur == qui compare un string avec le numéro de la  licence du médecin avec medécin comme opérande de gauche
 
@@ -209,7 +209,16 @@ bool operator==(std::string numeroLicence, Medecin medecin)
 
 Patient* Medecin::chercherPatient(const std::string& numeroAssuranceMaladie)
 {
+	for (size_t i = 0; i < nbPatientsAssocies_; i++)
+	{
+		if (patientsAssocies_[i]->getNumeroAssuranceMaladie() == numeroAssuranceMaladie)
+		{
 
+			return patientsAssocies_[i].get();
+		}
+	}
+
+	return nullptr;
 }
 
 
