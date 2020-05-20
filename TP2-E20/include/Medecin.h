@@ -3,6 +3,7 @@
 
 #include <memory>
 #include <string>
+#include <vector>
 #include "Patient.h"
 
 
@@ -25,15 +26,23 @@ public:
     Medecin() = default;
     Medecin(const std::string& nom, const std::string& numeroLicence, Specialite specialite);
 
-    void ajouterPatient(Patient patient);
-    bool supprimerPatient(const std::string& numeroAssuranceMaladie);
-    void afficher(std::ostream& stream) const;
+    //void ajouterPatient(Patient patient);
+    //bool supprimerPatient(const std::string& numeroAssuranceMaladie);
+    //void afficher(std::ostream& stream) const;
+
+    friend std::ostream& operator<< (std::ostream& stream, const Medecin& medecin);
+
+    bool operator+= (Patient patient);
+    bool operator-= (std::string numeroAssuranceMaladie);
+    bool operator== (std::string numeroLicence);
+
+    Patient* chercherPatient(const std::string& numeroAssuranceMaladie);
 
     // TODO : signature des opérateurs à surcharger.
-    // opérateur<< qui remplace afficher
-    // opérateur+= qui remplace ajouterPatient
-    // opérateur-= qui remplace supprimerPatient
-    // opérateur== qui compare un string avec le numéro licence du médecin
+    // opérateur<< qui remplace afficher ok
+    // opérateur+= qui remplace ajouterPatient ok
+    // opérateur-= qui remplace supprimerPatient ok
+    // opérateur== qui compare un string avec le numéro licence du médecin ok
     // (par exemple, pour medecin == "158795")
     // opérateur== qui compare un string avec le numéro licence du médecin
     // (par exemple, pour "158795" == medecin)
@@ -45,7 +54,7 @@ public:
     const Specialite getSpecialite() const;
     const size_t getCapacitePatientAssocies() const;
     const size_t getNombrePatientsAssocies() const;
-    std::unique_ptr<std::shared_ptr<Patient>[]> getPatientsAssocies();
+    std::vector<std::shared_ptr<Patient>> getPatientsAssocies();
 
     void setNom(const std::string& nom);
     void setNumeroLicence(const std::string& numeroLicence);
@@ -60,9 +69,8 @@ private:
     bool estActif_ = true;
 
     // TODO: remplacer le tableau par un vecetur de Patient*
-    std::unique_ptr<std::shared_ptr<Patient>[]> patientsAssocies_;
+    std::vector<std::shared_ptr<Patient>> patientsAssocies_;
     size_t nbPatientsAssocies_;
-    size_t capacitePatientsAssocies_;
   
 };
 

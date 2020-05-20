@@ -15,8 +15,7 @@ Medecin::Medecin(const std::string& nom, const std::string& numeroLicence, Speci
 	, numeroLicence_(numeroLicence)
 	, specialite_(specialite)
 	, nbPatientsAssocies_(0)
-	, capacitePatientsAssocies_(CAPACITE_PATIENTS_INITIALE)
-	, patientsAssocies_(std::make_unique<std::shared_ptr<Patient>[]>(CAPACITE_PATIENTS_INITIALE))
+	, patientsAssocies_(std::vector<std::shared_ptr<Patient>>(CAPACITE_PATIENTS_INITIALE))
 {
 }
 
@@ -26,7 +25,7 @@ Medecin::Medecin(const std::string& nom, const std::string& numeroLicence, Speci
 
 //! Méthode qui ajoute un patient à liste des patients associes au médecin.
 //! \param Patient patient à ajouter
-void Medecin::ajouterPatient(Patient patient)
+/*void Medecin::ajouterPatient(Patient patient)
 {
 	static constexpr unsigned int AUGMENTATION_NOMBRE_PATIENTS = 2;
 
@@ -48,7 +47,7 @@ void Medecin::ajouterPatient(Patient patient)
 	}
 
 	patientsAssocies_[nbPatientsAssocies_++] = std::make_shared<Patient>(patient);
-}
+}*/
 
 
 // TODO: Methode supprimerPatient doit être remplacée par l'operateur -= Il prend en paramètre le numero d'assurance maladie du patient 
@@ -56,7 +55,7 @@ void Medecin::ajouterPatient(Patient patient)
 
 //! Méthode pour supprimer un patient de la liste des patients
 //! \param le nom du patient a supprimer
-bool Medecin::supprimerPatient(const std::string& numeroAssuranceMaladie)
+/*bool Medecin::supprimerPatient(const std::string& numeroAssuranceMaladie)
 {
 	for (size_t i = 0; i < nbPatientsAssocies_; i++)
 	{
@@ -69,7 +68,7 @@ bool Medecin::supprimerPatient(const std::string& numeroAssuranceMaladie)
 				patientsAssocies_[j] = patientsAssocies_[j + 1];
 			}
 
-			patientsAssocies_[nbPatientsAssocies_ - 1] = nullptr;
+			patientsAssocies_.push_back();
 			nbPatientsAssocies_--;
 
 			return true;
@@ -77,11 +76,11 @@ bool Medecin::supprimerPatient(const std::string& numeroAssuranceMaladie)
 	}
 
 	return false;
-}
+}*/
 // TODO : La methode afficher doit être remplacée par l’opérateur << 
 //! Méthode pour afficher les informations du medecin
 //! \param stream dans lequel on ecrit les informations du medecin
-void Medecin::afficher(std::ostream& stream) const
+/*void Medecin::afficher(std::ostream& stream) const
 {
 	static const std::string SPECIALITES[] = { "Generaliste",
 												"Cardiologue",
@@ -108,11 +107,112 @@ void Medecin::afficher(std::ostream& stream) const
 		patientsAssocies_[i]->afficher(stream);
 	}
 	stream << '\n';
+}*/
+
+
+//! Surcharge de l'opérateur << : Affiche les informations du médecin
+//! \param stream Le stream dans lequel on affiche les infos
+//! \param medecin le médecin dont on veut afficher les informations
+//| \return le stream qui affiche les infos
+std::ostream& operator<< (std::ostream& stream, const Medecin& medecin)
+{
+	static const std::string SPECIALITES[] = { "Generaliste",
+												"Cardiologue",
+												"Dermatologue",
+												"Gynecologue",
+												"Pediatre",
+												"Ophtalmologue",
+												"Autre" };
+	auto index = enum_value(medecin.specialite_);
+	assert(valid_as_enum<Medecin::Specialite>(index));
+	std::string specialite = SPECIALITES[index];
+
+	std::string statut = medecin.estActif_ ? "Actif" : "Inactif";
+
+	stream << "\nMedecin: " << medecin.nom_
+		<< "\n\tNumero de licence: " << medecin.numeroLicence_
+		<< "\n\tSpecialite: " << specialite
+		<< "\n\tStatut: " << statut
+		<< (medecin.nbPatientsAssocies_ == 0 ? "\n\tAucun patient n'est suivi par ce medecin." : "\n\tPatients associes:");
+
+	for (std::size_t i = 0; i < medecin.nbPatientsAssocies_; i++)
+	{
+		stream << "\n\t\t"<<medecin.patientsAssocies_[i];
+	}
+	stream << '\n';
+
+	return stream;
 }
 
+
+//! Surcharge de l'opérateur += : Méthode pour ajouter un patient
+//! \param patient Patient à ajouter
+//! \return true si l'ajout a réussi, sinon false
+bool Medecin::operator+= (Patient patient)
+{
+	int nbPatientInit = patientsAssocies_.size();
+
+	patientsAssocies_.push_back(std::make_shared<Patient>(patient));
+
+
+	if((nbPatientInit+1)==patientsAssocies_.size())
+	{ 
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+//! Surcharge de l'opérateur -= : Méthode pour supprimer un patient
+//! \param nummeroAssuranceMaladie Numéro d'assurance Maladie du patient à supprimer
+//! \return true si la suppression a réussi, sinon false
+bool Medecin::operator-= (std::string numeroAssuranceMaladie)
+{
+	for (size_t i = 0; i < nbPatientsAssocies_; i++)
+	{
+		if (patientsAssocies_[i]->getNumeroAssuranceMaladie() == numeroAssuranceMaladie)
+		{
+			patientsAssocies_[i].reset();
+
+			for (size_t j = i; j < nbPatientsAssocies_ - 1; j++)
+			{
+				patientsAssocies_[j] = patientsAssocies_[j + 1];
+			}
+
+			patientsAssocies_.pop_back();
+
+			return true;
+		}
+	}
+
+	return false;
+}
+
+//! Surcharge de l'opérateur == : qui compare un string avec le numéro de la licence du médecin avec medécin 
+//! \param numeroLicence numéro de licence à comparer
+//! \return true si le numéro de licence correspond à celui du médecin, sinon false
+bool Medecin::operator== (std::string numeroLicence)
+{
+	return numeroLicence == numeroLicence_;
+}
+
+//! Surcharge externe de l'opérateur ==
+bool operator==(std::string numeroLicence, Medecin medecin)
+{
+	return(medecin == numeroLicence);
+}
 // TODO : Opérateur == qui compare un string avec le numéro de la  licence du médecin avec medécin comme opérande de gauche
 
 // TODO :  Opérateur ==  qui compare le numéro de la  licence du médecin avec un le numéro de la  licence. Le numéro de licence comme opérande de gauche.
+
+Patient* Medecin::chercherPatient(const std::string& numeroAssuranceMaladie)
+{
+
+}
+
+
 
 //! Méthode qui retourne le nom du medecin
 //! \return le nom du medecin 
@@ -152,7 +252,7 @@ const Medecin::Specialite Medecin::getSpecialite() const
 const size_t Medecin::getNombrePatientsAssocies() const
 {
 
-	return nbPatientsAssocies_;
+	return patientsAssocies_.size();
 }
 
 //! Méthode qui retourne la capacité du tableau patientsAssocies_
@@ -160,12 +260,12 @@ const size_t Medecin::getNombrePatientsAssocies() const
 const size_t Medecin::getCapacitePatientAssocies() const
 {
 
-	return capacitePatientsAssocies_;
+	return patientsAssocies_.capacity();
 }
 
 //! Méthode qui retourne la liste des patients associes au medecin
 //! \return la liste des patients
-std::unique_ptr<std::shared_ptr<Patient>[]> Medecin::getPatientsAssocies()
+std::vector<std::shared_ptr<Patient>> Medecin::getPatientsAssocies()
 {
 	return move(patientsAssocies_);
 }

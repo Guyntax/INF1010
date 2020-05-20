@@ -29,12 +29,12 @@ int main()
 	//GestionnaireMedecins gestionnaireMedecins;
 	GestionnairePatients gestionnairePatients;
 	Patient patientTest = Patient("Simon", "25/10/92", "1000000");
-	//Medecin medecinTest = Medecin("Tamard", "1000000", Medecin::Specialite::Cardiologue);
+	Medecin medecinTest = Medecin("Tamard", "1000000", Medecin::Specialite::Cardiologue);
 
 	std::vector<bool> tests;
 
 // Test 1 : tester la classe Patient
-#if true
+#if false
 
 	// Tester l'affichage du patient
 	std::stringstream patientStream;
@@ -59,7 +59,7 @@ int main()
 #endif
 
 // Test 2 : tester la classe Medecin
-#if false
+#if true
 
 	// Tester l'affichage du medecin
 	std::stringstream medecinStream;
