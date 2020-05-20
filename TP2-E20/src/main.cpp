@@ -12,8 +12,8 @@
 #include "Patient.h"
 #include "debogageMemoire.h"
 #include "GestionnairePatients.h"
-//#include "Medecin.h"
-//#include "GestionnaireMedecins.h"
+#include "Medecin.h"
+#include "GestionnaireMedecins.h"
 #include "typesafe_enum.h"
 //#include "Consultation.h"
 //#include "Hopital.h"
@@ -26,10 +26,10 @@ int main()
 {
 	initDebogageMemoire();
 
-	//GestionnaireMedecins gestionnaireMedecins;
+	GestionnaireMedecins gestionnaireMedecins;
 	GestionnairePatients gestionnairePatients;
 	Patient patientTest = Patient("Simon", "25/10/92", "1000000");
-	//Medecin medecinTest = Medecin("Tamard", "1000000", Medecin::Specialite::Cardiologue);
+	Medecin medecinTest = Medecin("Tamard", "1000000", Medecin::Specialite::Cardiologue);
 
 	std::vector<bool> tests;
 
@@ -59,7 +59,7 @@ int main()
 #endif
 
 // Test 2 : tester la classe Medecin
-#if false
+#if true
 
 	// Tester l'affichage du medecin
 	std::stringstream medecinStream;
@@ -82,7 +82,6 @@ int main()
 
 	// Tester l'operateur += (ajout de patient)
 	medecinTest += patientTest;
-
 	medecinStream = std::stringstream();
 	medecinStream << medecinTest << std::endl;
 	medecinString = medecinStream.str();
@@ -130,7 +129,7 @@ int main()
 #endif
 
 // Test 3 : tester la classe GestionnairePatients
-#if false
+#if true
 	
 	// Tester le chargement de fichier
 	bool resultatLecturePatients = gestionnairePatients.chargerDepuisFichier("patients.txt") &&
@@ -142,6 +141,7 @@ int main()
 	patientsStream << gestionnairePatients << std::endl;
 	std::string patientsString = patientsStream.str();
 	std::cout << patientsString << '\n';
+
 	const std::string sortieAttenduePatients =
 		"Patient:JohnLourdes|Datedenaissance:12/12/2001|Numerod'assurancemaladie:louj010304"
 		"Patient:GeorgeLucas|Datedenaissance:01/04/1944|Numerod'assurancemaladie:LUCG441212";
@@ -158,6 +158,8 @@ int main()
 	GestionnairePatients gestionnairePatientCopieTest1 = GestionnairePatients(gestionnairePatients);
 	bool test3Reussi = true;
 	for (size_t i = 0; i < gestionnairePatients.getNbPatients(); i++) {
+		std::cout << &gestionnairePatients.getPatients()[i] << "\n";
+		std::cout << &gestionnairePatientCopieTest1.getPatients()[i] << "\n";
 		if (&gestionnairePatients.getPatients()[i] == &gestionnairePatientCopieTest1.getPatients()[i]) {
 			test3Reussi = false;
 			break;

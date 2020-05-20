@@ -10,9 +10,10 @@
 GestionnairePatients::GestionnairePatients(){}
 
 GestionnairePatients::GestionnairePatients(const GestionnairePatients& gestionnairePatient) {
+	//std::cout << "roger\n";
 	//for(Patient pat : gestPat)
 	for (int i = 0; i < gestionnairePatient.getPatients().size(); i++) {
-		patients_.push_back(gestionnairePatient.getPatients()[i]);
+		patients_.push_back(std::make_shared<Patient> (*gestionnairePatient.getPatients()[i]) );
 	}
 }
 
@@ -23,6 +24,26 @@ GestionnairePatients& GestionnairePatients::operator=(const GestionnairePatients
 		}
 	}
 	return *this;
+}
+
+
+
+// TODO: Methode ajouterPatientdoit être remplacée par l'operteur +=. il prend en paramètre une référence vers le patient à ajouter
+// Retourne true si l'opération d'ajout est réussi, false si non.
+
+//! Méthode qui ajoute un patient à la liste des patients
+//! \param patient Le patient à ajouter
+//! \return       Un bool qui indique si l'opération a bien fonctionnée
+bool GestionnairePatients::operator+=(const Patient& patient)
+{
+
+	//std::cout << "size: "<<  patients_.size() << "\m";
+	//std::cout << "max: "<< NB_PATIENT_MAX << "\m";
+
+	if (patients_.size() >= NB_PATIENT_MAX) { return false; }
+
+	patients_.push_back(std::make_shared<Patient>(patient));
+	return true;
 }
 
 
@@ -50,8 +71,10 @@ bool GestionnairePatients::chargerDepuisFichier(const std::string& nomFichier)
 {
 	std::ifstream fichier(nomFichier);
 	if (fichier)
-	{
-		for (int i =0; i < patients_.size(); i++){
+	{	
+		int size = patients_.size(); // necesaire, car patients_.size() change dans la boucle
+		for (int i =0; i < size; i++){
+			std::cout << i << "\n";
 			patients_.pop_back();
 		}
 		std::string ligne;
@@ -70,19 +93,6 @@ bool GestionnairePatients::chargerDepuisFichier(const std::string& nomFichier)
 	return false;
 }
 
-// TODO: Methode ajouterPatientdoit être remplacée par l'operteur +=. il prend en paramètre une référence vers le patient à ajouter
-// Retourne true si l'opération d'ajout est réussi, false si non.
-
-//! Méthode qui ajoute un patient à la liste des patients
-//! \param patient Le patient à ajouter
-//! \return       Un bool qui indique si l'opération a bien fonctionnée
-bool GestionnairePatients::operator+=(const std::shared_ptr<Patient>& patient)
-{
-	if (patients_.size() >= NB_PATIENT_MAX){return false;}
-
-	patients_.push_back(patient);
-	return true;
-}
 
 
 
@@ -94,6 +104,11 @@ std::vector<std::shared_ptr<Patient>>  GestionnairePatients::getPatients() const
 };
 
 
+int GestionnairePatients::getNbPatients()const {
+	return patients_.size();
+};
+
+
 //Friend
 
 // opérateur<< qui remplace afficher
@@ -102,7 +117,7 @@ std::vector<std::shared_ptr<Patient>>  GestionnairePatients::getPatients() const
 std::ostream& operator<<(std::ostream& stream, const GestionnairePatients& gestionnairePatients)
 {
 	for (int i = 0; i < gestionnairePatients.patients_.size(); i++)
-	{
+	{	
 		stream << *(gestionnairePatients.patients_[i]);
 		stream << '\n';
 	}
@@ -129,8 +144,8 @@ bool GestionnairePatients::lireLignePatient(const std::string& ligne)
 	{
 		// Adapter cette méthode pour utiliser l'opérateur+=
 
-		Patient pat(nomPatient, anneeDeNaissance, numeroAssuranceMaladie );
-		std::shared_ptr<Patient> patient = std::make_shared<Patient>(pat);
+		Patient patient(nomPatient, anneeDeNaissance, numeroAssuranceMaladie );
+
 		//const std::string& nomPatient, const std::string& anneeDeNaissance, const std::string& numeroAssuranceMaladie)
 
 		*this += patient;
