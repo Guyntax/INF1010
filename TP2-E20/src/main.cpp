@@ -12,8 +12,8 @@
 #include "Patient.h"
 #include "debogageMemoire.h"
 #include "GestionnairePatients.h"
-//#include "Medecin.h"
-//#include "GestionnaireMedecins.h"
+#include "Medecin.h"
+#include "GestionnaireMedecins.h"
 #include "typesafe_enum.h"
 //#include "Consultation.h"
 //#include "Hopital.h"
@@ -26,10 +26,10 @@ int main()
 {
 	initDebogageMemoire();
 
-	//GestionnaireMedecins gestionnaireMedecins;
+	GestionnaireMedecins gestionnaireMedecins;
 	GestionnairePatients gestionnairePatients;
 	Patient patientTest = Patient("Simon", "25/10/92", "1000000");
-	//Medecin medecinTest = Medecin("Tamard", "1000000", Medecin::Specialite::Cardiologue);
+	Medecin medecinTest = Medecin("Tamard", "1000000", Medecin::Specialite::Cardiologue);
 
 	std::vector<bool> tests;
 
@@ -59,7 +59,7 @@ int main()
 #endif
 
 // Test 2 : tester la classe Medecin
-#if false
+#if true
 
 	// Tester l'affichage du medecin
 	std::stringstream medecinStream;

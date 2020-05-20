@@ -14,8 +14,7 @@ Medecin::Medecin(const std::string& nom, const std::string& numeroLicence, Speci
 	: nom_(nom)
 	, numeroLicence_(numeroLicence)
 	, specialite_(specialite)
-	, nbPatientsAssocies_(0)
-	, patientsAssocies_(std::vector<std::shared_ptr<Patient>>(CAPACITE_PATIENTS_INITIALE))
+	, patientsAssocies_(std::vector<std::shared_ptr<Patient>>())
 {
 }
 
@@ -133,11 +132,14 @@ std::ostream& operator<< (std::ostream& stream, const Medecin& medecin)
 		<< "\n\tNumero de licence: " << medecin.numeroLicence_
 		<< "\n\tSpecialite: " << specialite
 		<< "\n\tStatut: " << statut
-		<< (medecin.nbPatientsAssocies_ == 0 ? "\n\tAucun patient n'est suivi par ce medecin." : "\n\tPatients associes:");
+		<< (medecin.patientsAssocies_.size()== 0 ? "\n\tAucun patient n'est suivi par ce medecin." : "\n\tPatients associes:");
 
-	for (std::size_t i = 0; i < medecin.nbPatientsAssocies_; i++)
+	if (medecin.patientsAssocies_.size() > 0)
 	{
-		stream << "\n\t\t"<<medecin.patientsAssocies_[i];
+		for (std::size_t i = 0; i < medecin.patientsAssocies_.size(); i++)
+		{
+			stream << "\n\t\t" << *(medecin.patientsAssocies_[i]);
+		}
 	}
 	stream << '\n';
 
@@ -170,13 +172,13 @@ bool Medecin::operator+= (Patient patient)
 //! \return true si la suppression a réussi, sinon false
 bool Medecin::operator-= (const std::string& numeroAssuranceMaladie)
 {
-	for (size_t i = 0; i < nbPatientsAssocies_; i++)
+	for (size_t i = 0; i < patientsAssocies_.size(); i++)
 	{
 		if (patientsAssocies_[i]->getNumeroAssuranceMaladie() == numeroAssuranceMaladie)
 		{
 			patientsAssocies_[i].reset();
 
-			for (size_t j = i; j < nbPatientsAssocies_ - 1; j++)
+			for (size_t j = i; j < patientsAssocies_.size() - 1; j++)
 			{
 				patientsAssocies_[j] = patientsAssocies_[j + 1];
 			}
@@ -276,7 +278,7 @@ const size_t Medecin::getCapacitePatientAssocies() const
 //! \return la liste des patients
 std::vector<std::shared_ptr<Patient>> Medecin::getPatientsAssocies()
 {
-	return move(patientsAssocies_);
+	return patientsAssocies_;
 }
 
 //! Méthode qui met a jours le nom  du medecin
