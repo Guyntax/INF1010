@@ -15,7 +15,7 @@
 #include "Medecin.h"
 #include "GestionnaireMedecins.h"
 #include "typesafe_enum.h"
-//#include "Consultation.h"
+#include "Consultation.h"
 //#include "Hopital.h"
 
 // NOTE: Pour que le programme compile, vous pouvez changer tous les #if true à des #if false,
@@ -317,12 +317,15 @@ int main()
 #endif
 
 // Test 5 : tester la classe Consultation
-#if false
+#if true
 	Consultation consultation = Consultation(medecinTest, patientTest, "05/05/2020");
 	
 	// Tester le constructeur de Consultation
-	tests.push_back(medecinTest.chercherPatient(patientTest.getNumeroAssuranceMaladie()) 
-		&& *medecinTest.getPatientsAssocies()[0] == patientTest.getNumeroAssuranceMaladie());
+	bool test1 = medecinTest.chercherPatient(patientTest.getNumeroAssuranceMaladie());
+	bool test2 = *medecinTest.getPatientsAssocies()[0] == patientTest.getNumeroAssuranceMaladie();
+
+	tests.push_back(test1
+		&& test2);
 
 	// Tester l 'affichage de la consultation
 	std::stringstream consultationStream;

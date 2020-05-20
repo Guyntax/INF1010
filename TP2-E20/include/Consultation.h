@@ -14,7 +14,7 @@ public:
 
     // TODO : la signature de l'opérateur à surcharger
     // opérateur<< pour afficher 
-    std::ostream& operator<<(std::ostream& string);
+    friend std::ostream& operator<<(std::ostream& string, const Consultation& consultation);
 
     Medecin* getMedecin() const;
     Patient* getPatient() const;

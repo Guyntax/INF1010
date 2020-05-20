@@ -211,7 +211,7 @@ bool operator==(const std::string& numeroLicence, Medecin medecin)
 
 Patient* Medecin::chercherPatient(const std::string& numeroAssuranceMaladie)
 {
-	for (size_t i = 0; i < nbPatientsAssocies_; i++)
+	for (size_t i = 0; i < patientsAssocies_.size(); i++)
 	{
 		if (patientsAssocies_[i]->getNumeroAssuranceMaladie() == numeroAssuranceMaladie)
 		{
