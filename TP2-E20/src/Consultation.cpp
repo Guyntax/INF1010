@@ -16,7 +16,7 @@ Consultation::Consultation(Medecin& medecin, Patient& patient, const std::string
 	, date_(date){
 	// TODO : compléter Constructeur par paramètre de la classe Consulation en utilisant la liste d'initialisation
 	// Assurer d'ajouter le patient à la liste des patients assoicés au medecin s'il n'y existe pas.
-	std::unique_ptr<std::vector<Patient>> patientsAssocies = medecin_->getPatientsAssocies();
+	std::vector<std::shared_ptr<Patient>> patientsAssocies = medecin_->getPatientsAssocies();
 
 	// bla bla
 
@@ -26,9 +26,10 @@ Consultation::Consultation(Medecin& medecin, Patient& patient, const std::string
 // TODO : operateur<< pour afficher les informations d'une consultation.
 // Voir l'enoncé pour avoir un exemple d'affichage d'une consultation. 
 // Si l'affichage n'est pas respecté, le test de l'affichage de consultation ne passera pas.
-std::stringstream& Consultation::operator<<(std::stringstream& string) {
+std::ostream& Consultation::operator<<(std::ostream& string) {
 
-
+	// a refaire
+	return string << medecin_ << patient_;
 }
 
 //! Méthode qui retourne le médecin de la consultation
