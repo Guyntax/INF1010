@@ -87,19 +87,14 @@ bool GestionnaireMedecins::chargerDepuisFichier(const std::string& nomFichier)
 //! Surcharge de l'opérateur += : opérateur qui ajoute un médecin à la liste des médecins
 //! \param medecin Le medecin à ajouter
 //! \return true si l'opération d'ajout est réussie, false sinon.
-bool GestionnaireMedecins::operator+= (const Medecin& medecin)
-{
-	int nbMedecinInit = medecins_.size();
-	medecins_.push_back(std::make_shared<Medecin>(medecin));
-		if ((nbMedecinInit + 1) == medecins_.size())
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	
+bool GestionnaireMedecins::operator+= (Medecin medecin)
+{	
+	if ( !chercherMedecin(medecin.getNumeroLicence()) )
+	{
+		medecins_.push_back(std::make_shared<Medecin>(medecin)); 
+		return true;
+	}
+	return false;
 }
 
 // TODO: Methode supprimerMedecin doit être remplacée par l'operteur -= Il prend en paramètre le numéro de licence 

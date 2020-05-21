@@ -34,11 +34,12 @@ GestionnairePatients& GestionnairePatients::operator=(const GestionnairePatients
 //! \return       Un bool qui indique si l'opération a bien fonctionnée
 bool GestionnairePatients::operator+=(const Patient& patient)
 {
-
-	if (patients_.size() >= NB_PATIENT_MAX) { return false; }
-
-	patients_.push_back(std::make_shared<Patient>(patient));
-	return true;
+	
+	if ( !chercherPatient(patient.getNumeroAssuranceMaladie()) && (patients_.size() < NB_PATIENT_MAX)) {
+		patients_.push_back(std::make_shared<Patient>(patient));
+		return true;
+	}
+	return false;
 }
 
 
