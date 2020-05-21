@@ -1,4 +1,6 @@
-// TODO: Faire l'entête de fichier
+//! Définition de la classe GestionnaireMedecins qui permet la gestion des médecins de l'hôpital
+//! \authors Didier Blach Laflèche & Maude Tremblay
+//! \date 20 Mai 2020
 
 #include "GestionnaireMedecins.h"
 #include <fstream>
@@ -7,31 +9,44 @@
 #include <sstream>
 #include "typesafe_enum.h"
 
-constexpr size_t CAPACITE_MEDECINS_INITIALE = 2;
 constexpr int MEDECIN_INEXSISTANT = -1;
 
 //! Constructeur par defaut de la classe GestionnaireMedecins
-GestionnaireMedecins::GestionnaireMedecins()
-	: nbMedecins_(0)
-	, capaciteMedecins_(CAPACITE_MEDECINS_INITIALE)
-	, medecins_(std::make_unique<std::shared_ptr<Medecin>[]>(CAPACITE_MEDECINS_INITIALE))
+GestionnaireMedecins::GestionnaireMedecins():
+	medecins_(std::vector<std::shared_ptr<Medecin>>())
 {
 }
 
+//! Constructeur de copie de la classe GestionnaireMedecins
+GestionnaireMedecins::GestionnaireMedecins(const GestionnaireMedecins& gestionnaireMedecins) 
+{
 
+	for (int i = 0; i < gestionnaireMedecins.getMedecins().size(); i++) {
+		medecins_.push_back(std::make_shared<Medecin>(*gestionnaireMedecins.getMedecins()[i]));
+	}
+}
+
+//! Opérateur d'affectation
+GestionnaireMedecins& GestionnaireMedecins::operator=(const GestionnaireMedecins& gestionnaireMedecins) {
+	if (this != &gestionnaireMedecins) {
+		for (int i = 0; i < gestionnaireMedecins.medecins_.size(); i++)
+		{
+			operator+=(*(gestionnaireMedecins.medecins_[i]));
+		}
+	}
+	return *this;
+}
 
 //! Méthode qui cherche un medecin par son nom
 //! \param nomMedecin Le nom du medecin à chercher
-//! \return Un pointeur vers le patient. Le pointeur est nullptr si le medecin n'existe pas dans la liste des medecin.
-Medecin* GestionnaireMedecins::chercherMedecin(const std::string& numeroLicence)
+//! \return Un pointeur vers le medecin. Le pointeur est nullptr si le medecin n'existe pas dans la liste des medecin.
+Medecin* GestionnaireMedecins::chercherMedecin(const std::string& numeroLicence) const
 {
-	for (size_t i = 0; i < nbMedecins_; i++)
+	for (size_t i = 0; i < medecins_.size(); i++)
 	{
-
-		// Adapater la ligne ci-dessous en utilisant l'operateur == pour la comparaison
 		if (medecins_[i]->getNumeroLicence() == numeroLicence)
 		{
-			// TODO retourner un pointeur vers le medecin 
+			return medecins_[i].get();
 		}
 	}
 
@@ -47,8 +62,11 @@ bool GestionnaireMedecins::chargerDepuisFichier(const std::string& nomFichier)
 	std::ifstream fichier(nomFichier);
 	if (fichier)
 	{
+		int size = medecins_.size(); // necessaire, car patients_.size() change dans la boucle
+		for (int i = 0; i < size; i++) {
+			medecins_.pop_back();
+		}
 		// Doit être adaptée pour vecteur
-		nbMedecins_ = 0;
 		std::string ligne;
 		while (getline(fichier, ligne))
 		{
@@ -66,41 +84,31 @@ bool GestionnaireMedecins::chargerDepuisFichier(const std::string& nomFichier)
 }
 
 
-// TODO: Methode ajouterMedecin doit être remplacée par l'opérteur +=. il prend en paramètre une référence vers le medecin à ajouter
-// Retourne true si l'opération d'ajout est réussie, false si non.
-
-//! Méthode qui ajoute un médecin à la liste des patients
+//! Surcharge de l'opérateur += : opérateur qui ajoute un médecin à la liste des médecins
 //! \param medecin Le medecin à ajouter
-void GestionnaireMedecins::ajouterMedecin(std::shared_ptr<Medecin> medecin)
+//! \return true si l'opération d'ajout est réussie, false sinon.
+bool GestionnaireMedecins::operator+= (Medecin medecin)
 {
-	constexpr unsigned int AUGMENTATION_NOMBRE_MEDECINS = 2;
-
-	if (nbMedecins_ >= capaciteMedecins_)
-	{
-		// Creer nouveau tableau
-		std::unique_ptr<std::shared_ptr<Medecin>[]> tableauTemporaire =
-			std::make_unique<std::shared_ptr<Medecin>[]>(capaciteMedecins_ * AUGMENTATION_NOMBRE_MEDECINS);
-
-		// Copier chaque élément vers le nouveau tableau
-		for (std::size_t i = 0; i < nbMedecins_; i++)
+	int nbMedecinInit = medecins_.size();
+	medecins_.push_back(std::make_shared<Medecin>(medecin));
+		if ((nbMedecinInit + 1) == medecins_.size())
 		{
-			tableauTemporaire[i] = medecins_[i];
+			return true;
 		}
-
-		medecins_ = move(tableauTemporaire);
-		capaciteMedecins_ *= AUGMENTATION_NOMBRE_MEDECINS;
-	}
-
-	medecins_[nbMedecins_++] = medecin;
+		else
+		{
+			return false;
+		}
+	
 }
 
 // TODO: Methode supprimerMedecin doit être remplacée par l'operteur -= Il prend en paramètre le numéro de licence 
 // Retourne true si l'opération d'ajout est réussi, false si non.
 
-//! Méthode  qui permet de supprimer un medecin
+//! Surcharge de l'opérateur -= : opérateur qui permet de supprimer un medecin
 //! \param numeroLicence   numero de licence du medecin a supprimer
 //! \return             Un bool qui indique si le medecin a été supprimé
-bool GestionnaireMedecins::supprimerMedecin(const std::string& numeroLicence)
+bool GestionnaireMedecins::operator-=(const std::string& numeroLicence)
 {
 	int indexMedecin = trouverIndexMedecin(numeroLicence);
 
@@ -114,16 +122,17 @@ bool GestionnaireMedecins::supprimerMedecin(const std::string& numeroLicence)
 
 }
 
-// TODO : La methode afficher doit être remplacée par l’opérateur << 
-//! Méthode pour afficher la liste des medecins
+
+//! Surcharge de l'opérateur << : opérateur pour afficher la liste des medecins
 //! \param stream Le stream dans lequel afficher
-void GestionnaireMedecins::afficher(std::ostream& stream) const
+//! \return stream Le stream dans lequel les informations sont affichées
+std::ostream& operator<<(std::ostream& stream, const GestionnaireMedecins& gestMed)
 {
-	for (size_t i = 0; i < nbMedecins_; i++)
+	for (size_t i = 0; i < gestMed.medecins_.size(); i++)
 	{
-		
-		stream << medecins_[i]<< '\n';
+		stream << *(gestMed.medecins_[i])<< '\n';
 	}
+	return stream;
 }
 
 
@@ -131,15 +140,21 @@ void GestionnaireMedecins::afficher(std::ostream& stream) const
 //! \return Le nombre de medecins dans la liste
 size_t GestionnaireMedecins::getNbMedecins() const
 {
-	return nbMedecins_;
+	return medecins_.size();
 }
 
-// TODO : getMedecins() retourne une reference constante vers le vecteur medecins_
+//! Méthode qui retourne vecteur medecins_
+//! \return Vecteur medecins_
+const std::vector<std::shared_ptr<Medecin>>& GestionnaireMedecins::getMedecins() const
+{
+	return medecins_;
+}
 
+//! Méthode qui retourne la capacité du vecteur medecins_
+//! \return Capacité du vecteur medecins_
 size_t GestionnaireMedecins::getCapaciteMedecins() const
 {
-
-	return capaciteMedecins_;
+	return medecins_.capacity();
 }
 
 //! Méthode qui lit les attributs d'un medecin
@@ -157,8 +172,7 @@ bool GestionnaireMedecins::lireLigneMedecin(const std::string& ligne)
 
 	if (stream >> std::quoted(nomMedecin) >> std::quoted(numeroLicence) >> indexSpecialite)
 	{
-		// Adapter cette méthode pour utiliser l'opérateur+=
-		ajouterMedecin(std::make_unique<Medecin>(nomMedecin, numeroLicence, to_enum<Medecin::Specialite, int>(indexSpecialite)));
+		operator+=(Medecin(nomMedecin, numeroLicence, to_enum<Medecin::Specialite, int>(indexSpecialite)));
 		return true;
 	}
 
@@ -171,9 +185,9 @@ bool GestionnaireMedecins::lireLigneMedecin(const std::string& ligne)
 int GestionnaireMedecins::trouverIndexMedecin(const std::string& numeroLicence)
 {
 	// À Adapter pour vecteur et l'utilisation l'opérateur == 
-	for (std::size_t i = 0; i < nbMedecins_; i++)
+	for (std::size_t i = 0; i < medecins_.size(); i++)
 	{
-		if (medecins_[i]->getNumeroLicence() == numeroLicence)
+		if (*(medecins_[i]) == numeroLicence)
 		{
 			return static_cast<int>(i);
 		}

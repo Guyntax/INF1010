@@ -218,7 +218,7 @@ int main()
 #endif
 
 // Test 4 : tester la classe GestionnaireMedecins
-#if false
+#if true
 	
 	// Tester le chargement de fichier
 	bool resultatLectureMedecins = gestionnaireMedecins.chargerDepuisFichier("medecins.txt") &&
