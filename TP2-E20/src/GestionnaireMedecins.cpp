@@ -87,7 +87,7 @@ bool GestionnaireMedecins::chargerDepuisFichier(const std::string& nomFichier)
 //! Surcharge de l'opérateur += : opérateur qui ajoute un médecin à la liste des médecins
 //! \param medecin Le medecin à ajouter
 //! \return true si l'opération d'ajout est réussie, false sinon.
-bool GestionnaireMedecins::operator+= (Medecin medecin)
+bool GestionnaireMedecins::operator+= (const Medecin& medecin)
 {
 	int nbMedecinInit = medecins_.size();
 	medecins_.push_back(std::make_shared<Medecin>(medecin));

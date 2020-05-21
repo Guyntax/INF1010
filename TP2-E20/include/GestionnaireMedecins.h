@@ -13,12 +13,11 @@ class GestionnaireMedecins
 public:
     GestionnaireMedecins();
     GestionnaireMedecins(const GestionnaireMedecins& gestionnaireMedecins);
-
     GestionnaireMedecins& operator=(const GestionnaireMedecins& gestionnaireMedecins);
 
     Medecin* chercherMedecin(const std::string& numeroLicence) const;
     bool chargerDepuisFichier(const std::string& nomFichiers);
-    bool operator+= (Medecin medecin);
+    bool operator+= (const Medecin& medecin);
     bool operator-=(const std::string& numeroLicence);
     friend std::ostream& operator<<(std::ostream& stream, const GestionnaireMedecins& gestMed);
  

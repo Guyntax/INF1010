@@ -27,7 +27,7 @@ public:
     Medecin(const std::string& nom, const std::string& numeroLicence, Specialite specialite);
 
     friend std::ostream& operator<< (std::ostream& stream, const Medecin& medecin);
-    bool operator+= (Patient patient);
+    bool operator+= (const Patient& patient);
     bool operator-= (const std::string& numeroAssuranceMaladie);
     bool operator== (const std::string& numeroLicence);
     friend bool operator==(const std::string& numeroLicence, Medecin medecin);

@@ -9,14 +9,14 @@
 //! Constructeur par defaut de la classe GestionnairePatients
 GestionnairePatients::GestionnairePatients(){}
 
+//! Constructeur de copie de la classe GestionnairePatients
 GestionnairePatients::GestionnairePatients(const GestionnairePatients& gestionnairePatient) {
-	//std::cout << "roger\n";
-	//for(Patient pat : gestPat)
 	for (int i = 0; i < gestionnairePatient.getPatients().size(); i++) {
 		patients_.push_back(std::make_shared<Patient> (*gestionnairePatient.getPatients()[i]) );
 	}
 }
 
+//! Opérateur d'affectation
 GestionnairePatients& GestionnairePatients::operator=(const GestionnairePatients& gestionnairePatient) {
 	if (this != &gestionnairePatient) {
 		for (int i = 0; i < gestionnairePatient.getPatients().size(); i++) {
@@ -27,18 +27,11 @@ GestionnairePatients& GestionnairePatients::operator=(const GestionnairePatients
 }
 
 
-
-// TODO: Methode ajouterPatientdoit être remplacée par l'operteur +=. il prend en paramètre une référence vers le patient à ajouter
-// Retourne true si l'opération d'ajout est réussi, false si non.
-
-//! Méthode qui ajoute un patient à la liste des patients
+//! Surcharge de l'opérateur += : opérateur qui ajoute un patient à la liste des patients
 //! \param patient Le patient à ajouter
 //! \return       Un bool qui indique si l'opération a bien fonctionnée
 bool GestionnairePatients::operator+=(const Patient& patient)
 {
-
-	//std::cout << "size: "<<  patients_.size() << "\m";
-	//std::cout << "max: "<< NB_PATIENT_MAX << "\m";
 
 	if (patients_.size() >= NB_PATIENT_MAX) { return false; }
 
@@ -54,7 +47,6 @@ Patient* GestionnairePatients::chercherPatient(const std::string& numeroAssuranc
 {
 	for (std::shared_ptr<Patient> patient : patients_)
 	{
-		// À adapter au vecteur et pour l'opérateur==
 		if (*patient == numeroAssuranceMaladie)
 		{
 			return &(*patient);  // this is weird
@@ -93,17 +85,14 @@ bool GestionnairePatients::chargerDepuisFichier(const std::string& nomFichier)
 	return false;
 }
 
-
-
-
-
-
-// TODO : getPatients()  retourne une reference constante vers le vecteur patients_
+//! Méthode qui retourne une reference constante vers le vecteur patients_
+//! \return une reference constante vers le vecteur patients_
 std::vector<std::shared_ptr<Patient>>  GestionnairePatients::getPatients() const {
 	return patients_;
 };
 
-
+//! Méthode qui retourne le nombre de patients
+//! \return le nombre de patients
 int GestionnairePatients::getNbPatients()const {
 	return patients_.size();
 };
@@ -111,9 +100,9 @@ int GestionnairePatients::getNbPatients()const {
 
 //Friend
 
-// opérateur<< qui remplace afficher
-//! Méthode pour afficher la liste des patients
+//! Surcharge de l'opérateur<< : opérateur qui affiche la liste des patients
 //! \param stream Le stream dans lequel afficher
+//! \return le stream qui contient les informations
 std::ostream& operator<<(std::ostream& stream, const GestionnairePatients& gestionnairePatients)
 {
 	for (int i = 0; i < gestionnairePatients.patients_.size(); i++)
@@ -129,6 +118,7 @@ std::ostream& operator<<(std::ostream& stream, const GestionnairePatients& gesti
 
 //! Méthode qui lit les attributs d'un patient
 //! \param ligne  Le string qui contient les attributs
+//! \return true si la ligne a bien été lue, sinon false
 bool GestionnairePatients::lireLignePatient(const std::string& ligne)
 {
 	std::istringstream stream(ligne);
@@ -142,11 +132,8 @@ bool GestionnairePatients::lireLignePatient(const std::string& ligne)
 
 	if (stream >> std::quoted(nomPatient) >> std::quoted(anneeDeNaissance) >> std::quoted(numeroAssuranceMaladie))
 	{
-		// Adapter cette méthode pour utiliser l'opérateur+=
 
 		Patient patient(nomPatient, anneeDeNaissance, numeroAssuranceMaladie );
-
-		//const std::string& nomPatient, const std::string& anneeDeNaissance, const std::string& numeroAssuranceMaladie)
 
 		*this += patient;
 		return true;

@@ -61,7 +61,7 @@ std::ostream& operator<< (std::ostream& stream, const Medecin& medecin)
 //! Surcharge de l'opérateur += : opérateur pour ajouter un patient
 //! \param patient Patient à ajouter
 //! \return true si l'ajout a réussi, sinon false
-bool Medecin::operator+= (Patient patient)
+bool Medecin::operator+= (const Patient& patient)
 {
 	int nbPatientInit = patientsAssocies_.size();
 
@@ -103,7 +103,7 @@ bool Medecin::operator-= (const std::string& numeroAssuranceMaladie)
 	return false;
 }
 
-//! Surcharge de l'opérateur == : compare un string avec le numéro de la licence du médecin avec médecin 
+//! Surcharge de l'opérateur == : compare un string avec le numéro de la licence du médecin 
 //! \param numeroLicence numéro de licence à comparer
 //! \return true si le numéro de licence correspond à celui du médecin, sinon false
 bool Medecin::operator== (const std::string& numeroLicence)
@@ -111,7 +111,7 @@ bool Medecin::operator== (const std::string& numeroLicence)
 	return numeroLicence == numeroLicence_;
 }
 
-//! Surcharge externe de l'opérateur == :compare un string avec le numéro de la licence du médecin avec médecin 
+//! Surcharge externe de l'opérateur == :compare un string avec le numéro de la licence du médecin 
 //! \param numeroLicence numéro de licence à comparer
 //! \param medecin Medecin avec lequel comparer le numéro de licence
 //! \return true si le numéro de licence correspond à celui du médecin, sinon false
