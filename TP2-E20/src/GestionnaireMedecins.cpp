@@ -125,6 +125,7 @@ bool GestionnaireMedecins::operator-=(const std::string& numeroLicence)
 
 //! Surcharge de l'opérateur << : opérateur pour afficher la liste des medecins
 //! \param stream Le stream dans lequel afficher
+//! \param gestMed GestionnaireMedecin dont on veut afficher la liste de médecins
 //! \return stream Le stream dans lequel les informations sont affichées
 std::ostream& operator<<(std::ostream& stream, const GestionnaireMedecins& gestMed)
 {

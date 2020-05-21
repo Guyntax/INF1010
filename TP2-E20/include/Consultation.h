@@ -12,8 +12,6 @@ public:
     Consultation() = default;
 	Consultation(Medecin& medecin, Patient& patient, const std::string& date);
 
-    // TODO : la signature de l'opérateur à surcharger
-    // opérateur<< pour afficher 
     friend std::ostream& operator<<(std::ostream& string, const Consultation& consultation);
 
     Medecin* getMedecin() const;

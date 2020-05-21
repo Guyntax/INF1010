@@ -11,13 +11,11 @@
 #include<sstream>
 
 
-// Contructeur par param^tres
+//! Contructeur par paramètres
 Consultation::Consultation(Medecin& medecin, Patient& patient, const std::string& date)
 	:medecin_(&medecin)
 	,patient_(&patient)
 	, date_(date){
-	// TODO : compléter Constructeur par paramètre de la classe Consulation en utilisant la liste d'initialisation
-	// Assurer d'ajouter le patient à la liste des patients assoicés au medecin s'il n'y existe pas.
 	std::vector<std::shared_ptr<Patient>> patientsAssocies = medecin_->getPatientsAssocies();
 	if (medecin.chercherPatient(patient.getNumeroAssuranceMaladie()) == nullptr) {
 		medecin += patient;
@@ -25,9 +23,10 @@ Consultation::Consultation(Medecin& medecin, Patient& patient, const std::string
 }
 
 
-// TODO : operateur<< pour afficher les informations d'une consultation.
-// Voir l'enoncé pour avoir un exemple d'affichage d'une consultation. 
-// Si l'affichage n'est pas respecté, le test de l'affichage de consultation ne passera pas.
+//Surcharge de l'operateur<< : afficher les informations d'une consultation.
+//! \param stream Le stream dans lequel afficher
+//! \param consultation Consultation dont on veut afficher les informations
+//! \return stream Le stream dans lequel les informations sont affichées
 std::ostream& operator<<(std::ostream& string, const Consultation& consultation) {
 
 	return string <<"Consultation: \n"
