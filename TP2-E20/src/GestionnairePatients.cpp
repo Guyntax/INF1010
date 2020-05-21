@@ -1,4 +1,6 @@
-﻿// TODO: Faire l'entête de fichier
+﻿//! Définition de la classe GestionnairePatients qui ermet la gestion des patients de l'hôpital
+//! \authors Didier Blach Laflèche & Maude Tremblay
+//! \date 20 Mai 2020
 
 #include "GestionnairePatients.h"
 #include <fstream>

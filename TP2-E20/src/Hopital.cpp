@@ -1,4 +1,6 @@
-// TODO: Faire l'entête de fichier
+//! Définition de la classe Hopital qui permet la gestion de l'hôpital
+//! \authors Didier Blach Laflèche & Maude Tremblay
+//! \date 20 Mai 2020
 
 #include "Hopital.h"
 
