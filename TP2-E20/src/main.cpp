@@ -82,6 +82,7 @@ int main()
 
 	// Tester l'operateur += (ajout de patient)
 	medecinTest += patientTest;
+
 	medecinStream = std::stringstream();
 	medecinStream << medecinTest << std::endl;
 	medecinString = medecinStream.str();
@@ -141,7 +142,6 @@ int main()
 	patientsStream << gestionnairePatients << std::endl;
 	std::string patientsString = patientsStream.str();
 	std::cout << patientsString << '\n';
-
 	const std::string sortieAttenduePatients =
 		"Patient:JohnLourdes|Datedenaissance:12/12/2001|Numerod'assurancemaladie:louj010304"
 		"Patient:GeorgeLucas|Datedenaissance:01/04/1944|Numerod'assurancemaladie:LUCG441212";
@@ -158,8 +158,6 @@ int main()
 	GestionnairePatients gestionnairePatientCopieTest1 = GestionnairePatients(gestionnairePatients);
 	bool test3Reussi = true;
 	for (size_t i = 0; i < gestionnairePatients.getNbPatients(); i++) {
-		std::cout << &gestionnairePatients.getPatients()[i] << "\n";
-		std::cout << &gestionnairePatientCopieTest1.getPatients()[i] << "\n";
 		if (&gestionnairePatients.getPatients()[i] == &gestionnairePatientCopieTest1.getPatients()[i]) {
 			test3Reussi = false;
 			break;

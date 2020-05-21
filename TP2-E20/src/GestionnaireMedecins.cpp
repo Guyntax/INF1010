@@ -1,6 +1,6 @@
-//! Définition de la classe GestionnaireMedecins qui permet la gestion des médecins de l'hôpital
+//! Implémentation de la classe GestionnaireMedecins qui permet la gestion des médecins de l'hôpital
 //! \authors Didier Blach Laflèche & Maude Tremblay
-//! \date 20 Mai 2020
+//! \date 21 Mai 2020
 
 #include "GestionnaireMedecins.h"
 #include <fstream>
@@ -66,7 +66,7 @@ bool GestionnaireMedecins::chargerDepuisFichier(const std::string& nomFichier)
 		for (int i = 0; i < size; i++) {
 			medecins_.pop_back();
 		}
-		// Doit être adaptée pour vecteur
+		// Adaptée pour vecteur
 		std::string ligne;
 		while (getline(fichier, ligne))
 		{
@@ -87,7 +87,7 @@ bool GestionnaireMedecins::chargerDepuisFichier(const std::string& nomFichier)
 //! Surcharge de l'opérateur += : opérateur qui ajoute un médecin à la liste des médecins
 //! \param medecin Le medecin à ajouter
 //! \return true si l'opération d'ajout est réussie, false sinon.
-bool GestionnaireMedecins::operator+= (Medecin medecin)
+bool GestionnaireMedecins::operator+= (const Medecin& medecin)
 {	
 	if ( !chercherMedecin(medecin.getNumeroLicence()) )
 	{

@@ -1,3 +1,7 @@
+//! DÈfinition de la classe Hopital qui permet la gestion de l'hÙpital
+//! \authors Didier Blach LaflËche & Maude Tremblay
+//! \date 21 Mai 2020
+
 #ifndef HOPITAL_H
 #define HOPITAL_H
 
@@ -16,36 +20,30 @@ public:
 
     bool chargerBaseDeDonnees(const std::string& nomFichierMedecins, const std::string& nomFichierPatients);
     
-    //TODO : la signature des op√©rateurs √† surcharger
-    // op√©rateur+= qui ajoute une instance de Consultation
+    // surcharge interne d'operateurs
     bool operator+=(Consultation& consultation);
-    // op√©rateur+= qui ajoute une instance de Medecin
     bool operator+=(Medecin& medecin);
-    // op√©rateur+= qui ajoute une instance de Patient
     bool operator+=(Patient& patient);
 
-
+    // getters
     const std::string& getNom() const;
     const std::string& getAdresse() const;
     GestionnaireMedecins& getGesionnaireMedecins();
     GestionnairePatients& getGestionnairePatients();
+    const std::vector<Consultation>& getConsultations()const;
 
-    // TODO : la signature de getConsultations()
-    const std::vector<Consultation>& getConsultations();
-
-
-
+    // setters
     void setNom(const std::string& nom);
     void setAdresse(const std::string& adresse);
 
 private:
+    // attributs
     std::string nom_;
     std::string adresse_;
 
     GestionnaireMedecins gestionnaireMedecins_;
     GestionnairePatients gestionnairePatients_;
 
-    //TODO : vecteur de shared_ptr de Consultation consultations_
     std::vector<Consultation> consultation_;
 };
 

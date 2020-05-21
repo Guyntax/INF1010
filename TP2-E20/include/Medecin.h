@@ -1,3 +1,7 @@
+//! Définition de la classe Medecin qui représente un médecin qui travaille à l'hôpital
+//! \authors Didier Blach Laflèche & Maude Tremblay
+//! \date 21 Mai 2020
+
 #ifndef MEDECIN_H
 #define MEDECIN_H
 
@@ -26,14 +30,18 @@ public:
     Medecin() = default;
     Medecin(const std::string& nom, const std::string& numeroLicence, Specialite specialite);
 
-    friend std::ostream& operator<< (std::ostream& stream, const Medecin& medecin);
+    // surcharge interne d'operateurs
     bool operator+= (const Patient& patient);
     bool operator-= (const std::string& numeroAssuranceMaladie);
     bool operator== (const std::string& numeroLicence);
+    // surcharge externe d'operateurs
+    friend std::ostream& operator<< (std::ostream& stream, const Medecin& medecin);
     friend bool operator==(const std::string& numeroLicence, Medecin medecin);
+
+
     Patient* chercherPatient(const std::string& numeroAssuranceMaladie);
 
-
+    // getters
     const std::string& getNom() const;
     const std::string& getNumeroLicence() const;
     bool getEstActif() const;
@@ -42,6 +50,7 @@ public:
     const size_t getNombrePatientsAssocies() const;
     std::vector<std::shared_ptr<Patient>> getPatientsAssocies();
 
+    //setters
     void setNom(const std::string& nom);
     void setNumeroLicence(const std::string& numeroLicence);
     void setEstActif(bool estActif);

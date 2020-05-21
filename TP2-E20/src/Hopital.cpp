@@ -1,6 +1,6 @@
-//! Définition de la classe Hopital qui permet la gestion de l'hôpital
+//! Implémentation de la classe Hopital qui permet la gestion de l'hôpital
 //! \authors Didier Blach Laflèche & Maude Tremblay
-//! \date 20 Mai 2020
+//! \date 21 Mai 2020
 
 #include "Hopital.h"
 
@@ -11,7 +11,6 @@ Hopital::Hopital(const std::string& nom, const std::string& adresse):nom_(nom), 
 {
 }
 
-// TODO : chargerBaseDeDonnees(const std::string& nomFichierMedecins, const std::string& nomFichierPatients)
 // Permet de charger les médecins et les patients depuis les fichiers passés en paramètres.
 // Retourne true si les fichiers sont bien chargés , false si non.
 bool Hopital::chargerBaseDeDonnees(const std::string& nomFichierMedecins, const std::string& nomFichierPatients) {
@@ -25,13 +24,11 @@ bool Hopital::chargerBaseDeDonnees(const std::string& nomFichierMedecins, const 
 	return false;
 }
 
-
-// TODO : Operateur += qui permet d'ajouter une consultation à la liste consutltations_ 
+ 
 // Il prend en parametre une reference vers la consultation a ajouter
 // Il ajoute la consultation et retourne true si le medecin est actif, existe dans le gestionnaire de medecins 
 // et le patient existe dans le gestionnaire de patients.
 // Si non il retourne false.
-
 bool Hopital::operator+=(Consultation& consultation){
 	if (consultation.getMedecin()->getEstActif() &&
 		gestionnaireMedecins_.chercherMedecin((consultation.getMedecin())->getNumeroLicence()) &&
@@ -44,22 +41,17 @@ bool Hopital::operator+=(Consultation& consultation){
 };
 
 
-
-
-
-// TODO : operater += qui ajoute un médecin au gestionnaire de médecins.
 // Il prend en parametre une reference vers le medecin a ajouter
 // Une seule ligne de code
 bool Hopital::operator+=(Medecin& medecin) {
 	return gestionnaireMedecins_ += medecin;
 };
-// TODO : operater += qui ajouté un pateint au gestionnaire de patient.
+
 // Il prend en parametre une reference vers le patient à ajouter
 // Une seule ligne de code
 bool Hopital::operator+=(Patient& patient) {
 	return gestionnairePatients_ += patient;
 };
-
 
 //! Méthode qui retourne le nom de l'hopital
 //! \return le nom de l'hopital 
@@ -89,8 +81,9 @@ GestionnairePatients& Hopital::getGestionnairePatients()
 	return gestionnairePatients_;
 }
 
-// TODO : getConsultations() retourne une reference constante vers le vecteur consultation.
-const std::vector<Consultation>& Hopital::getConsultations() {
+// Retourne une reference constante vers le vecteur consultation.
+const std::vector<Consultation>& Hopital::getConsultations() const
+{
 	return consultation_;
 }
 

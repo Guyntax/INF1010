@@ -1,6 +1,6 @@
-﻿//! Définition de la classe GestionnairePatients qui ermet la gestion des patients de l'hôpital
+﻿//! Impléèmentation de la classe GestionnairePatients qui permet la gestion des patients de l'hôpital
 //! \authors Didier Blach Laflèche & Maude Tremblay
-//! \date 20 Mai 2020
+//! \date 21 Mai 2020
 
 #include "GestionnairePatients.h"
 #include <fstream>
@@ -29,19 +29,6 @@ GestionnairePatients& GestionnairePatients::operator=(const GestionnairePatients
 }
 
 
-//! Surcharge de l'opérateur += : opérateur qui ajoute un patient à la liste des patients
-//! \param patient Le patient à ajouter
-//! \return       Un bool qui indique si l'opération a bien fonctionnée
-bool GestionnairePatients::operator+=(const Patient& patient)
-{
-	
-	if ( !chercherPatient(patient.getNumeroAssuranceMaladie()) && (patients_.size() < NB_PATIENT_MAX)) {
-		patients_.push_back(std::make_shared<Patient>(patient));
-		return true;
-	}
-	return false;
-}
-
 
 //! Méhode qui cherche un patient par son nom
 //! \param nomPatient Le nom du patient à chercher
@@ -55,7 +42,6 @@ Patient* GestionnairePatients::chercherPatient(const std::string& numeroAssuranc
 			return &(*patient);  // this is weird
 		}
 	}
-
 	return nullptr;
 }
 
@@ -69,7 +55,6 @@ bool GestionnairePatients::chargerDepuisFichier(const std::string& nomFichier)
 	{	
 		int size = patients_.size(); // necesaire, car patients_.size() change dans la boucle
 		for (int i =0; i < size; i++){
-			std::cout << i << "\n";
 			patients_.pop_back();
 		}
 		std::string ligne;
@@ -88,6 +73,33 @@ bool GestionnairePatients::chargerDepuisFichier(const std::string& nomFichier)
 	return false;
 }
 
+
+//! Surcharge de l'opérateur += : opérateur qui ajoute un patient à la liste des patients
+//! \param patient Le patient à ajouter
+//! \return       Un bool qui indique si l'opération a bien fonctionnée
+bool GestionnairePatients::operator+=(const Patient& patient)
+{
+
+	if (!chercherPatient(patient.getNumeroAssuranceMaladie()) && (patients_.size() < NB_PATIENT_MAX)) {
+		patients_.push_back(std::make_shared<Patient>(patient));
+		return true;
+	}
+	return false;
+}
+
+//! Surcharge de l'opérateur<< : opérateur qui affiche la liste des patients
+//! \param stream Le stream dans lequel afficher
+//! \return le stream qui contient les informations
+std::ostream& operator<<(std::ostream& stream, const GestionnairePatients& gestionnairePatients)
+{
+	for (int i = 0; i < gestionnairePatients.patients_.size(); i++)
+	{
+		stream << *(gestionnairePatients.patients_[i]);
+		stream << '\n';
+	}
+	return stream;
+}
+
 //! Méthode qui retourne une reference constante vers le vecteur patients_
 //! \return une reference constante vers le vecteur patients_
 std::vector<std::shared_ptr<Patient>>  GestionnairePatients::getPatients() const {
@@ -101,23 +113,6 @@ int GestionnairePatients::getNbPatients()const {
 };
 
 
-//Friend
-
-//! Surcharge de l'opérateur<< : opérateur qui affiche la liste des patients
-//! \param stream Le stream dans lequel afficher
-//! \return le stream qui contient les informations
-std::ostream& operator<<(std::ostream& stream, const GestionnairePatients& gestionnairePatients)
-{
-	for (int i = 0; i < gestionnairePatients.patients_.size(); i++)
-	{	
-		stream << *(gestionnairePatients.patients_[i]);
-		stream << '\n';
-	}
-	return stream;
-}
-
-
-//Private
 
 //! Méthode qui lit les attributs d'un patient
 //! \param ligne  Le string qui contient les attributs
@@ -129,13 +124,10 @@ bool GestionnairePatients::lireLignePatient(const std::string& ligne)
 	std::string numeroAssuranceMaladie;
 	std::string anneeDeNaissance;
 
-
 	// Pour extraire ce qui se trouve entre "" dans un stream,
 	// il faut faire stream >> quoted(variable)
-
 	if (stream >> std::quoted(nomPatient) >> std::quoted(anneeDeNaissance) >> std::quoted(numeroAssuranceMaladie))
 	{
-
 		Patient patient(nomPatient, anneeDeNaissance, numeroAssuranceMaladie );
 
 		*this += patient;

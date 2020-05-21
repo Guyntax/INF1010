@@ -1,6 +1,6 @@
-//! Définition de la classe Consultation qui permet la gestion des consultations de l'hôpital
+//! Implémentation de la classe Consultation qui permet la gestion des consultations de l'hôpital
 //! \authors Didier Blach Laflèche & Maude Tremblay
-//! \date 20 Mai 2020
+//! \date 21 Mai 2020
 
 #include "Consultation.h"
 #include "Medecin.h"

@@ -1,6 +1,6 @@
-//! Définition de la classe Medecin qui représente un médecin qui travaille à l'hôpital
+//! Implémentation de la classe Medecin qui représente un médecin qui travaille à l'hôpital
 //! \authors Didier Blach Laflèche & Maude Tremblay
-//! \date 20 Mai 2020
+//! \date 21 Mai 2020
 
 #include <iostream>
 #include "Medecin.h"
@@ -20,42 +20,7 @@ Medecin::Medecin(const std::string& nom, const std::string& numeroLicence, Speci
 {
 }
 
-//! Surcharge de l'opérateur << : Affiche les informations du médecin
-//! \param stream Le stream dans lequel on affiche les infos
-//! \param medecin le médecin dont on veut afficher les informations
-//| \return le stream qui affiche les infos
-std::ostream& operator<< (std::ostream& stream, const Medecin& medecin)
-{
-	static const std::string SPECIALITES[] = { "Generaliste",
-												"Cardiologue",
-												"Dermatologue",
-												"Gynecologue",
-												"Pediatre",
-												"Ophtalmologue",
-												"Autre" };
-	auto index = enum_value(medecin.specialite_);
-	assert(valid_as_enum<Medecin::Specialite>(index));
-	std::string specialite = SPECIALITES[index];
 
-	std::string statut = medecin.estActif_ ? "Actif" : "Inactif";
-
-	stream << "\nMedecin: " << medecin.nom_
-		<< "\n\tNumero de licence: " << medecin.numeroLicence_
-		<< "\n\tSpecialite: " << specialite
-		<< "\n\tStatut: " << statut
-		<< (medecin.patientsAssocies_.size()== 0 ? "\n\tAucun patient n'est suivi par ce medecin." : "\n\tPatients associes:");
-
-	if (medecin.patientsAssocies_.size() > 0)
-	{
-		for (std::size_t i = 0; i < medecin.patientsAssocies_.size(); i++)
-		{
-			stream << "\n\t\t" << *(medecin.patientsAssocies_[i]);
-		}
-	}
-	stream << '\n';
-
-	return stream;
-}
 
 
 //! Surcharge de l'opérateur += : opérateur pour ajouter un patient
@@ -63,19 +28,13 @@ std::ostream& operator<< (std::ostream& stream, const Medecin& medecin)
 //! \return true si l'ajout a réussi, sinon false
 bool Medecin::operator+= (const Patient& patient)
 {
-	int nbPatientInit = patientsAssocies_.size();
-
-	patientsAssocies_.push_back(std::make_shared<Patient>(patient));
-
-
-	if((nbPatientInit+1)==patientsAssocies_.size())
+	if( !chercherPatient(patient.getNumeroAssuranceMaladie()) )
 	{ 
+		patientsAssocies_.push_back(std::make_shared<Patient>(patient));
 		return true;
 	}
-	else
-	{
-		return false;
-	}
+	return false;
+
 }
 
 //! Surcharge de l'opérateur -= : opérateur pour supprimer un patient
@@ -110,6 +69,44 @@ bool Medecin::operator== (const std::string& numeroLicence)
 {
 	return numeroLicence == numeroLicence_;
 }
+//! Surcharge de l'opérateur << : Affiche les informations du médecin
+//! \param stream Le stream dans lequel on affiche les infos
+//! \param medecin le médecin dont on veut afficher les informations
+//| \return le stream qui affiche les infos
+std::ostream& operator<< (std::ostream& stream, const Medecin& medecin)
+{	
+	// Obtention de la spectialite à partir de son index.
+	static const std::string SPECIALITES[] = { "Generaliste",
+												"Cardiologue",
+												"Dermatologue",
+												"Gynecologue",
+												"Pediatre",
+												"Ophtalmologue",
+												"Autre" };
+	auto index = enum_value(medecin.specialite_);
+	assert(valid_as_enum<Medecin::Specialite>(index));
+	std::string specialite = SPECIALITES[index];
+	std::string statut = medecin.estActif_ ? "Actif" : "Inactif";
+
+	// On affiche les attributs du medcein en queston.
+	stream << "\nMedecin: " << medecin.nom_
+		<< "\n\tNumero de licence: " << medecin.numeroLicence_
+		<< "\n\tSpecialite: " << specialite
+		<< "\n\tStatut: " << statut
+		<< (medecin.patientsAssocies_.size() == 0 ? "\n\tAucun patient n'est suivi par ce medecin." : "\n\tPatients associes:");
+
+	// Pour tout les patients, on afficher leurs attributs.
+	if (medecin.patientsAssocies_.size() > 0)
+	{
+		for (std::size_t i = 0; i < medecin.patientsAssocies_.size(); i++)
+		{
+			stream << "\n\t\t" << *(medecin.patientsAssocies_[i]);
+		}
+	}
+	stream << '\n';
+
+	return stream;
+}
 
 //! Surcharge externe de l'opérateur == :compare un string avec le numéro de la licence du médecin 
 //! \param numeroLicence numéro de licence à comparer
@@ -130,11 +127,9 @@ Patient* Medecin::chercherPatient(const std::string& numeroAssuranceMaladie)
 	{
 		if (patientsAssocies_[i]->getNumeroAssuranceMaladie() == numeroAssuranceMaladie)
 		{
-
 			return patientsAssocies_[i].get();
 		}
 	}
-
 	return nullptr;
 }
 

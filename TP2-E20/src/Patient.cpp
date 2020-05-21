@@ -1,6 +1,6 @@
-//! Définition de la classe Medecin qui représente un patient de l'hôpital
+//! Implémentation de la classe Medecin qui représente un patient de l'hôpital
 //! \authors Didier Blach Laflèche & Maude Tremblay
-//! \date 20 Mai 2020
+//! \date 21 Mai 2020
 
 #include "Patient.h"
 #include <iostream>
@@ -28,6 +28,25 @@ bool Patient::operator==(const std::string& string) const {
 	return false;
 }
 
+//! Surcharge de l'opérateur<< : affiche les informations d'un patient
+//! \param stream Le stream dans lequel afficher
+//! \param patient Patient dont on veut afficher les informations
+//! \return stream Stream contenant les informations du patient
+std::ostream& operator<<(std::ostream& stream, const Patient& patient) {
+	return stream << "Patient: " << patient.nom_ << " | Date de naissance: " << patient.dateDeNaissance_
+		<< " | Numero d\'assurance maladie: " << patient.numeroAssuranceMaladie_;
+}
+
+//! Surcharge externe de l'opérateur == :compare un string avec le numéro d'assurance maladie d'un patient 
+//! \param string numéro D'assurance maladie à comparer
+//! \param patient Patient avec lequel comparer le numéro d'assurance maladie
+//! \return true si le numéro d'assurance maladie correspond à celui du patient, sinon false
+bool operator==(const std::string& string, const Patient& patient) {
+	if (patient.numeroAssuranceMaladie_ == string) {
+		return true;
+	};
+	return false;
+}
 
 //! Méthode qui retourne le nom du patient
 //! \return le nom du patient 
@@ -75,22 +94,3 @@ void Patient::setDateDeNaissance(const std::string& dateDeNaissance)
 }
 
 
-//! Surcharge de l'opérateur<< : affiche les informations d'un patient
-//! \param stream Le stream dans lequel afficher
-//! \param patient Patient dont on veut afficher les informations
-//! \return stream Stream contenant les informations du patient
-std::ostream& operator<<(std::ostream& stream, const Patient& patient){
-	 return stream << "Patient: " << patient.nom_ << " | Date de naissance: " << patient.dateDeNaissance_
-		<< " | Numero d\'assurance maladie: " << patient.numeroAssuranceMaladie_;
-}
-
-//! Surcharge externe de l'opérateur == :compare un string avec le numéro d'assurance maladie d'un patient 
-//! \param string numéro D'assurance maladie à comparer
-//! \param patient Patient avec lequel comparer le numéro d'assurance maladie
-//! \return true si le numéro d'assurance maladie correspond à celui du patient, sinon false
-bool operator==(const std::string& string, const Patient& patient) {
-	if (patient.numeroAssuranceMaladie_ == string) {
-		return true;
-	};
-	return false;
-}
