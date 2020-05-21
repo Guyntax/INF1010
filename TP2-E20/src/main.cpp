@@ -15,8 +15,8 @@
 #include "Medecin.h"
 #include "GestionnaireMedecins.h"
 #include "typesafe_enum.h"
-//#include "Consultation.h"
-//#include "Hopital.h"
+#include "Consultation.h"
+#include "Hopital.h"
 
 // NOTE: Pour que le programme compile, vous pouvez changer tous les #if true à des #if false,
 // et mettre en commentaire tout le code qui a été écrit pour vous. Ainsi, vous pourrez
@@ -317,7 +317,7 @@ int main()
 #endif
 
 // Test 5 : tester la classe Consultation
-#if false
+#if true
 	Consultation consultation = Consultation(medecinTest, patientTest, "05/05/2020");
 	
 	// Tester le constructeur de Consultation
@@ -345,7 +345,7 @@ int main()
 #endif
 
 // Test 6 : tester la classe Hopital
-#if false
+#if true
 	Hopital hopital = Hopital("CHUM", "1051 Rue Sanguinet, Montréal, QC H2X 3E4");
 
 	// Tester le chargement de la base de données

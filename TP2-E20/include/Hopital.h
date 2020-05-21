@@ -18,8 +18,11 @@ public:
     
     //TODO : la signature des opérateurs à surcharger
     // opérateur+= qui ajoute une instance de Consultation
+    bool operator+=(Consultation& consultation);
     // opérateur+= qui ajoute une instance de Medecin
+    bool operator+=(Medecin& medecin);
     // opérateur+= qui ajoute une instance de Patient
+    bool operator+=(Patient& patient);
 
 
     const std::string& getNom() const;

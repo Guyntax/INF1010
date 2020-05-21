@@ -30,14 +30,34 @@ bool Hopital::chargerBaseDeDonnees(const std::string& nomFichierMedecins, const 
 // et le patient existe dans le gestionnaire de patients.
 // Si non il retourne false.
 
+bool Hopital::operator+=(Consultation& consultation){
+	if (consultation.getMedecin()->getEstActif() &&
+		gestionnaireMedecins_.chercherMedecin((consultation.getMedecin())->getNumeroLicence()) &&
+		gestionnairePatients_.chercherPatient((consultation.getPatient())->getNumeroAssuranceMaladie()) ) { 
+
+		consultation_.push_back(consultation);
+		return true;
+	}
+	return false;
+};
+
+
+
+
 
 // TODO : operater += qui ajoute un médecin au gestionnaire de médecins.
 // Il prend en parametre une reference vers le medecin a ajouter
 // Une seule ligne de code
-
+bool Hopital::operator+=(Medecin& medecin) {
+	return gestionnaireMedecins_ += medecin;
+};
 // TODO : operater += qui ajouté un pateint au gestionnaire de patient.
 // Il prend en parametre une reference vers le patient à ajouter
 // Une seule ligne de code
+bool Hopital::operator+=(Patient& patient) {
+	return gestionnairePatients_ += patient;
+};
+
 
 //! Méthode qui retourne le nom de l'hopital
 //! \return le nom de l'hopital 
