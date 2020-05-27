@@ -95,9 +95,13 @@ std::ostream& operator<<(std::ostream& os, const GestionnairePatients& gestionna
 
 std::vector<std::shared_ptr<PatientEtudiant>> GestionnairePatients::getPatientsEtudiants() const{
 	std::vector<std::shared_ptr<PatientEtudiant>> vecteur;
+
 	for (const auto& patient : patients_){
-		if (typeid(patient).name() == "PatientEtudiant"){
-			vecteur.push_back*(patient); // why ???
+		if (dynamic_cast<PatientEtudiant*>(patient.get())){
+
+			//std::shared_ptr ptr = std::make_shared<Patient>(patient);
+
+			vecteur.push_back(std::make_shared<PatientEtudiant>(*dynamic_cast<PatientEtudiant*>(patient.get()))); // a expliquer !!
 		}
 	}
 	return vecteur;
