@@ -13,7 +13,7 @@ Hopital::Hopital(const std::string& nom, const std::string& adresse) :nom_(nom),
 //! \param adresse  nomFichierPatients le nom du fichier qui contient les informations des patients
 bool Hopital::chargerBaseDeDonnees(const std::string& nomFichierMedecins, const std::string& nomFichierPatients)
 {
-	return gestionnaireMedecins_.chargerDepuisFichier(nomFichierMedecins)
+	return gestionnairePersonnels_.chargerDepuisFichier(nomFichierMedecins)
 		&& gestionnairePatients_.chargerDepuisFichier(nomFichierPatients);
 }
 
@@ -37,7 +37,7 @@ bool Hopital::operator+=(const Consultation& consultation)
 //! \return       Un bool qui indique si l'opération a bien fonctionnée
 bool Hopital::operator+=(const Medecin& medecin)
 {
-	return gestionnaireMedecins_ += medecin;
+	return gestionnairePersonnels_ += medecin;
 }
 
 //! Operateur qui ajoute un patient à un hopital
@@ -64,9 +64,9 @@ const std::string& Hopital::getAdresse() const
 
 //! Méthode qui retourne le gestionnaire des medecins
 //! \return gestionnaire des medecins
-GestionnaireMedecins& Hopital::getGesionnaireMedecins()
+GestionnairePersonnels& Hopital::getGestionnairePersonnels()
 {
-	return gestionnaireMedecins_;
+	return gestionnairePersonnels_;
 }
 
 //! Méthode qui retourne le gestionnaire des patients

@@ -16,11 +16,11 @@ public:
 	friend bool operator==(const std::string& id, const Personnel& personnel);
 	bool operator==(const std::string& id) const;
 
-	// TODO : méthode virtuelle
-	void afficher(std::ostream& stream) const;
+	// DONE: méthode virtuelle
+	virtual void afficher(std::ostream& stream) const;
 
-	//TODO : méthode virtuelle pure à ne pas implémenter dans cette classe
-	double getSalaireAnnuel() const;
+	//DONE : méthode virtuelle pure à ne pas implémenter dans cette classe
+	virtual double getSalaireAnnuel() const = 0;
 
 	const std::string& getNom() const;
 	const std::string& getId() const;
@@ -30,8 +30,8 @@ public:
 	void setId(const std::string& id);
 	void setEstActif(bool estActif);
 
-//TODO : Les attributs de cette classe doivent être accessible par les classes des dérivées
-private:
+//DONE : Les attributs de cette classe doivent être accessible par les classes des dérivées
+protected:
 	// Attributs
 	std::string nom_;
 	std::string id_;

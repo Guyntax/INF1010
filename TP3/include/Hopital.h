@@ -22,7 +22,7 @@ public:
 
     const std::string& getNom() const;
     const std::string& getAdresse() const;
-    GestionnairePersonnels& getGesionnairePersonnels();
+    GestionnairePersonnels& getGestionnairePersonnels();
     GestionnairePatients& getGestionnairePatients();
     const std::vector<std::shared_ptr<Consultation>>& getConsultations() const;
 
