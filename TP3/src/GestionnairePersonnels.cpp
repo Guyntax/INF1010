@@ -56,11 +56,11 @@ bool GestionnairePersonnels::operator+=(Personnel* personnel)
 	if (personnel && !chercherPersonnel(personnel->getId()))
 	{
 		//TODO : vérifier si personnel est un MedecinResidant. Conversion dynamique
-		if (....) {
+		if (dynamic_cast<MedecinResident*>(personnel)) {
 			//TODO : Ajouter un objet de type MedecinResident au personnels_. Conversion dynamique
 		}
 		//TODO : vérifier si personnel est un Medecin. Conversion dynamique
-		else if (...) {
+		else if (dynamic_cast<Medecin*>(personnel)) {
 			//TODO : Ajouter un objet de type Medecin au personnels_. Conversion dynamique
 		}
 		else {
@@ -151,7 +151,8 @@ bool GestionnairePersonnels::lireLignePersonnel(const std::string& ligne)
 	if (stream >> indexTypePersonnel >> std::quoted(nomPersonnel) >> std::quoted(id))
 	{
 		//TODO : 
-		//1- Utiliser to_enum pour convertir indexTypePersonnel à l'enum TypePersonnel : to_enum<GestionnairePersonnels::TypePersonnel, int>(variable)
+		//1- Utiliser to_enum pour convertir indexTypePersonnel à l'enum TypePersonnel : 
+		to_enum<GestionnairePersonnels::TypePersonnel, int>(indexTypePersonnel);
 		//2- Si le personnel est de type Medecin. 
 		//	  - Lire indexPecialite
 		//	  - Ajouter un objet de type Medecin en utilisant l'opérateur +=
@@ -159,7 +160,9 @@ bool GestionnairePersonnels::lireLignePersonnel(const std::string& ligne)
 		//    - Lire sa date de naissance, son matricule, son établissement et  indexSpecialite
 		//    - Ajouter un objet de type MedecinResidant en utilisant l'opérateur +=
 		// 
-		switch () {
+		switch (indexTypePersonnel) {
+		
+
 
 		default:
 			assert(false); // ne devrait pas passer avec le fichier fourni
