@@ -29,15 +29,15 @@ bool operator==(const std::string& id, const Personnel& personnel)
 	return (id == personnel.id_);
 }
 
-//TODO : méthode afficher
+//DONE : méthode afficher
 void Personnel::afficher(std::ostream& os) const
 {
-	std::string typePersonnel = //TODO: Chercher le nom de la classe.Elle peut être Medecin ou MedecinResident.
+	std::string typePersonnel = typeid(*this).name(); //TODO: Chercher le nom de la classe.Elle peut être Medecin ou MedecinResident.
 		                        //Utiliser typeid().name() ;
-	os << "Personnel: " << // Afficher nom_
-		<< "\n\tType: " << // Extraire le nom de la classe du string typePersonnel
-		<< "\n\tIdentifiant: " << //Afficher id_
-		<< "\n\tStatut: " << // afficher 'Actif' si estActif est true et 'Inactif' si false;
+	os << "Personnel: " << nom_
+		<< "\n\tType: " << typePersonnel
+		<< "\n\tIdentifiant: " << id_
+		<< "\n\tStatut: " << (estActif_ ? "Actif" : "Inactif");// afficher 'Actif' si estActif est true et 'Inactif' si false;
 }
 
 //! Méthode qui retourne le nom du personnel
