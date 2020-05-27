@@ -1,6 +1,7 @@
 //! Fonction main qui test le programme
 //! \authors Ahmed Hammami & Youssef Ben Taleb
 //! \date 07 Mai 2020
+// je suis george!
 
 #include <algorithm>
 #include <cctype>
