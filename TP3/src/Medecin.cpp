@@ -5,10 +5,8 @@
 
 constexpr int PATIENT_INEXSISTANT = -1;
 
-//DONE : Constructeur par paramètre pour intialiser les attributs de la classe. 
+//TODO : Constructeur par paramètre pour intialiser les attributs de la classe. 
 // Il utilise le constructeur de la classe Personnel
-Medecin::Medecin(const std::string& nom, const std::string& numeroLicence, Specialite specialite):Personnel(nom, numeroLicence),specialite_(specialite),nbConsultations_(0)
-{}
 
 
 //! Operateur qui ajoute un patient à la liste des patients
@@ -55,8 +53,7 @@ void Medecin::afficher(std::ostream& stream) const
 	assert(valid_as_enum<Medecin::Specialite>(index));
 	std::string specialite = SPECIALITES[index];
 
-	//DONE : Afficher les informations du médecin liées à la classe Personnel
-	Personnel::afficher(stream);
+	//TODO : Afficher les informations du médecin liées à la classe Personnel
 
 	stream << "\n\tSpecialite: " << specialite
 		<< (patientsAssocies_.empty() ? "\n\tAucun patient n'est suivi par ce medecin." : "\n\tPatients associes:");
@@ -64,8 +61,7 @@ void Medecin::afficher(std::ostream& stream) const
 	for (const auto& patient : patientsAssocies_)
 	{
 		stream << "\n\t\t";
-		//DONE: Afficher les informations du Patient
-		patient->afficher(stream);
+		//TODO : Afficher les informations du Patient
 	}
 }
 
@@ -85,29 +81,13 @@ Patient* Medecin::chercherPatient(const std::string& numeroAssuranceMaladie)
 	return nullptr;
 }
 
-//DONE : Méthode incrementNombreConsultations 
+//TODO : Méthode incrementNombreConsultations 
 // Incrementer le nombre de consultaions
 
-void Medecin::incrementNombreConsultations() 
-{
-	nbConsultations_++;
-}
-
-
-
-
-
-//DONE : Méthode getSalaireAnnuel
+//TODO : Méthode getSalaireAnnuel
 // le salaire annuel = salaire de base du médecin + nombre de consultations * le prix de consultation
-double Medecin::getSalaireAnnuel() const 
-{
-	double salaireAnnuel;
-	salaireAnnuel = SALAIRE_DE_BASE_MEDECIN + nbConsultations_ * getPrixConsultation();
-	return salaireAnnuel;
 
-}
-
-//DONE : Méthode getPrixConsultation
+//TODO : Méthode getPrixConsultation
 //Utiliser Switch
 //Cette méthode retourne le prix de la consultation qui dépend de la spécialité du médecin.
 //prix = 100 pour Gynecologue et Ophtalmologue
@@ -116,30 +96,7 @@ double Medecin::getSalaireAnnuel() const
 //prix = 60 pour Generaliste ou Autre
 //default : throw "La spécialite du médecin n'est pas définie"
 
-double Medecin::getPrixConsultation() const 
-{
-	switch (specialite_) {
-	case Specialite::Pediatre:
-		return 80;
-	case Specialite::Gynecologue:
-		return 100;
-	case Specialite::Ophtalmologue:
-		return 100;
-	case Specialite::Cardiologue:
-		return 120;
-	case Specialite::Dermatologue:
-		return 120;
-	case Specialite::Generaliste:
-		return 60;
-	case Specialite::Autre:
-		return 60;
-	default:
-		throw "La spécialite du médecin n'est pas définie";
-	}
-
-}
-// Méthodes hérités
-/*//! Méthode qui retourne le nom du medecin
+//! Méthode qui retourne le nom du medecin
 //! \return le nom du medecin 
 const std::string& Medecin::getNom() const
 {
@@ -153,7 +110,7 @@ const std::string& Medecin::getNom() const
 const std::string& Medecin::getNumeroLicence() const
 {
 
-	return id_;
+	return numeroLicence_;
 }
 
 //! Méthode qui retourne le status du medecin
@@ -163,7 +120,6 @@ bool Medecin::getEstActif() const
 
 	return estActif_;
 }
-*/
 
 //! Méthode qui retourne la specialite du medecin
 //! \return la specialite des medecins
@@ -189,8 +145,6 @@ const std::vector<Patient*>& Medecin::getPatientsAssocies() const
 	return patientsAssocies_;
 }
 
-// Méthodes héritées
-/*
 //! Méthode qui met a jours le nom  du medecin
 //! \pararm  nom  Le nom du médecin
 void Medecin::setNom(const std::string& nom)
@@ -212,7 +166,6 @@ void Medecin::setEstActif(bool estActif)
 
 	estActif_ = estActif;
 }
-*/
 
 //! Méthode qui met a jours la specialité du medecin
 //! \pararm  specialite  specialité du medecin

@@ -5,7 +5,7 @@
 #include <vector>
 
 #include "Consultation.h"
-#include "GestionnairePersonnels.h"
+#include "GestionnaireMedecins.h"
 #include "GestionnairePatients.h"
 
 class Hopital
@@ -22,7 +22,7 @@ public:
 
     const std::string& getNom() const;
     const std::string& getAdresse() const;
-    GestionnairePersonnels& getGestionnairePersonnels();
+    GestionnaireMedecins& getGesionnaireMedecins();
     GestionnairePatients& getGestionnairePatients();
     const std::vector<std::shared_ptr<Consultation>>& getConsultations() const;
 
@@ -34,7 +34,7 @@ private:
     std::string adresse_;
 
     //TODO : À remplacer par gestionnaire personnels
-    GestionnairePersonnels gestionnairePersonnels_;
+    GestionnaireMedecins gestionnaireMedecins_;
     GestionnairePatients gestionnairePatients_;
     std::vector<std::shared_ptr<Consultation>> consultations_;
 };

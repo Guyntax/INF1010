@@ -8,7 +8,7 @@ Etudiant::Etudiant(const std::string& nom, const std::string& dateDeNaissance, c
     etablissement_(etablissement),
     nom_(nom),
     matricule_(matricule),
-    dateDeNaissance_(dateDeNaissance)
+    dateDeNaissance_(dateDeNaissance),
 {}
 
 //! Méthode qui affiche les informations de l'étudiant

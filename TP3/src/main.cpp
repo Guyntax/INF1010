@@ -14,15 +14,15 @@
 #include "Patient.h"
 #include "PatientEtudiant.h"
 #include "debogageMemoire.h"
-#include "GestionnairePatients.h"
-#include "Medecin.h"
-#include "MedecinResident.h"
-#include "GestionnairePersonnels.h"
+//#include "GestionnairePatients.h"
+//#include "Medecin.h"
+//#include "MedecinResident.h"
+//#include "GestionnairePersonnels.h"
 #include "typesafe_enum.h"
-#include "Consultation.h"
-#include "ConsultationEnligne.h"
-#include "ConsultationPhysique.h"
-#include "Hopital.h"
+//#include "Consultation.h"
+//#include "ConsultationEnligne.h"
+//#include "ConsultationPhysique.h"
+//#include "Hopital.h"
 
 // NOTE: Pour que le programme compile, vous pouvez changer tous les #if true à des #if false,
 // et mettre en commentaire tout le code qui a été écrit pour vous. Ainsi, vous pourrez
@@ -42,7 +42,7 @@ int main()
 	std::vector<bool> tests;
 
 	// Test 1 : tester la classe PatientEtudiant , Patient et implicaitement Etudiant
-#if false
+#if true
 
 	// Tester l'affichage du patient
 	std::stringstream patientStream;
@@ -92,7 +92,7 @@ int main()
 	tests.push_back(false);
 	tests.push_back(false);
 #endif
-
+/*
 	// Test 2 : tester la classe Medecin, MedecinResident et implicitement Personnel
 #if false
 
@@ -346,5 +346,5 @@ int main()
 	stream << totalPoints << "/"
 		<< std::accumulate(ponderationTests.begin(), ponderationTests.end(), 0.0f);
 	std::cout << std::left << std::setw(16) << "TOTAL: " << stream.str() << '\n';
-	
+	*/
 }
