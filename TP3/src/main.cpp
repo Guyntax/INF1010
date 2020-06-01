@@ -178,7 +178,7 @@ int main()
 #endif
 
 	// Test 3 : tester la classe GestionnairePatients
-#if false
+#if true
 
 	// Tester le chargement de fichier
 	bool resultatLecturePatients = gestionnairePatients.chargerDepuisFichier("patients.txt") &&
@@ -204,30 +204,9 @@ int main()
 		&& gestionnairePatients.getNbPatients() == 3);
 
 	// Tester getPatientsEtudiants() et getNbPatientsEtudiants()
-
-
-	bool test1 = gestionnairePatients.getNbPatientsEtudiants() == 1;
-
-	std::cout << "lol \n";
-	const std::vector<std::shared_ptr<PatientEtudiant>> pat = gestionnairePatients.getPatientsEtudiants();
-	std::cout << pat.size() << "\n";
-	int lol = 2;
-	PatientEtudiant patEt = *pat[0] ;
-	int lo2 = 2;
-
-	const std::string num = patEt.getNumeroAssuranceMaladie();
-	Patient* ptr1 = gestionnairePatients.chercherPatient(num);
-
-
-	Patient* ptr2 = gestionnairePatients.getPatients()[2].get();
-
-
-
-	bool test2 = gestionnairePatients.chercherPatient(gestionnairePatients.getPatientsEtudiants()[0]->getNumeroAssuranceMaladie()) == gestionnairePatients.getPatients()[2].get();
-
-	tests.push_back(test1
-		&& test2);
-
+	tests.push_back(gestionnairePatients.getNbPatientsEtudiants() == 1
+		&& gestionnairePatients.chercherPatient(gestionnairePatients.getPatientsEtudiants()[0]->getNumeroAssuranceMaladie()) == gestionnairePatients.getPatients()[2].get());
+	
 #else
 	tests.push_back(false);
 	tests.push_back(false);

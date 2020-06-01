@@ -30,7 +30,7 @@ public:
 
     const std::vector<std::shared_ptr<Patient>>& getPatients() const;
     //Done : Méthode constante getPatientsEtudiants qui retourne un vecteur de PatientEtudiant*
-    const std::vector<std::shared_ptr<PatientEtudiant>>& getPatientsEtudiants() const;
+    std::vector<std::shared_ptr<PatientEtudiant>> getPatientsEtudiants() const;
     size_t getNbPatients() const;
     size_t getNbPatientsEtudiants() const;
 
