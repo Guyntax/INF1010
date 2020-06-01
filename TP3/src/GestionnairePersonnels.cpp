@@ -147,9 +147,6 @@ const std::vector<MedecinResident*>& GestionnairePersonnels::getMedecinsResident
 }
 
 
-
-
-
 // TODO : Méthode getNbPersonnels
 // Retourner le nombre des personnels
 size_t GestionnairePersonnels::getNbPersonnels() const {
@@ -159,13 +156,15 @@ size_t GestionnairePersonnels::getNbPersonnels() const {
 // TODO : Méthode getNbMedecins
 // Retourner le nombre de medecins
 size_t GestionnairePersonnels::getNbMedecins() const {
-	return(getMedecins().size());
+	size_t s(getMedecins().size());
+	return s;
 }
 
 // TODO : Méthode getNbMedecinsResidents
 // Retourner le nombre de medecins résidents
 size_t GestionnairePersonnels::getNbMedecinsResidents() const {
-	return(getMedecinsResidents().size());
+	std::vector<MedecinResident*> temp = getMedecinsResidents();
+	return(temp.size());
 }
 
 
@@ -197,8 +196,15 @@ bool GestionnairePersonnels::lireLignePersonnel(const std::string& ligne)
 		//    - Ajouter un objet de type MedecinResidant en utilisant l'opérateur +=
 		// 
 		switch (indexTypePersonnel) {
-		
+		case 0:
+			stream >> indexSpecialite;
+			return operator+=(std::make_shared<Medecin>(Medecin(nomPersonnel, id, Medecin::Specialite(indexSpecialite))).get());
+			
 
+		case 1:
+			stream >> std::quoted(dateDeNaissance) >> std::quoted(matricule) >> std::quoted(etablissement) >> indexSpecialite;
+			return operator+=(std::make_shared<MedecinResident>(MedecinResident(nomPersonnel, dateDeNaissance, matricule, etablissement, id, Medecin::Specialite(indexSpecialite))).get());
+			
 
 		default:
 			assert(false); // ne devrait pas passer avec le fichier fourni
