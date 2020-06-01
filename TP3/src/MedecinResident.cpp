@@ -5,9 +5,10 @@
 #include "MedecinResident.h"
 
 
-MedecinResident::MedecinResident(const std::string& nom, const std::string& numeroLicence, Specialite specialite,
-	const std::string& dateDeNaissance, const std::string& matricule, const std::string& etablissement)
-	:Medecin(nom,numeroLicence,specialite),Etudiant(nom,dateDeNaissance,matricule,etablissement){}
+MedecinResident::MedecinResident(const std::string& nom, const std::string& dateDeNaissance, const std::string& matricule, 
+	const std::string& etablissement, const std::string& numeroLicence, Medecin::Specialite specialite):
+	Etudiant(nom,dateDeNaissance,matricule,etablissement),
+	Medecin(nom,numeroLicence,specialite){}
 
 
 // DONE : Méthode afficher

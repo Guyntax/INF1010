@@ -41,6 +41,8 @@ public:
 
     double getPrixConsultation() const;
 
+    size_t getNombreConsultations() const;
+
     //DONE : des getters et des setters peuvent être ajoutés ou enlevés si nécessaire
 
     //const std::string& getNom() const;

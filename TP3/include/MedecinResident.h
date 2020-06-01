@@ -6,9 +6,11 @@
 #include <string>
 
 class MedecinResident : public Etudiant, public Medecin {
+
+	public:
 	
-	MedecinResident(const std::string& nom, const std::string& numeroLicence, Specialite specialite,
-		const std::string& dateDeNaissance, const std::string& matricule, const std::string& etablissement);
+	MedecinResident(const std::string& nom, const std::string& dateDeNaissance, const std::string& matricule,const std::string& etablissement,
+		const std::string& numeroLicence, Medecin::Specialite specialite);
 
 	void afficher(std::ostream& stream) const override;
 	double getSalaireAnnuel() const override;

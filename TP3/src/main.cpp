@@ -37,14 +37,14 @@ int main()
 	GestionnairePatients gestionnairePatients;
 	Patient patientTest = Patient("Simon", "25/10/92", "P003");
 	PatientEtudiant patientEtudiantTest = PatientEtudiant("Timon", "05/06/1998", "PE0002", "100002", "HEC Montreal");
-	//Medecin medecinTest = Medecin("Tamard", "M003", Medecin::Specialite::Cardiologue);
-	//MedecinResident medecinResidentTest = MedecinResident("Tira", "12/11/1991", "111113", "University Of Toronto", "MR003", Medecin::Specialite::Gynecologue);
+	Medecin medecinTest = Medecin("Tamard", "M003", Medecin::Specialite::Cardiologue);
+	MedecinResident medecinResidentTest = MedecinResident("Tira", "12/11/1991", "111113", "University Of Toronto", "MR003", Medecin::Specialite::Gynecologue);
 	
 
 	std::vector<bool> tests;
 
 	// Test 1 : tester la classe PatientEtudiant , Patient et implicaitement Etudiant
-#if true
+#if false
 
 	// Tester l'affichage du patient
 	std::stringstream patientStream;

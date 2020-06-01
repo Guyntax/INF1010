@@ -30,6 +30,8 @@ public:
 
 	//TODO : Méthode constante getMedecins retourne un vecteur de Medecin*
 	//TODO : Méthode constante getMedecinsResidents retourne un vecteur de MedecinResidant*
+	const std::vector<Medecin*>& getMedecins() const;
+	const std::vector<MedecinResident*>& getMedecinsResidents() const;
 
 	size_t getNbPersonnels() const;
 	size_t getNbMedecins() const;

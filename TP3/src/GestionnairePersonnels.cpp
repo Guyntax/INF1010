@@ -55,14 +55,16 @@ bool GestionnairePersonnels::operator+=(Personnel* personnel)
 {
 	if (personnel && !chercherPersonnel(personnel->getId()))
 	{
-		//TODO : vérifier si personnel est un MedecinResidant. Conversion dynamique
+		//DONE : vérifier si personnel est un MedecinResidant. Conversion dynamique
 		if (dynamic_cast<MedecinResident*>(personnel)) {
-			//TODO : Ajouter un objet de type MedecinResident au personnels_. Conversion dynamique
+			//DONE : Ajouter un objet de type MedecinResident au personnels_. Conversion dynamique
+			personnels_.push_back(std::make_shared<MedecinResident>(*dynamic_cast<MedecinResident*>(personnel)));
 		}
-		//TODO : vérifier si personnel est un Medecin. Conversion dynamique
+		//DONE : vérifier si personnel est un Medecin. Conversion dynamique
 		else if (dynamic_cast<Medecin*>(personnel)) {
-			//TODO : Ajouter un objet de type Medecin au personnels_. Conversion dynamique
-		}
+			//DONE : Ajouter un objet de type Medecin au personnels_. Conversion dynamique
+			personnels_.push_back(std::make_shared<Medecin>(*dynamic_cast<Medecin*>(personnel)));
+		}	
 		else {
 			assert(false);
 		}
@@ -95,7 +97,8 @@ std::ostream& operator<<(std::ostream& os, const GestionnairePersonnels& gestion
 {
 	for (const auto& personnel : gestionnairePersonnels.personnels_)
 	{
-		//TODO : Afficher les information d'un personnel
+		//DONE : Afficher les information d'un personnel
+		(personnel)->afficher(os);
 		os << '\n';
 	}
 
@@ -109,28 +112,61 @@ const std::vector<std::shared_ptr<Personnel>>& GestionnairePersonnels::getPerson
 	return personnels_;
 }
 
-//TODO : Méthode getMedecins
+
+const std::vector<Medecin*>& GestionnairePersonnels::getMedecins() const
+{
+//DONE : Méthode getMedecins
 //Hint : conversion dynamique
 //Chercher les médecins  parmis tous les personnels 
 //Retourner un vecteur de Medecin*
+	std::vector<Medecin*> temp;
+	for (const auto& personnel : personnels_) {
+		if (dynamic_cast<Medecin*>(personnel.get())) {
+			temp.push_back(dynamic_cast<Medecin*>(personnel.get()));
+		}
+	}
+	return  temp;
+}
 
-
-//TODO : Méthode getMedecinsResidents
+const std::vector<MedecinResident*>& GestionnairePersonnels::getMedecinsResidents() const
+{
+//DONE: Méthode getMedecinsResidents
 //Hint : conversion dynamique
 //Chercher les médecins résidents  parmis tous les personnels 
 //Retourner un vecteur de MedecinResident*
 
+	std::vector<MedecinResident*> temp;
+	for (const auto& personnel : personnels_) {
+		if (dynamic_cast<MedecinResident*>(personnel.get())) {
+			temp.push_back(dynamic_cast<MedecinResident*>(personnel.get())); 
+		}
+	}
+	return  temp;
+
+
+}
+
+
+
+
 
 // TODO : Méthode getNbPersonnels
 // Retourner le nombre des personnels
+size_t GestionnairePersonnels::getNbPersonnels() const {
+	return personnels_.size();
+}
 
 // TODO : Méthode getNbMedecins
 // Retourner le nombre de medecins
-
+size_t GestionnairePersonnels::getNbMedecins() const {
+	return(getMedecins().size());
+}
 
 // TODO : Méthode getNbMedecinsResidents
 // Retourner le nombre de medecins résidents
-
+size_t GestionnairePersonnels::getNbMedecinsResidents() const {
+	return(getMedecinsResidents().size());
+}
 
 
 //! Méthode qui lit les attributs d'un personnel

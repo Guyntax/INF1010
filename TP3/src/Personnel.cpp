@@ -34,6 +34,7 @@ void Personnel::afficher(std::ostream& os) const
 {
 	std::string typePersonnel = typeid(*this).name(); //TODO: Chercher le nom de la classe.Elle peut être Medecin ou MedecinResident.
 		                        //Utiliser typeid().name() ;
+	typePersonnel.erase(0, 6); // Efface "Class "
 	os << "Personnel: " << nom_
 		<< "\n\tType: " << typePersonnel
 		<< "\n\tIdentifiant: " << id_

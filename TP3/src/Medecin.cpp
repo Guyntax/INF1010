@@ -41,7 +41,7 @@ bool Medecin::operator-=(const std::string& numeroAssuranceMaladiePatient)
 	return true;
 }
 
-//TODO : méthode Afficher
+//DONE : méthode Afficher
 void Medecin::afficher(std::ostream& stream) const
 {
 	static const std::string SPECIALITES[] = { "Generaliste",
@@ -138,6 +138,12 @@ double Medecin::getPrixConsultation() const
 	}
 
 }
+
+size_t Medecin::getNombreConsultations() const
+{
+	return nbConsultations_;
+}
+
 // Méthodes hérités
 /*//! Méthode qui retourne le nom du medecin
 //! \return le nom du medecin 
