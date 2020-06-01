@@ -56,11 +56,11 @@ bool GestionnairePersonnels::operator+=(Personnel* personnel)
 	if (personnel && !chercherPersonnel(personnel->getId()))
 	{
 		//TODO : vérifier si personnel est un MedecinResidant. Conversion dynamique
-		if (....) {
+		if (true) {
 			//TODO : Ajouter un objet de type MedecinResident au personnels_. Conversion dynamique
 		}
 		//TODO : vérifier si personnel est un Medecin. Conversion dynamique
-		else if (...) {
+		else if (true) {
 			//TODO : Ajouter un objet de type Medecin au personnels_. Conversion dynamique
 		}
 		else {
@@ -159,7 +159,7 @@ bool GestionnairePersonnels::lireLignePersonnel(const std::string& ligne)
 		//    - Lire sa date de naissance, son matricule, son établissement et  indexSpecialite
 		//    - Ajouter un objet de type MedecinResidant en utilisant l'opérateur +=
 		// 
-		switch () {
+		switch (true) {
 
 		default:
 			assert(false); // ne devrait pas passer avec le fichier fourni

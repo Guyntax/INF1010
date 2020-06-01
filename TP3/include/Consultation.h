@@ -22,6 +22,7 @@ public:
 
     const double PRIX_DE_BASE = 50;
 
+
 // Ces attributs doivent être accessibles par les classes dérivées de cette class
 protected:
     Medecin* medecin_;

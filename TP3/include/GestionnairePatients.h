@@ -27,11 +27,10 @@ public:
     bool operator+=(Patient* patient);
     friend std::ostream& operator<<(std::ostream& os, const GestionnairePatients& gestionnairePatient);
 
+
     const std::vector<std::shared_ptr<Patient>>& getPatients() const;
-
-    //TODO : Méthode constante getPatientsEtudiants qui retourne un vecteur de PatientEtudiant*
-    std::vector<std::shared_ptr<PatientEtudiant>> getPatientsEtudiants() const;
-
+    //Done : Méthode constante getPatientsEtudiants qui retourne un vecteur de PatientEtudiant*
+    const std::vector<std::shared_ptr<PatientEtudiant>>& getPatientsEtudiants() const;
     size_t getNbPatients() const;
     size_t getNbPatientsEtudiants() const;
 

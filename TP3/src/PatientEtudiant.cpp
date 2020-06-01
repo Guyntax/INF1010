@@ -7,7 +7,8 @@
 //Il utilise le constructeur de la classe Etudiant et la classe Patient
 PatientEtudiant::PatientEtudiant(const std::string& nom, const std::string& dateDeNaissance, const std::string& numeroAssuranceMaladie, const std::string& matricule, const std::string& etablissement):
 	Patient( nom, dateDeNaissance, numeroAssuranceMaladie),
-	Etudiant(nom, dateDeNaissance, matricule, etablissement)
+	Etudiant(nom, dateDeNaissance, matricule, etablissement),
+	tauxRabais_(TAUX_RABAIS)
 {};
 
 

@@ -8,7 +8,7 @@
 //! \param patient Le patient qui demande une consultation
 //! \param date    La date de la consultation
 Consultation::Consultation(Medecin& medecin, Patient& patient, const std::string& date) :
-	medecin_(&medecin), patient_(&patient), date_(date), prix_(PRIX_DE_BASE)
+	medecin_(std::make_shared<Medecin>(medecin).get()), patient_(std::make_shared<Patient>(patient).get()), date_(date), prix_(PRIX_DE_BASE)
 {
 }
 
@@ -51,7 +51,7 @@ void Consultation::afficher(std::ostream& os) const
 	os << "Consultation: "
 		<< "\n\tType: " << typeConsultation//Extraire le nom de la classe du string typeConsultation
 		<< "\n\t\t" << typeMedecin//Extraire le nom de la classe du string typeMedecin
-		<< ": " << medecin_->getNumeroLicence() // afficher Id du medecin
+		<< ": " << medecin_->getId() // afficher Id du medecin
 		<< "\n\t\t" << typePatient//Extraire le nom de la classe du string typePatient 
 		<< ": " << patient_->getNumeroAssuranceMaladie()// afficher le numero d'assurance maladie du patient
 		<< "\n\t\t" << "Date de consultation: " << date_ << "\n"; //Afficher date_

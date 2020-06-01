@@ -1,6 +1,9 @@
 #include "Patient.h"
 #include <iostream>
 #include <string>
+#include <typeinfo>
+
+
 
 //! Constructeur par paramètre  de la classe de base Patient
 //! \param nom                    Le nom du patient
@@ -35,6 +38,8 @@ void Patient::afficher(std::ostream& stream) const
 {
 	stream << "Patient: ";
 	std::string typePatient = typeid(*this).name();//Chercher le nom de la classe. Il peut être Patient ou PatientEtudiant. Utiliser typeid().name()
+	typePatient.erase(0, 6); // Efface "Class "
+
 	stream << "\n\tType: " << typePatient<<"\n";//Extraire le nom de la classe du string typePatient;
 	stream << "\n\tNom: " << nom_ << " | Date de naissance: " << dateDeNaissance_
 		<< " | Numero d\'assurance maladie: " << numeroAssuranceMaladie_;
