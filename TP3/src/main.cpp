@@ -44,7 +44,7 @@ int main()
 	std::vector<bool> tests;
 
 	// Test 1 : tester la classe PatientEtudiant , Patient et implicaitement Etudiant
-#if false
+#if true
 
 	// Tester l'affichage du patient
 	std::stringstream patientStream;
@@ -96,7 +96,7 @@ int main()
 #endif
 
 	// Test 2 : tester la classe Medecin, MedecinResident et implicitement Personnel
-#if false
+#if true
 
 	// Tester l'affichage du medecin (incluant le test du polymorphisme de la methode)
 	std::stringstream medecinStream;
@@ -214,7 +214,7 @@ int main()
 #endif
 
 	// Test 4 : tester la classe GestionnairePersonnels
-#if false
+#if true
 
 	// Tester le chargement de fichier
 	bool resultatLecturePersonnels= gestionnairePersonnels.chargerDepuisFichier("personnels.txt") &&
@@ -249,7 +249,7 @@ int main()
 #endif
 
 	// Test 5 : tester la classe ConsultationEnLigne, ConsultationPhysique et implicitement Consultation
-#if false
+#if true
 	// Tester l 'affichage de la consultation
 	ConsultationEnligne consultationEnLigneTest = ConsultationEnligne(medecinResidentTest, patientEtudiantTest, "02/05/2020");
 	ConsultationPhysique consultationPhysiqueTest = ConsultationPhysique(medecinTest, patientTest, "02/05/2020");

@@ -4,11 +4,11 @@
 
 
 // TODO : Constructeur par paramètres
-ConsultationEnLigne::ConsultationEnLigne(Medecin& medecin, Patient& patient, const std::string& date, const std::string& diagnostique, double rabaisConsultationEnLigne_):
+ConsultationEnligne::ConsultationEnligne(Medecin& medecin, Patient& patient, const std::string& date):
 	Consultation(medecin, patient, date),
-	diagnostique_(diagnostique),
+	diagnostique_(" "),
 	rabaisConsultationEnLigne_(TAUX_RABAIS_CONSULTATION_ENLIGNE)
-{}
+{} 
 
 //TODO : const double calculerPrix() const
 // Chercher le prix de la consultation du médecin
@@ -16,7 +16,7 @@ ConsultationEnLigne::ConsultationEnLigne(Medecin& medecin, Patient& patient, con
 // Si le patient est patient étudiant, appliquer  le rabais étudiant
 // Appliquer encore le rabais de la consultation enligne
 // retourner le prix de la consultaion
-const double ConsultationEnLigne::calculerPrix() const  {
+const double ConsultationEnligne::calculerPrix() const  {
 	double prix = medecin_->getPrixConsultation();
 	if (dynamic_cast<PatientEtudiant*>(patient_)) {
 		prix = prix * ( 1 -  dynamic_cast<PatientEtudiant*>(patient_)->getTauxRabais() );
@@ -27,8 +27,8 @@ const double ConsultationEnLigne::calculerPrix() const  {
 }
 
 // TODO : des getters et des setters si nécessaire
-void ConsultationEnLigne::setDiagnostique(std::string diagnostique) { diagnostique_ = diagnostique; }
-std::string ConsultationEnLigne::getDiagnostique() const { return diagnostique_; }
+void ConsultationEnligne::setDiagnostique(std::string diagnostique) { diagnostique_ = diagnostique; }
+std::string ConsultationEnligne::getDiagnostique() const { return diagnostique_; }
 
 
 

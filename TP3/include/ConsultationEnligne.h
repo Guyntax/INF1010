@@ -5,13 +5,13 @@
 #include "Consultation.h"
 #include "PatientEtudiant.h"
 
-class ConsultationEnLigne : public Consultation //DONE : Cette classe hérite de la classe Consultaion.
+class ConsultationEnligne : public Consultation //DONE : Cette classe hérite de la classe Consultaion.
 {
 public:
 
 	//DONE: Le constructeur par paramètres pour initialiser les attributs de la classe. 
 	//Ce constructeur utilise le constructeur de la classe Consultation.
-	ConsultationEnLigne(Medecin& medecin, Patient& patient, const std::string& date,const std::string& diagnostique, double rabaisConsultationEnLigne_);
+	ConsultationEnligne(Medecin& medecin, Patient& patient, const std::string& date);
 
 //TODO : surchager la méthode calculerPrix  const double calculerPrix() const override;
 	const double calculerPrix() const override;
