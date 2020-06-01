@@ -107,11 +107,11 @@ const std::vector<std::shared_ptr<Patient>>& GestionnairePatients::getPatients()
 //Hint : conversion dynamique
 //Chercher les Patients étudiants parmis tous les patients 
 //Retourner un vecteur de PatientEtudiant*
-const std::vector<std::shared_ptr<PatientEtudiant>>& GestionnairePatients::getPatientsEtudiants() const {
+std::vector<std::shared_ptr<PatientEtudiant>> GestionnairePatients::getPatientsEtudiants() const {
 	std::vector<std::shared_ptr<PatientEtudiant>> vecteur ;
 	for (const auto& patient : patients_) {
 		if (dynamic_cast<PatientEtudiant*>(patient.get())) {
-			vecteur.push_back(std::make_shared<PatientEtudiant>(*dynamic_cast<PatientEtudiant*>(patient.get()))); // expliquer!!
+			vecteur.push_back(std::make_shared<PatientEtudiant>(*dynamic_cast<PatientEtudiant*>(patient.get()))); 
 		}
 	}
 	return  vecteur;
