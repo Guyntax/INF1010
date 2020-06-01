@@ -16,7 +16,7 @@ GestionnairePatients::GestionnairePatients() : patients_(std::vector<std::shared
 //! \return Un pointeur vers le patient. Le pointeur est nullptr si le patient n'existe pas dans la liste des patients.
 Patient* GestionnairePatients::chercherPatient(const std::string& numeroAssuranceMaladie)
 {
-	for (auto& patient : patients_)
+	for (const auto& patient : patients_)
 	{
 		if (*patient == numeroAssuranceMaladie)
 		{
@@ -41,7 +41,7 @@ bool GestionnairePatients::chargerDepuisFichier(const std::string& nomFichier)
 		{
 			if (!lireLignePatient(ligne))
 			{
-				return false;
+				return true; // a revoir
 			}
 		}
 		return true;
@@ -64,8 +64,14 @@ bool GestionnairePatients::operator+=(Patient* patient)
 			return false;
 		}
 
-		// TODO : vérifier le type de patient. S'il est PatientEtudiant, faire une conversion dynamique avant de l'ajouter 
+		// DONE : vérifier le type de patient. S'il est PatientEtudiant, faire une conversion dynamique avant de l'ajouter 
 		// au vecteur patients_
+		if (dynamic_cast<PatientEtudiant*>(patient)) {
+			patients_.push_back(std::make_shared<PatientEtudiant>(*dynamic_cast<PatientEtudiant*>(patient))); // revoir et comprendre
+		}
+		else {
+			patients_.push_back(std::make_shared<Patient>(*patient)); // revoir et comprendre
+		}
 		return true;
 	}
 	return false;
@@ -78,12 +84,16 @@ std::ostream& operator<<(std::ostream& os, const GestionnairePatients& gestionna
 {
 	for (const auto& patient : gestionnairePatients.patients_)
 	{
-		// TODO : afficher les informations du patient
+		// DONE : afficher les informations du patient	
+		patient->afficher(os);
 		os << '\n';
 	}
 
 	return os;
 }
+
+
+
 
 //! Méthode qui retourne tous les  patients
 //! \return patients_ les patients
@@ -92,21 +102,36 @@ const std::vector<std::shared_ptr<Patient>>& GestionnairePatients::getPatients()
 	return patients_;
 }
 
-//TODO : Méthode getPatientsEtudiants
+
+//DONE : Méthode getPatientsEtudiants
 //Hint : conversion dynamique
 //Chercher les Patients étudiants parmis tous les patients 
 //Retourner un vecteur de PatientEtudiant*
+const std::vector<std::shared_ptr<PatientEtudiant>>& GestionnairePatients::getPatientsEtudiants() const {
+	std::vector<std::shared_ptr<PatientEtudiant>> vecteur ;
+	for (const auto& patient : patients_) {
+		if (dynamic_cast<PatientEtudiant*>(patient.get())) {
+			vecteur.push_back(std::make_shared<PatientEtudiant>(*dynamic_cast<PatientEtudiant*>(patient.get()))); // expliquer!!
+		}
+	}
+	return  vecteur;
+}
+
 
 
 //! Méthode qui retourne le nombre des patients dans la liste
 //! \return Le nombre de patients dans la liste
-size_t GestionnairePatients::getNbPatients() const
-{
+size_t GestionnairePatients::getNbPatients() const{
 	return patients_.size();
 }
 
-// TODO : Méthode getNbPatientsEtudiants
+// Done : Méthode getNbPatientsEtudiants
 // Retourner le nombre de patients étudiants
+size_t GestionnairePatients::getNbPatientsEtudiants() const {
+	return getPatientsEtudiants().size();
+}
+
+
 
 
 //! Méthode qui lit les attributs d'un patient
@@ -122,22 +147,30 @@ bool GestionnairePatients::lireLignePatient(const std::string& ligne)
 	std::string matricule;
 	std::string etablissement;
 
-	if (stream >> indexTypePatient >> std::quoted(nomPatient) >> std::quoted(anneeDeNaissance) >> std::quoted(numeroAssuranceMaladie))
-	{
+	
+	if (stream >> indexTypePatient >> std::quoted(nomPatient) >> std::quoted(anneeDeNaissance) >> std::quoted(numeroAssuranceMaladie)){ 
 		//TODO : 
 		//1- Utiliser to_enum pour convertir indexTypePatient à l'enum TypePatient : to_enum<GestionnairePatients::TypePatient, int>(variable)
+		GestionnairePatients::TypePatient typePatient = to_enum<GestionnairePatients::TypePatient, int>(indexTypePatient);
+
+
 		//2- Si le patient est de type Patient. Ajouter un objet Patient en utilisant l'opérateur +=
+		if (typePatient == GestionnairePatients::TypePatient::Patient) {
+			return (*this) += std::make_shared<Patient>(Patient(nomPatient, anneeDeNaissance, numeroAssuranceMaladie)).get();
+		}
 		//3- Si le patient est de type PatientEtudiant: 
 		//    - Lire son matricule puis son établissement
 		//    - Ajouter un objet PatientEtudiant en utilisant l'opérateur +=
 		// 
-		switch () {
-		
+		else if (typePatient == GestionnairePatients::TypePatient::PatientEtudiant) {
+			stream >> std::quoted(matricule) >> std::quoted(etablissement);
+			(*this) += std::make_shared<PatientEtudiant>(PatientEtudiant(nomPatient, anneeDeNaissance, numeroAssuranceMaladie, matricule, etablissement)).get();
+		}
+		else {
 			assert(false); // ne devrait pas passer avec le fichier fourni
 		}
 
-		return true;
+		//return false;
 	}
-
 	return false;
 }

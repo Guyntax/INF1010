@@ -30,6 +30,7 @@ bool Hopital::operator+=(const Consultation& consultation)
 	//Chercher si le patient est associé à ce médecin sinon à ajouter le patient au médecin
 	//incrementer le nombre de consultation du medecin.
 
+	return true;//temp
 }
 
 //! Operateur qui ajoute un médecin à un hopital
@@ -37,7 +38,8 @@ bool Hopital::operator+=(const Consultation& consultation)
 //! \return       Un bool qui indique si l'opération a bien fonctionnée
 bool Hopital::operator+=(const Medecin& medecin)
 {
-	return gestionnairePersonnels_ += medecin;
+	//return gestionnairePersonnels_ += medecin;
+	return true;// temporaire
 }
 
 //! Operateur qui ajoute un patient à un hopital
@@ -45,7 +47,8 @@ bool Hopital::operator+=(const Medecin& medecin)
 //! \return       Un bool qui indique si l'opération a bien fonctionnée
 bool Hopital::operator+=(const Patient& patient)
 {
-	return gestionnairePatients_ += patient;
+	//return gestionnairePatients_ += patient;
+	return true;// temporaire
 }
 
 //! Méthode qui retourne le nom de l'hopital

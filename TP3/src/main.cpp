@@ -32,17 +32,19 @@ int main()
 {
 	initDebogageMemoire();
 
-	//GestionnairePersonnels gestionnairePersonnels;
-	//GestionnairePatients gestionnairePatients;
+	
+	GestionnairePersonnels gestionnairePersonnels;
+	GestionnairePatients gestionnairePatients;
 	Patient patientTest = Patient("Simon", "25/10/92", "P003");
 	PatientEtudiant patientEtudiantTest = PatientEtudiant("Timon", "05/06/1998", "PE0002", "100002", "HEC Montreal");
 	//Medecin medecinTest = Medecin("Tamard", "M003", Medecin::Specialite::Cardiologue);
 	//MedecinResident medecinResidentTest = MedecinResident("Tira", "12/11/1991", "111113", "University Of Toronto", "MR003", Medecin::Specialite::Gynecologue);
 	
+
 	std::vector<bool> tests;
 
 	// Test 1 : tester la classe PatientEtudiant , Patient et implicaitement Etudiant
-#if false
+#if true
 
 	// Tester l'affichage du patient
 	std::stringstream patientStream;
@@ -202,8 +204,29 @@ int main()
 		&& gestionnairePatients.getNbPatients() == 3);
 
 	// Tester getPatientsEtudiants() et getNbPatientsEtudiants()
-	tests.push_back(gestionnairePatients.getNbPatientsEtudiants() == 1
-		&& gestionnairePatients.chercherPatient(gestionnairePatients.getPatientsEtudiants()[0]->getNumeroAssuranceMaladie()) == gestionnairePatients.getPatients()[2].get());
+
+
+	bool test1 = gestionnairePatients.getNbPatientsEtudiants() == 1;
+
+	std::cout << "lol \n";
+	const std::vector<std::shared_ptr<PatientEtudiant>> pat = gestionnairePatients.getPatientsEtudiants();
+	std::cout << pat.size() << "\n";
+	int lol = 2;
+	PatientEtudiant patEt = *pat[0] ;
+	int lo2 = 2;
+
+	const std::string num = patEt.getNumeroAssuranceMaladie();
+	Patient* ptr1 = gestionnairePatients.chercherPatient(num);
+
+
+	Patient* ptr2 = gestionnairePatients.getPatients()[2].get();
+
+
+
+	bool test2 = gestionnairePatients.chercherPatient(gestionnairePatients.getPatientsEtudiants()[0]->getNumeroAssuranceMaladie()) == gestionnairePatients.getPatients()[2].get();
+
+	tests.push_back(test1
+		&& test2);
 
 #else
 	tests.push_back(false);
@@ -346,5 +369,4 @@ int main()
 	stream << totalPoints << "/"
 		<< std::accumulate(ponderationTests.begin(), ponderationTests.end(), 0.0f);
 	std::cout << std::left << std::setw(16) << "TOTAL: " << stream.str() << '\n';
-	
 }
