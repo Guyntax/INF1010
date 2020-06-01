@@ -113,32 +113,32 @@ const std::vector<std::shared_ptr<Personnel>>& GestionnairePersonnels::getPerson
 }
 
 
-const std::vector<Medecin*>& GestionnairePersonnels::getMedecins() const
+std::vector<std::shared_ptr<Medecin>> GestionnairePersonnels::getMedecins() const
 {
 //DONE : Méthode getMedecins
 //Hint : conversion dynamique
 //Chercher les médecins  parmis tous les personnels 
 //Retourner un vecteur de Medecin*
-	std::vector<Medecin*> temp;
+	std::vector<std::shared_ptr<Medecin>> temp;
 	for (const auto& personnel : personnels_) {
 		if (dynamic_cast<Medecin*>(personnel.get())) {
-			temp.push_back(dynamic_cast<Medecin*>(personnel.get()));
+			temp.push_back(std::make_shared<Medecin>(*dynamic_cast<Medecin*>(personnel.get())));
 		}
 	}
 	return  temp;
 }
 
-const std::vector<MedecinResident*>& GestionnairePersonnels::getMedecinsResidents() const
+std::vector<std::shared_ptr<MedecinResident>> GestionnairePersonnels::getMedecinsResidents() const
 {
 //DONE: Méthode getMedecinsResidents
 //Hint : conversion dynamique
 //Chercher les médecins résidents  parmis tous les personnels 
 //Retourner un vecteur de MedecinResident*
 
-	std::vector<MedecinResident*> temp;
+	std::vector<std::shared_ptr<MedecinResident>> temp;
 	for (const auto& personnel : personnels_) {
 		if (dynamic_cast<MedecinResident*>(personnel.get())) {
-			temp.push_back(dynamic_cast<MedecinResident*>(personnel.get())); 
+			temp.push_back(std::make_shared<MedecinResident>(*dynamic_cast<MedecinResident*>(personnel.get())));
 		}
 	}
 	return  temp;
@@ -156,15 +156,13 @@ size_t GestionnairePersonnels::getNbPersonnels() const {
 // TODO : Méthode getNbMedecins
 // Retourner le nombre de medecins
 size_t GestionnairePersonnels::getNbMedecins() const {
-	size_t s(getMedecins().size());
-	return s;
+	return getMedecins().size();
 }
 
 // TODO : Méthode getNbMedecinsResidents
 // Retourner le nombre de medecins résidents
 size_t GestionnairePersonnels::getNbMedecinsResidents() const {
-	std::vector<MedecinResident*> temp = getMedecinsResidents();
-	return(temp.size());
+	return getMedecinsResidents().size();
 }
 
 
