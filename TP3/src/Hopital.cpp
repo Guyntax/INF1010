@@ -1,4 +1,7 @@
-// TODO: Faire l'entête de fichier
+//! Implémentation de la classe Hopital qui gère les consultations.
+//! \Authurs: Didier Blach-Laflèche & Maude Tremblay
+//! \date 07 Juin 2020
+
 #include "Hopital.h"
 
 //! Constructeur par paramètre  de la classe Hopital

@@ -1,4 +1,7 @@
-﻿// TODO: Faire l'entête de fichier
+﻿//! Implémentation de la classe GestionnairePatients.
+//! \Authurs: Didier Blach-Laflèche & Maude Tremblay
+//! \date 07 Juin 2020
+
 #include "GestionnairePatients.h"
 #include <fstream>
 #include <iomanip>
@@ -23,7 +26,6 @@ Patient* GestionnairePatients::chercherPatient(const std::string& numeroAssuranc
 			return patient.get();
 		}
 	}
-
 	return nullptr;
 }
 
@@ -41,10 +43,10 @@ bool GestionnairePatients::chargerDepuisFichier(const std::string& nomFichier)
 		{
 			if (!lireLignePatient(ligne))
 			{
-				return true; // a revoir
+				return true; 
 			}
 		}
-		return true;
+		return false;
 	}
 	std::cerr << "Le fichier " << nomFichier
 		<< " n'existe pas. Assurez vous de le mettre au bon endroit.\n";

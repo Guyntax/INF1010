@@ -1,4 +1,7 @@
-// TODO: Faire l'entête de fichier
+//! Implémentation de la classe abstraite Consultation.
+//! \Authurs: Didier Blach-Laflèche & Maude Tremblay
+//! \date 07 Juin 2020
+
 #include "Consultation.h"
 #include <iostream>
 #include <string>

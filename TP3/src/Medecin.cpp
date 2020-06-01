@@ -1,4 +1,7 @@
-//TODO : Entête du fichier
+//! Implémentation de la classe Medecin qui hérite de Personnel.
+//! \Authurs: Didier Blach-Laflèche & Maude Tremblay
+//! \date 07 Juin 2020
+
 #include <iostream>
 #include "Medecin.h"
 #include "typesafe_enum.h"

@@ -1,14 +1,17 @@
-//TODO : Entête du ficher
+//! Implémentation de la classe ConsultationPhysique qui hérite de Consultation.
+//! \Authurs: Didier Blach-Laflèche & Maude Tremblay
+//! \date 07 Juin 2020
+
 
 #include <string>
 #include "ConsultationPhysique.h"
 
-//TODO : Constructeur par paramètres
+//DONE : Constructeur par paramètres
 ConsultationPhysique::ConsultationPhysique(Medecin& medecin, Patient& patient, const std::string& date) :
 	Consultation(medecin, patient, date),
 	prescription_(" ")
 {}
-//TODO : const double calculerPrix() const
+//DONE : const double calculerPrix() const
 // Chercher le prix de la consultation du médecin
 // Vérifier si le patient est un patient étudiant (Convesion dynamique)
 // Si le patient est patient étudiant, appliquer  le rabais étudiant
@@ -22,7 +25,7 @@ const double ConsultationPhysique::calculerPrix() const {
 }
 
 
-// TODO : des getters et des setters si nécessaire
+// DONE : des getters et des setters si nécessaire
 void ConsultationPhysique::setPrescription(std::string prescription) {
 	prescription_ = prescription;
 }

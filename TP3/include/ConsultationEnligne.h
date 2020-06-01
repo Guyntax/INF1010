@@ -1,3 +1,7 @@
+//! Définition de la classe ConsultationEnligne qui hérite de Consultation.
+//! \Authurs: Didier Blach-Laflèche & Maude Tremblay
+//! \date 07 Juin 2020
+
 #ifndef CONSULTATIONENLIGNE_H
 #define CONSULTATIONENLIGNE_H
 
@@ -13,10 +17,10 @@ public:
 	//Ce constructeur utilise le constructeur de la classe Consultation.
 	ConsultationEnligne(Medecin& medecin, Patient& patient, const std::string& date);
 
-//TODO : surchager la méthode calculerPrix  const double calculerPrix() const override;
+	//DONE : surchager la méthode calculerPrix  const double calculerPrix() const override;
 	const double calculerPrix() const override;
 
-//TODO: des getters et des setters si necessaire
+	//DONE: des getters et des setters si necessaire
 	void setDiagnostique(std::string diagnostique);
 	std::string getDiagnostique()const;
 

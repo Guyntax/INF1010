@@ -1,6 +1,6 @@
-//TODO : Entête de fichier
-
-// wut
+//! Implémentation de la classe abstraite Personnel.
+//! \Authurs: Didier Blach-Laflèche & Maude Tremblay
+//! \date 07 Juin 2020
 
 #include "Personnel.h"
 #include <iostream>

@@ -1,16 +1,20 @@
-//TODO : Entête du ficher
+//! Implémentation de la classe ConsultationEnligne qui hérite de Consultation.
+//! \Authurs: Didier Blach-Laflèche & Maude Tremblay
+//! \date 07 Juin 2020
+
+
 #include "ConsultationEnligne.h"
 #include <string>
 
 
-// TODO : Constructeur par paramètres
+// DONE : Constructeur par paramètres
 ConsultationEnligne::ConsultationEnligne(Medecin& medecin, Patient& patient, const std::string& date):
 	Consultation(medecin, patient, date),
 	diagnostique_(" "),
 	rabaisConsultationEnLigne_(TAUX_RABAIS_CONSULTATION_ENLIGNE)
 {} 
 
-//TODO : const double calculerPrix() const
+//DONE : const double calculerPrix() const
 // Chercher le prix de la consultation du médecin
 // Vérifier si le patient est un patient étudiant (Convesion dynamique)
 // Si le patient est patient étudiant, appliquer  le rabais étudiant
@@ -26,7 +30,7 @@ const double ConsultationEnligne::calculerPrix() const  {
 	return prix;
 }
 
-// TODO : des getters et des setters si nécessaire
+// DONE : des getters et des setters si nécessaire
 void ConsultationEnligne::setDiagnostique(std::string diagnostique) { diagnostique_ = diagnostique; }
 std::string ConsultationEnligne::getDiagnostique() const { return diagnostique_; }
 

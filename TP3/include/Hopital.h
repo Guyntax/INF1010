@@ -1,3 +1,7 @@
+//! Définition de la classe Hopital qui gère les consultations.
+//! \Authurs: Didier Blach-Laflèche & Maude Tremblay
+//! \date 07 Juin 2020
+
 #ifndef HOPITAL_H
 #define HOPITAL_H
 

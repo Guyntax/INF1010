@@ -1,4 +1,7 @@
-//TODO Entête du fichier
+//! Implémentation de la classe Étudiant.
+//! \Authurs: Didier Blach-Laflèche & Maude Tremblay
+//! \date 07 Juin 2020
+
 #include "Etudiant.h"
 #include <iostream>
 #include <string>

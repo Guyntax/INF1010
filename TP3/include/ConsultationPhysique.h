@@ -1,3 +1,7 @@
+//! Définition de la classe ConsultationPhysique qui hérite de Consultation.
+//! \Authurs: Didier Blach-Laflèche & Maude Tremblay
+//! \date 07 Juin 2020
+
 #ifndef CONSULTATIONPHYSIQUE_H
 #define CONSULTATIONPHYSIQUE_H
 
@@ -10,26 +14,26 @@
 
 
 
-//TODO: Cette classe hérite de la classe Consultaion.
+//DONE: Cette classe hérite de la classe Consultaion.
 class ConsultationPhysique : public Consultation //DONE : Cette classe hérite de la classe Consultaion.
 {
 public:
-	//TODO: Le constructeur par paramètres pour initialiser les attributs de la classe. 
+	//DONE: Le constructeur par paramètres pour initialiser les attributs de la classe. 
 	// Ce constructeur utilise le constructeur de la classe Consultation.
 	ConsultationPhysique(Medecin& medecin, Patient& patient, const std::string& date);
 
 
-	//TODO: surchage de la méthode calculerPrix 
+	//DONE: surchage de la méthode calculerPrix 
 	const double calculerPrix() const;
 
-	//TODO: des getters et des setters si necessaire
+	//DONE: des getters et des setters si necessaire
 	void setPrescription(std::string prescription);
 	std::string getPrescription()const;
 
 
 
 private:
-	//TODO: Des attributs privées :prescription_ (std::string)
+	//DONE: Des attributs privées :prescription_ (std::string)
 	std::string prescription_;
 };
 

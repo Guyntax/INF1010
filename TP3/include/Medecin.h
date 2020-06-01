@@ -1,3 +1,7 @@
+//! Définition de la classe Medecin qui hérite de Personnel.
+//! \Authurs: Didier Blach-Laflèche & Maude Tremblay
+//! \date 07 Juin 2020
+
 #ifndef MEDECIN_H
 #define MEDECIN_H
 
