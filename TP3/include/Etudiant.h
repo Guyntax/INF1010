@@ -1,4 +1,4 @@
-//! Définition de la classe Étudiant.
+//! Définition de la classe abstraite Étudiant qui représente un étudiant
 //! \Authurs: Didier Blach-Laflèche & Maude Tremblay
 //! \date 07 Juin 2020
 

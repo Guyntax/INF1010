@@ -1,8 +1,9 @@
-//! Implémentation de la classe Hopital qui gère les consultations.
-//! \Authurs: Didier Blach-Laflèche & Maude Tremblay
+//! Implémentation de la classe Hopital qui permet la gestion de l'hôpital.
+//! \Authors: Didier Blach-Laflèche & Maude Tremblay
 //! \date 07 Juin 2020
 
 #include "Hopital.h"
+
 
 //! Constructeur par paramètre  de la classe Hopital
 //! \param nom      Nom de l'hopital
@@ -26,8 +27,6 @@ bool Hopital::chargerBaseDeDonnees(const std::string& nomFichierMedecins, const 
 bool Hopital::operator+=(const Consultation& consultation)
 {	
 	
-	//Hint : conversion dynamique
-	//TODO utiliser chercherPersonnel de GestionnairePersonnel pour avoir un pointeur vers le medecin de la consultation.
 	std::string id = (consultation.Consultation::getMedecin())->Personnel::getId();
 	Medecin* medecin = dynamic_cast<Medecin*>(gestionnairePersonnels_.GestionnairePersonnels::chercherPersonnel(id));
 	if (medecin != nullptr && medecin->getEstActif())
@@ -40,21 +39,20 @@ bool Hopital::operator+=(const Consultation& consultation)
 		}
 		else {
 
+			if (dynamic_cast<ConsultationEnligne*>(const_cast<Consultation*>(&consultation))) {
 
-		//consultations_.push_back(std::make_shared<Consultation>(consultation));
+				consultations_.push_back(std::make_shared<ConsultationEnligne>(*dynamic_cast<ConsultationEnligne*>(const_cast<Consultation*>(&consultation))));
+			}
+			else if (dynamic_cast<ConsultationPhysique*>(const_cast<Consultation*>(&consultation))) {
+
+				consultations_.push_back(std::make_shared<ConsultationPhysique>(*dynamic_cast<ConsultationPhysique*>(const_cast<Consultation*>(&consultation))));
+			}
 		
+		*medecin += patient; // cherche déjà si le patient est associé au médecin
 		medecin->incrementNombreConsultations();
 		return true;
 		}
-	}
-		
-	//Si le medecin existe et actif, vérifier si le patient n'existe pas dans gestionnaire patient et retourner false.
-	// si le patient existe , ajouter la conversation à consultations_ après voir vérifier son type: connsultatioEnligne ou ConsultaitionPhysique
-	
-	//Chercher si le patient est associé à ce médecin sinon à ajouter le patient au médecin
-	//incrementer le nombre de consultation du medecin.
-
-	
+	}	
 }
 
 //! Operateur qui ajoute un médecin à un hopital

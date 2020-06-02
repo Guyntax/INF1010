@@ -1,5 +1,5 @@
-//! Implémentation de la classe abstraite Consultation.
-//! \Authurs: Didier Blach-Laflèche & Maude Tremblay
+//! Implémentation de la classe abstraite Consultation qui permet de gérer les consultations de l’hôpital.
+//! \Authors: Didier Blach-Laflèche & Maude Tremblay
 //! \date 07 Juin 2020
 
 #include "Consultation.h"

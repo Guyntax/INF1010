@@ -1,10 +1,13 @@
+//! Définition de la classe GestionnairePersonnels qui permet la gestion des personnels de l’hôpital.
+//! \Authors: Didier Blach-Laflèche & Maude Tremblay
+//! \date 07 Juin 2020
+
 #ifndef GESTIONNAIREPERSONNELS_H
 #define GESTIONNAIREPERSONNELS_H
 
 #include <memory>
 #include "Medecin.h"
 #include "MedecinResident.h"
-//! Ne pas inclure la Classe Personnel dans cette classe
 
 class GestionnairePersonnels
 {
@@ -27,12 +30,8 @@ public:
 	friend std::ostream& operator<<(std::ostream& os, const GestionnairePersonnels& gestionnairePesonnel);
 
 	const std::vector<std::shared_ptr<Personnel>>& getPersonnels() const;
-
-	//DONE : Méthode constante getMedecins retourne un vecteur de Medecin*
-	//DONE : Méthode constante getMedecinsResidents retourne un vecteur de MedecinResidant*
-	std::vector<std::shared_ptr<Medecin>> getMedecins() const;
-	std::vector < std::shared_ptr < MedecinResident> >  getMedecinsResidents() const;
-
+	std::vector<Medecin*> getMedecins() const;
+	std::vector <MedecinResident*>  getMedecinsResidents() const;
 	size_t getNbPersonnels() const;
 	size_t getNbMedecins() const;
 	size_t getNbMedecinsResidents() const;

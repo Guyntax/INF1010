@@ -1,5 +1,6 @@
 //! Définition de la classe ConsultationEnligne qui hérite de Consultation.
-//! \Authurs: Didier Blach-Laflèche & Maude Tremblay
+//! Cette classe permet de gérer les consultations en ligne de l’hôpital.
+//! \Authors: Didier Blach-Laflèche & Maude Tremblay
 //! \date 07 Juin 2020
 
 #ifndef CONSULTATIONENLIGNE_H

@@ -1,4 +1,5 @@
 //! Implémentation de la classe ConsultationPhysique qui hérite de Consultation.
+//! Cette classe permet de gérer les consultations physiques de l’hôpital.
 //! \Authurs: Didier Blach-Laflèche & Maude Tremblay
 //! \date 07 Juin 2020
 

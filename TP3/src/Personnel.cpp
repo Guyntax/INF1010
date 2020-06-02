@@ -1,5 +1,5 @@
-//! Implémentation de la classe abstraite Personnel.
-//! \Authurs: Didier Blach-Laflèche & Maude Tremblay
+//! Implémentation de la classe abstraite Personnel qui représente un personnel de l'hôpital.
+//! \Authors: Didier Blach-Laflèche & Maude Tremblay
 //! \date 07 Juin 2020
 
 #include "Personnel.h"
@@ -29,16 +29,18 @@ bool operator==(const std::string& id, const Personnel& personnel)
 	return (id == personnel.id_);
 }
 
-//DONE : méthode afficher
+//! Méthode qui affiche les informations du personnel 
+//! \param stream	Le stream dans lequel on affiche les informations
+//! \return			stream qui contient les informations du personnel
 void Personnel::afficher(std::ostream& os) const
 {
-	std::string typePersonnel = typeid(*this).name(); //TODO: Chercher le nom de la classe.Elle peut être Medecin ou MedecinResident.
-		                        //Utiliser typeid().name() ;
+	std::string typePersonnel = typeid(*this).name(); //Cherche le nom de la classe.Elle peut être Medecin ou MedecinResident.
+		                    
 	typePersonnel.erase(0, 6); // Efface "Class "
 	os << "Personnel: " << nom_
 		<< "\n\tType: " << typePersonnel
 		<< "\n\tIdentifiant: " << id_
-		<< "\n\tStatut: " << (estActif_ ? "Actif" : "Inactif");// afficher 'Actif' si estActif est true et 'Inactif' si false;
+		<< "\n\tStatut: " << (estActif_ ? "Actif" : "Inactif");
 }
 
 //! Méthode qui retourne le nom du personnel

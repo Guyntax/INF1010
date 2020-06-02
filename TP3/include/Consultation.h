@@ -1,5 +1,5 @@
-//! Définition de la classe abstraite Consultation.
-//! \Authurs: Didier Blach-Laflèche & Maude Tremblay
+//! Définition de la classe abstraite Consultation qui permet de gérer les consultations de l’hôpital.
+//! \Authors: Didier Blach-Laflèche & Maude Tremblay
 //! \date 07 Juin 2020
 
 #ifndef CONSULTATION_H

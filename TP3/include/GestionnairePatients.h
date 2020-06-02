@@ -1,5 +1,5 @@
-//! Définition de la classe GestionnairePatients.
-//! \Authurs: Didier Blach-Laflèche & Maude Tremblay
+//! Définition de la classe GestionnairePatients qui permet de gérer les patients de l'hôpital.
+//! \Authors: Didier Blach-Laflèche & Maude Tremblay
 //! \date 07 Juin 2020
 
 #ifndef GESTIONNAIREPATIENTS_H

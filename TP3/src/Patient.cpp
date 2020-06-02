@@ -1,5 +1,6 @@
-//! Implémtentation de la classe Patient.
-//! \Authurs: Didier Blach-Laflèche & Maude Tremblay
+//! Implémentation de la classe Patient qui représente un patient avec son nom, sa date de naissance et son numéro
+//! d’assurance maladie.
+//! \Authors: Didier Blach-Laflèche & Maude Tremblay
 //! \date 07 Juin 2020
 
 #include "Patient.h"

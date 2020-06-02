@@ -1,5 +1,5 @@
-//! Définition de la classe Medecin qui hérite de Personnel.
-//! \Authurs: Didier Blach-Laflèche & Maude Tremblay
+//! Définition de la classe Medecin qui hérite de Personnel. Cette classe représente un médecin qui exerce dans l'hôpital.
+//! \Authors: Didier Blach-Laflèche & Maude Tremblay
 //! \date 07 Juin 2020
 
 #ifndef MEDECIN_H
@@ -11,7 +11,7 @@
 #include <vector>
 #include "Personnel.h"
 
-//DONE : Cette classe hérite de la classe Personnel
+
 class Medecin : public Personnel
 {
 public:
@@ -34,42 +34,24 @@ public:
     bool operator+=(Patient* patient);
     bool operator-=(const std::string& numeroAssuranceMaladiePatient);
 
-    //Surchage de la méthode afficher. Elle doit être déclarée virtuelle ici aussi.
+    
     virtual void afficher(std::ostream& stream) const override;
 
     Patient* chercherPatient(const std::string& numeroAssuranceMaladie);
     void incrementNombreConsultations();
 
-    //Surchage de la méthode getSalaireAnnuel. Elle doit être déclarée virtuelle ici aussi.
     virtual double getSalaireAnnuel() const override;
-
     double getPrixConsultation() const;
-
     size_t getNombreConsultations() const;
-
-    //DONE : des getters et des setters peuvent être ajoutés ou enlevés si nécessaire
-
-    //const std::string& getNom() const;
-    //const std::string& getNumeroLicence() const;
-    //bool getEstActif() const;
     const Specialite getSpecialite() const;
     const size_t getNombrePatientsAssocies() const;
-
     const std::vector<Patient*>& getPatientsAssocies() const;
 
-    //void setNom(const std::string& nom);
-    //void setNumeroLicence(const std::string& numeroLicence);
-    //void setEstActif(bool estActif);
     void setSpecialite(Specialite specialite);
-
 
     static constexpr size_t SALAIRE_DE_BASE_MEDECIN = 100000;
 
-//DONE : 
-//Certains attributs devraient êtres enlevés.
-//D'autres attributs doivent être ajoutés. Voir l'énoncé
-//Les attributs de cette classe doivent être accessibles aux classes dérivées de cette classe.
-//La méthode trouverIndexPatient est une méthode privée
+
 protected:
 // Attributs
     Specialite specialite_;

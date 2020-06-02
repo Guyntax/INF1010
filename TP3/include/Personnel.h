@@ -1,5 +1,5 @@
-//! Définition de la classe abstraite Personnel.
-//! \Authurs: Didier Blach-Laflèche & Maude Tremblay
+//! Définition de la classe abstraite Personnel qui représente un personnel de l'hôpital.
+//! \Authors: Didier Blach-Laflèche & Maude Tremblay
 //! \date 07 Juin 2020
 
 #ifndef PERSONNEL_H
@@ -20,10 +20,8 @@ public:
 	friend bool operator==(const std::string& id, const Personnel& personnel);
 	bool operator==(const std::string& id) const;
 
-	// DONE: méthode virtuelle
 	virtual void afficher(std::ostream& stream) const;
 
-	//DONE : méthode virtuelle pure à ne pas implémenter dans cette classe
 	virtual double getSalaireAnnuel() const = 0;
 
 	const std::string& getNom() const;
@@ -34,7 +32,6 @@ public:
 	void setId(const std::string& id);
 	void setEstActif(bool estActif);
 
-//DONE : Les attributs de cette classe doivent être accessible par les classes des dérivées
 protected:
 	// Attributs
 	std::string nom_;

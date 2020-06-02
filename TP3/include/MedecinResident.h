@@ -1,5 +1,6 @@
-//! Définition de la classe MedecinResident qui hérite de Personnel et de Étudiant.
-//! \Authurs: Didier Blach-Laflèche & Maude Tremblay
+//! Définition de la classe MedecinResident qui représente un médecin résident qui exerce à l’hôpital
+//! Cette classe hérite de Personnel et de Étudiant.
+//! \Authors: Didier Blach-Laflèche & Maude Tremblay
 //! \date 07 Juin 2020
 
 #ifndef MEDECINRESIDENT_H
@@ -22,14 +23,5 @@ class MedecinResident : public Etudiant, public Medecin {
 	static constexpr size_t SALAIRE_DE_BASE_MEDECIN_RESIDENT = 50000;
 
 };
-
-//TODO: 
-//Cette classe hérite de la classe Etudiant et la classe Medecin
-//Pas d'attributs spéciaux pour cette classe
-//Un constructeur par paramètre pour intialiser les attributs en faisant appel au constructeur des classes Etudiant et Medecin
-//Surchage de la méthode afficher
-//Surchage de la méthode getSalaireAnnuel
-//Un salaire de base comme constante static :   static constexpr size_t SALAIRE_DE_BASE_MEDECIN_RESIDENT = 50000;
-
 
 #endif // MEDECINRESIDENT_H

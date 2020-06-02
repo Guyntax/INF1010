@@ -1,3 +1,7 @@
+//! Implémentation de la classe GestionnairePersonnels qui permet la gestion des personnels de l’hôpital.
+//! \Authors: Didier Blach-Laflèche & Maude Tremblay
+//! \date 07 Juin 2020
+
 #include "GestionnairePersonnels.h"
 #include <fstream>
 #include <iomanip>
@@ -55,14 +59,14 @@ bool GestionnairePersonnels::operator+=(Personnel* personnel)
 {
 	if (personnel && !chercherPersonnel(personnel->getId()))
 	{
-		//DONE : vérifier si personnel est un MedecinResidant. Conversion dynamique
+		// Vérifier si personnel est un MedecinResident
 		if (dynamic_cast<MedecinResident*>(personnel)) {
-			//DONE : Ajouter un objet de type MedecinResident au personnels_. Conversion dynamique
+			
 			personnels_.push_back(std::make_shared<MedecinResident>(*dynamic_cast<MedecinResident*>(personnel)));
 		}
-		//DONE : vérifier si personnel est un Medecin. Conversion dynamique
+		//Vérifie si personnel est un Medecin
 		else if (dynamic_cast<Medecin*>(personnel)) {
-			//DONE : Ajouter un objet de type Medecin au personnels_. Conversion dynamique
+			
 			personnels_.push_back(std::make_shared<Medecin>(*dynamic_cast<Medecin*>(personnel)));
 		}	
 		else {
@@ -97,7 +101,6 @@ std::ostream& operator<<(std::ostream& os, const GestionnairePersonnels& gestion
 {
 	for (const auto& personnel : gestionnairePersonnels.personnels_)
 	{
-		//DONE : Afficher les information d'un personnel
 		(personnel)->afficher(os);
 		os << '\n';
 	}
@@ -113,32 +116,29 @@ const std::vector<std::shared_ptr<Personnel>>& GestionnairePersonnels::getPerson
 }
 
 
-std::vector<std::shared_ptr<Medecin>> GestionnairePersonnels::getMedecins() const
+//! Méthode qui retourne la liste de tous les médecins de l'hôpital
+//! \return vecteur qui contient les pointeurs de tous les médecins
+std::vector<Medecin*> GestionnairePersonnels::getMedecins() const
 {
-//DONE : Méthode getMedecins
-//Hint : conversion dynamique
-//Chercher les médecins  parmis tous les personnels 
-//Retourner un vecteur de Medecin*
-	std::vector<std::shared_ptr<Medecin>> temp;
+
+	std::vector<Medecin*> temp;
 	for (const auto& personnel : personnels_) {
 		if (dynamic_cast<Medecin*>(personnel.get())) {
-			temp.push_back(std::make_shared<Medecin>(*dynamic_cast<Medecin*>(personnel.get())));
+			temp.push_back(dynamic_cast<Medecin*>(personnel.get()));
 		}
 	}
 	return  temp;
 }
 
-std::vector<std::shared_ptr<MedecinResident>> GestionnairePersonnels::getMedecinsResidents() const
+//! Méthode qui retourne la liste de tous les médecins résidents de l'hôpital
+//! \return vecteur qui contient les pointeurs de tous les médecins résidents
+std::vector<MedecinResident*> GestionnairePersonnels::getMedecinsResidents() const
 {
-//DONE: Méthode getMedecinsResidents
-//Hint : conversion dynamique
-//Chercher les médecins résidents  parmis tous les personnels 
-//Retourner un vecteur de MedecinResident*
 
-	std::vector<std::shared_ptr<MedecinResident>> temp;
+	std::vector<MedecinResident*> temp;
 	for (const auto& personnel : personnels_) {
 		if (dynamic_cast<MedecinResident*>(personnel.get())) {
-			temp.push_back(std::make_shared<MedecinResident>(*dynamic_cast<MedecinResident*>(personnel.get())));
+			temp.push_back(dynamic_cast<MedecinResident*>(personnel.get()));
 		}
 	}
 	return  temp;
@@ -147,20 +147,20 @@ std::vector<std::shared_ptr<MedecinResident>> GestionnairePersonnels::getMedecin
 }
 
 
-// TODO : Méthode getNbPersonnels
-// Retourner le nombre des personnels
+//! Méthode qui retourne le nombre de personnel
+//! \return nombre de personnel
 size_t GestionnairePersonnels::getNbPersonnels() const {
 	return personnels_.size();
 }
 
-// TODO : Méthode getNbMedecins
-// Retourner le nombre de medecins
+//! Méthode qui retourne le nombre de médecins
+//! \return nombre de médecins
 size_t GestionnairePersonnels::getNbMedecins() const {
 	return getMedecins().size();
 }
 
-// TODO : Méthode getNbMedecinsResidents
-// Retourner le nombre de medecins résidents
+//! Méthode qui retourne le nombre de médecins résidents
+//! \return nombre de médecins résidents
 size_t GestionnairePersonnels::getNbMedecinsResidents() const {
 	return getMedecinsResidents().size();
 }
@@ -168,6 +168,7 @@ size_t GestionnairePersonnels::getNbMedecinsResidents() const {
 
 //! Méthode qui lit les attributs d'un personnel
 //! \param ligne  Le string qui contient les attributs
+//! \return bool qui dit si la ligne a bien été lue
 bool GestionnairePersonnels::lireLignePersonnel(const std::string& ligne)
 {
 	std::istringstream stream(ligne);
@@ -183,23 +184,16 @@ bool GestionnairePersonnels::lireLignePersonnel(const std::string& ligne)
 
 	if (stream >> indexTypePersonnel >> std::quoted(nomPersonnel) >> std::quoted(id))
 	{
-		//TODO : 
-		//1- Utiliser to_enum pour convertir indexTypePersonnel à l'enum TypePersonnel : 
-		to_enum<GestionnairePersonnels::TypePersonnel, int>(indexTypePersonnel);
-		//2- Si le personnel est de type Medecin. 
-		//	  - Lire indexPecialite
-		//	  - Ajouter un objet de type Medecin en utilisant l'opérateur +=
-		//3- Si le personnel est de type MedecinResident: 
-		//    - Lire sa date de naissance, son matricule, son établissement et  indexSpecialite
-		//    - Ajouter un objet de type MedecinResidant en utilisant l'opérateur +=
-		// 
-		switch (indexTypePersonnel) {
-		case 0:
+		 
+		GestionnairePersonnels::TypePersonnel typePersonnel = to_enum<GestionnairePersonnels::TypePersonnel, int>(indexTypePersonnel);
+	
+		switch (typePersonnel) {
+		case GestionnairePersonnels::TypePersonnel::Medecin : //Medecin
 			stream >> indexSpecialite;
 			return operator+=(std::make_shared<Medecin>(Medecin(nomPersonnel, id, Medecin::Specialite(indexSpecialite))).get());
 			
 
-		case 1:
+		case GestionnairePersonnels::TypePersonnel::MedecinResident: //MedecinResident
 			stream >> std::quoted(dateDeNaissance) >> std::quoted(matricule) >> std::quoted(etablissement) >> indexSpecialite;
 			return operator+=(std::make_shared<MedecinResident>(MedecinResident(nomPersonnel, dateDeNaissance, matricule, etablissement, id, Medecin::Specialite(indexSpecialite))).get());
 			

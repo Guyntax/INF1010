@@ -1,5 +1,5 @@
-//! Implémentation de la classe Medecin qui hérite de Personnel.
-//! \Authurs: Didier Blach-Laflèche & Maude Tremblay
+//! Implémentation de la classe Medecin qui hérite de Personnel. Cette classe représente un médecin qui exerce dans l'hôpital.
+//! \Authors: Didier Blach-Laflèche & Maude Tremblay
 //! \date 07 Juin 2020
 
 #include <iostream>
@@ -8,8 +8,10 @@
 
 constexpr int PATIENT_INEXSISTANT = -1;
 
-//DONE : Constructeur par paramètre pour intialiser les attributs de la classe. 
-// Il utilise le constructeur de la classe Personnel
+//!Constructeur par paramètre pour intialiser les attributs de la classe. 
+//! \param nom				Nom du médecin
+//! \param numeroLicence	id du médecin	
+//! \param specialite		spécialité du médecin
 Medecin::Medecin(const std::string& nom, const std::string& numeroLicence, Specialite specialite):Personnel(nom, numeroLicence),specialite_(specialite),nbConsultations_(0)
 {}
 
@@ -44,7 +46,9 @@ bool Medecin::operator-=(const std::string& numeroAssuranceMaladiePatient)
 	return true;
 }
 
-//DONE : méthode Afficher
+//! Méthode qui affiche les informations du médecin 
+//! \param stream	Le stream dans lequel on affiche les infromations
+//! \return			stream qui contient les informations du médecin
 void Medecin::afficher(std::ostream& stream) const
 {
 	static const std::string SPECIALITES[] = { "Generaliste",
@@ -58,7 +62,7 @@ void Medecin::afficher(std::ostream& stream) const
 	assert(valid_as_enum<Medecin::Specialite>(index));
 	std::string specialite = SPECIALITES[index];
 
-	//DONE : Afficher les informations du médecin liées à la classe Personnel
+	//Afficher les informations du médecin liées à la classe Personnel
 	Personnel::afficher(stream);
 
 	stream << "\n\tSpecialite: " << specialite
@@ -67,7 +71,7 @@ void Medecin::afficher(std::ostream& stream) const
 	for (const auto& patient : patientsAssocies_)
 	{
 		stream << "\n\t\t";
-		//DONE: Afficher les informations du Patient
+		//Afficher les informations du Patient
 		patient->afficher(stream);
 	}
 }
@@ -88,20 +92,16 @@ Patient* Medecin::chercherPatient(const std::string& numeroAssuranceMaladie)
 	return nullptr;
 }
 
-//DONE : Méthode incrementNombreConsultations 
-// Incrementer le nombre de consultaions
-
+//! Méthode qui incrémente le nombre de consultations d'un médecin 
 void Medecin::incrementNombreConsultations() 
 {
 	nbConsultations_++;
 }
 
 
+//! Méthode qui retourne le salaire annuel du médecin
+//! \return Le salaire annuel du médecin (= salaire de base du médecin + nombre de consultations * le prix de consultation)
 
-
-
-//DONE : Méthode getSalaireAnnuel
-// le salaire annuel = salaire de base du médecin + nombre de consultations * le prix de consultation
 double Medecin::getSalaireAnnuel() const 
 {
 	double salaireAnnuel;
@@ -110,15 +110,9 @@ double Medecin::getSalaireAnnuel() const
 
 }
 
-//DONE : Méthode getPrixConsultation
-//Utiliser Switch
-//Cette méthode retourne le prix de la consultation qui dépend de la spécialité du médecin.
-//prix = 100 pour Gynecologue et Ophtalmologue
-//prix = 120 pour Cardiologue et Dermatologue
-//prix = 80 pour Pediatre
-//prix = 60 pour Generaliste ou Autre
-//default : throw "La spécialite du médecin n'est pas définie"
 
+//! Méthode retourne le prix de la consultation qui dépend de la spécialité du médecin.
+//! \return prix de la consultation
 double Medecin::getPrixConsultation() const 
 {
 	switch (specialite_) {
@@ -147,32 +141,6 @@ size_t Medecin::getNombreConsultations() const
 	return nbConsultations_;
 }
 
-// Méthodes hérités
-/*//! Méthode qui retourne le nom du medecin
-//! \return le nom du medecin 
-const std::string& Medecin::getNom() const
-{
-
-	return nom_;
-}
-
-
-//! Méthode qui retourne le numero de licence du medecin
-//! \return le numero de licence
-const std::string& Medecin::getNumeroLicence() const
-{
-
-	return id_;
-}
-
-//! Méthode qui retourne le status du medecin
-//! \return le status du medecin
-bool Medecin::getEstActif() const
-{
-
-	return estActif_;
-}
-*/
 
 //! Méthode qui retourne la specialite du medecin
 //! \return la specialite des medecins
@@ -198,40 +166,16 @@ const std::vector<Patient*>& Medecin::getPatientsAssocies() const
 	return patientsAssocies_;
 }
 
-// Méthodes héritées
-/*
-//! Méthode qui met a jours le nom  du medecin
-//! \pararm  nom  Le nom du médecin
-void Medecin::setNom(const std::string& nom)
-{
-	nom_ = nom;
-}
-
-//! Méthode qui met a jours le numero de licence du medecin
-//! \pararm  numeroLicence  le numero de licence du medecin
-void Medecin::setNumeroLicence(const std::string& numeroLicence)
-{
-	numeroLicence_ = numeroLicence;
-}
-
-//! Méthode qui met a jours le statut  du medecin si il est actif ou non
-//! \pararm  boolean indiquant le  nouveau status du medecin
-void Medecin::setEstActif(bool estActif)
-{
-
-	estActif_ = estActif;
-}
-*/
 
 //! Méthode qui met a jours la specialité du medecin
-//! \pararm  specialite  specialité du medecin
+//! \param  specialite  specialité du medecin
 void Medecin::setSpecialite(Specialite specialite)
 {
 	specialite_ = specialite;
 }
 
 
-//! Méthode  qui permet de trouver l'index un medecin dans la liste des medecins
+//! Méthode  qui permet de trouver l'index d'un medecin dans la liste des medecins
 //! \param numeroLicence   numero de licence du medecin
 //! \return             int bool qui indique l'index du medecin et MEDECIN_INEXSISTANT si le medecin est inexistant
 int Medecin::trouverIndexPatient(const std::string& numeroAssuranceMaladie)

@@ -1,5 +1,5 @@
-//! iMPLÉMENTATION de la classe Étudiant. Celle-ci hérite de Patient et de Étudiant.
-//! \Authurs: Didier Blach-Laflèche & Maude Tremblay
+//! Implémentation de la classe Étudiantqui représente un patient qui est étudiant. Celle-ci hérite de Patient et de Étudiant.
+//! \Authors: Didier Blach-Laflèche & Maude Tremblay
 //! \date 07 Juin 2020
 
 #include "PatientEtudiant.h"

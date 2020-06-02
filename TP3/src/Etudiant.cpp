@@ -1,4 +1,4 @@
-//! Implémentation de la classe Étudiant.
+//! Implémentation de la classe Étudiant qui est une classe abstraite qui représente un étudiant 
 //! \Authurs: Didier Blach-Laflèche & Maude Tremblay
 //! \date 07 Juin 2020
 

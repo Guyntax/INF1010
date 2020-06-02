@@ -1,5 +1,5 @@
-//! Définition de la classe Hopital qui gère les consultations.
-//! \Authurs: Didier Blach-Laflèche & Maude Tremblay
+//! Définition de la classe Hopital qui permet la gestion de l'hôpital.
+//! \Authors: Didier Blach-Laflèche & Maude Tremblay
 //! \date 07 Juin 2020
 
 #ifndef HOPITAL_H
@@ -11,6 +11,8 @@
 #include "Consultation.h"
 #include "GestionnairePersonnels.h"
 #include "GestionnairePatients.h"
+#include "ConsultationEnligne.h"
+#include "ConsultationPhysique.h"
 
 class Hopital
 {

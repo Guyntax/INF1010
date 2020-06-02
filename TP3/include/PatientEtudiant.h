@@ -1,5 +1,5 @@
-//! Définition de la classe Étudiant. Celle-ci hérite de Patient et de Étudiant.
-//! \Authurs: Didier Blach-Laflèche & Maude Tremblay
+//! Définition de la classe Étudiant qui représente un patient qui est étudiant. Celle-ci hérite de Patient et de Étudiant.
+//! \Authors: Didier Blach-Laflèche & Maude Tremblay
 //! \date 07 Juin 2020
 
 #ifndef PATIENTETUDIAT_H
