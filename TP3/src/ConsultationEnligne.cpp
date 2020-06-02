@@ -18,7 +18,6 @@ ConsultationEnligne::ConsultationEnligne(Medecin& medecin, Patient& patient, con
 	rabaisConsultationEnLigne_(TAUX_RABAIS_CONSULTATION_ENLIGNE)
 {} 
 
-//DONE : const double calculerPrix() const
 //! Méthode qui calcule le prix de la consultation du médecin
 //! \return le prix de la consultaion
 const double ConsultationEnligne::calculerPrix() const  {

@@ -6,8 +6,12 @@
 #include <iostream>
 #include <string>
 
-//DONE : Constructeur par paramètre pour intialiser tous les attributs. Utiliser la liste d'initialisation
-//Il utilise le constructeur de la classe Etudiant et la classe Patient
+//! Constructeur par paramètre pour intialiser tous les attributs
+//! \param nom                    Le nom du patient
+//! \param dateDeNaissance        La date de naissance du patient
+//! \param numeroAssuranceMaladie Le numero d'assurance maladie du patient
+//! \param matricule			matricule de l'étudiant
+//! \param établissement		établissement de l'étudiant
 PatientEtudiant::PatientEtudiant(const std::string& nom, const std::string& dateDeNaissance, const std::string& numeroAssuranceMaladie, const std::string& matricule, const std::string& etablissement):
 	Patient( nom, dateDeNaissance, numeroAssuranceMaladie),
 	Etudiant(nom, dateDeNaissance, matricule, etablissement),
@@ -15,11 +19,9 @@ PatientEtudiant::PatientEtudiant(const std::string& nom, const std::string& date
 {};
 
 
-//DONE : surcharge de la méthode afficher
-//Afficher les informations liées au patient
-//Puis affichier " | "
-//Puis afficher les informations liées à l'étudiant
-//Puis afficher " | Taux de rabais: " suivi du tauxRabais_
+//! Méthode qui affiche les informations liées au patient
+//! \param stream	Le stream dans lequel on affiche les informations
+//! \return			stream qui contient les informations du patient etudiant
 void PatientEtudiant::afficher(std::ostream& stream)const {
 	Patient::afficher(stream);
 	stream << " | ";
@@ -29,7 +31,8 @@ void PatientEtudiant::afficher(std::ostream& stream)const {
 };
 
 
-//DONE : les getters et les setters si nécessaire
+//! Méthode qui retourne le taux de rabais du patient étudiant
+//! \return taux de rabais
 double PatientEtudiant::getTauxRabais() const { return tauxRabais_; };
 
 

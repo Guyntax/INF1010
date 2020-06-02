@@ -22,13 +22,10 @@ public:
     const std::string& getEtablissement() const;
 
     void setNom(const std::string& nom);
-    void setMatricule(const std::string& numeroAssuranceMaladie);
+    void setMatricule(const std::string& matricule);
     void setDateDeNaissance(const std::string& dateDeNaissance);
     void setEtablissement(const std::string& etablissement);
 
-
-   
-// les classes dérivées de cette classe ne doivent avoir accès qu'à l'attribut etablissement_.
 protected:
     std::string etablissement_;
 private:

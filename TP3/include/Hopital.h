@@ -39,7 +39,6 @@ private:
     std::string nom_;
     std::string adresse_;
 
-    //DONE : À remplacer par gestionnaire personnels
     GestionnairePersonnels gestionnairePersonnels_;
     GestionnairePatients gestionnairePatients_;
     std::vector<std::shared_ptr<Consultation>> consultations_;

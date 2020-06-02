@@ -18,7 +18,6 @@ public:
     bool operator==(const std::string& numeroAssuranceMaladie) const;
     friend bool operator==(const std::string& nom, const Patient& patient);
 
-    //DONE méthode virtuelle
     virtual void afficher(std::ostream& stream) const ;
 
     const std::string& getNom() const;
@@ -29,7 +28,6 @@ public:
     void setNumeroAssuranceMaladie(const std::string& numeroAssuranceMaladie);
     void setDateDeNaissance(const std::string& dateDeNaissance);
 
-// DONE: Ces attributs doivent être accessibles par les classes dérivées de cette classe
 private:
     std::string nom_;
     std::string numeroAssuranceMaladie_;

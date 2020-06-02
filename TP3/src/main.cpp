@@ -278,7 +278,7 @@ int main()
 #endif
 
 	// Test 6 : tester la classe Hopital
-#if false
+#if true
 	Hopital hopital = Hopital("CHUM", "1051 Rue Sanguinet, Montréal, QC H2X 3E4");
 
 	// Tester le chargement de la base de données

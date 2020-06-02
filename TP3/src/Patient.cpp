@@ -39,6 +39,7 @@ bool operator==(const std::string& numeroAssuranceMaladie, const Patient& patien
 
 //! Méthode qui affiche les informations d'un patient
 //! \param stream Le stream dans lequel afficher.
+//! \return le stream qui contient les informations du patient
 void Patient::afficher(std::ostream& stream) const
 {
 	stream << "Patient: ";

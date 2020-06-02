@@ -11,30 +11,18 @@
 #include "PatientEtudiant.h"
 
 
-
-
-
-
-//DONE: Cette classe hérite de la classe Consultaion.
-class ConsultationPhysique : public Consultation //DONE : Cette classe hérite de la classe Consultaion.
+class ConsultationPhysique : public Consultation 
 {
 public:
-	//DONE: Le constructeur par paramètres pour initialiser les attributs de la classe. 
-	// Ce constructeur utilise le constructeur de la classe Consultation.
 	ConsultationPhysique(Medecin& medecin, Patient& patient, const std::string& date);
 
-
-	//DONE: surchage de la méthode calculerPrix 
 	const double calculerPrix() const;
 
-	//DONE: des getters et des setters si necessaire
 	void setPrescription(std::string prescription);
 	std::string getPrescription()const;
 
-
-
 private:
-	//DONE: Des attributs privées :prescription_ (std::string)
+	
 	std::string prescription_;
 };
 
