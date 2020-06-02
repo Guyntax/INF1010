@@ -22,15 +22,36 @@ bool Hopital::chargerBaseDeDonnees(const std::string& nomFichierMedecins, const 
 //! \return       Un bool qui indique si l'opération a bien fonctionnée
 bool Hopital::operator+=(const Consultation& consultation)
 {	
+	
 	//Hint : conversion dynamique
 	//TODO utiliser chercherPersonnel de GestionnairePersonnel pour avoir un pointeur vers le medecin de la consultation.
-	// Medecin* medecin = 
+	std::string id = (consultation.Consultation::getMedecin())->Personnel::getId();
+	Medecin* medecin = dynamic_cast<Medecin*>(gestionnairePersonnels_.GestionnairePersonnels::chercherPersonnel(id));
+	if (medecin != nullptr && medecin->getEstActif())
+	{
+		std::string NAS = (consultation.Consultation::getPatient())->Patient::getNumeroAssuranceMaladie();
+		Patient* patient = dynamic_cast<Patient*>(gestionnairePatients_.GestionnairePatients::chercherPatient(NAS));
+		if(patient == nullptr)
+		{
+			return false;
+		}
+		else {
+
+
+		//consultations_.push_back(std::make_shared<Consultation>(consultation));
+		
+		medecin->incrementNombreConsultations();
+		return true;
+		}
+	}
+		
 	//Si le medecin existe et actif, vérifier si le patient n'existe pas dans gestionnaire patient et retourner false.
 	// si le patient existe , ajouter la conversation à consultations_ après voir vérifier son type: connsultatioEnligne ou ConsultaitionPhysique
+	
 	//Chercher si le patient est associé à ce médecin sinon à ajouter le patient au médecin
 	//incrementer le nombre de consultation du medecin.
 
-	return true;//temp
+	
 }
 
 //! Operateur qui ajoute un médecin à un hopital
@@ -38,8 +59,9 @@ bool Hopital::operator+=(const Consultation& consultation)
 //! \return       Un bool qui indique si l'opération a bien fonctionnée
 bool Hopital::operator+=(const Medecin& medecin)
 {
-	//return gestionnairePersonnels_ += medecin;
-	return true;// temporaire
+	std::shared_ptr<Medecin> med = std::make_shared<Medecin>(medecin);
+
+	return gestionnairePersonnels_ += med.get();
 }
 
 //! Operateur qui ajoute un patient à un hopital
@@ -47,8 +69,8 @@ bool Hopital::operator+=(const Medecin& medecin)
 //! \return       Un bool qui indique si l'opération a bien fonctionnée
 bool Hopital::operator+=(const Patient& patient)
 {
-	//return gestionnairePatients_ += patient;
-	return true;// temporaire
+	std::shared_ptr<Patient> pat = std::make_shared<Patient>(patient);
+	return gestionnairePatients_ += pat.get();
 }
 
 //! Méthode qui retourne le nom de l'hopital
