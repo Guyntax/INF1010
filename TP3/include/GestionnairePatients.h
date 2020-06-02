@@ -1,3 +1,7 @@
+//! Définition de la classe GestionnairePatients.
+//! \Authurs: Didier Blach-Laflèche & Maude Tremblay
+//! \date 07 Juin 2020
+
 #ifndef GESTIONNAIREPATIENTS_H
 #define GESTIONNAIREPATIENTS_H
 

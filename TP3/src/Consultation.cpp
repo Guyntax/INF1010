@@ -1,4 +1,7 @@
-// TODO: Faire l'entête de fichier
+//! Implémentation de la classe abstraite Consultation.
+//! \Authurs: Didier Blach-Laflèche & Maude Tremblay
+//! \date 07 Juin 2020
+
 #include "Consultation.h"
 #include <iostream>
 #include <string>
@@ -8,7 +11,7 @@
 //! \param patient Le patient qui demande une consultation
 //! \param date    La date de la consultation
 Consultation::Consultation(Medecin& medecin, Patient& patient, const std::string& date) :
-	medecin_(std::make_shared<Medecin>(medecin).get()), patient_(std::make_shared<Patient>(patient).get()), date_(date), prix_(PRIX_DE_BASE)
+	medecin_(&medecin), patient_(&patient), date_(date), prix_(PRIX_DE_BASE)
 {
 }
 
@@ -41,13 +44,18 @@ const std::string& Consultation::getDate() const
 //! \param os Le stream dans lequel afficher
 void Consultation::afficher(std::ostream& os) const
 {
+	// Chercher le nom de la classe. Elle peut être ConsultationEnligne ou ConsultationPhysique.
+	std::string typeConsultation = typeid(*this).name();//Utiliser typeid().name()
+	typeConsultation.erase(0, 6); // Efface "Class "
 
-	std::string typeConsultation = typeid(*this).name(); // Chercher le nom de la classe. Elle peut être ConsultationEnligne ou ConsultationPhysique.
-								  //Utiliser typeid().name()
-	std::string typeMedecin = typeid(medecin_).name();// Chercher le nom de la classe.Elle peut être Medecin ou MedecinResident.
-								//Utiliser typeid().name() ;
-	std::string typePatient = typeid(patient_).name();// Chercher le nom de la classe. Elle peut être Patient ou PatientEtudiant.
-							  //Utiliser typeid().name()
+	// Chercher le nom de la classe.Elle peut être Medecin ou MedecinResident.
+	std::string typeMedecin = typeid(*medecin_).name();//Utiliser typeid().name() ;
+	typeMedecin.erase(0, 6); // Efface "Class "
+
+	// Chercher le nom de la classe. Elle peut être Patient ou PatientEtudiant.
+	std::string typePatient = typeid(*patient_).name();//Utiliser typeid().name()
+	typePatient.erase(0, 6); // Efface "Class "					  
+
 	os << "Consultation: "
 		<< "\n\tType: " << typeConsultation//Extraire le nom de la classe du string typeConsultation
 		<< "\n\t\t" << typeMedecin//Extraire le nom de la classe du string typeMedecin

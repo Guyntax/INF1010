@@ -1,3 +1,7 @@
+//! Implémtentation de la classe Patient.
+//! \Authurs: Didier Blach-Laflèche & Maude Tremblay
+//! \date 07 Juin 2020
+
 #include "Patient.h"
 #include <iostream>
 #include <string>

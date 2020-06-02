@@ -1,4 +1,7 @@
-// TODO: Faire l'entête de fichier
+//! Implémentation de la classe MedecinResident qui hérite de Personnel et de Étudiant.
+//! \Authurs: Didier Blach-Laflèche & Maude Tremblay
+//! \date 07 Juin 2020
+
 
 #include <iostream>
 #include <string>

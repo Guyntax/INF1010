@@ -1,3 +1,7 @@
+//! Définition de la classe MedecinResident qui hérite de Personnel et de Étudiant.
+//! \Authurs: Didier Blach-Laflèche & Maude Tremblay
+//! \date 07 Juin 2020
+
 #ifndef MEDECINRESIDENT_H
 #define MEDECINRESIDENT_H
 #include "Etudiant.h"

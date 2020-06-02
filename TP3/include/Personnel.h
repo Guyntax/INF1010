@@ -1,3 +1,7 @@
+//! Définition de la classe abstraite Personnel.
+//! \Authurs: Didier Blach-Laflèche & Maude Tremblay
+//! \date 07 Juin 2020
+
 #ifndef PERSONNEL_H
 #define PERSONNEL_H
 

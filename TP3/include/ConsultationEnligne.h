@@ -1,3 +1,7 @@
+//! Définition de la classe ConsultationEnligne qui hérite de Consultation.
+//! \Authurs: Didier Blach-Laflèche & Maude Tremblay
+//! \date 07 Juin 2020
+
 #ifndef CONSULTATIONENLIGNE_H
 #define CONSULTATIONENLIGNE_H
 
@@ -5,18 +9,18 @@
 #include "Consultation.h"
 #include "PatientEtudiant.h"
 
-class ConsultationEnLigne : public Consultation //DONE : Cette classe hérite de la classe Consultaion.
+class ConsultationEnligne : public Consultation //DONE : Cette classe hérite de la classe Consultaion.
 {
 public:
 
 	//DONE: Le constructeur par paramètres pour initialiser les attributs de la classe. 
 	//Ce constructeur utilise le constructeur de la classe Consultation.
-	ConsultationEnLigne(Medecin& medecin, Patient& patient, const std::string& date,const std::string& diagnostique, double rabaisConsultationEnLigne_);
+	ConsultationEnligne(Medecin& medecin, Patient& patient, const std::string& date);
 
-//TODO : surchager la méthode calculerPrix  const double calculerPrix() const override;
+	//DONE : surchager la méthode calculerPrix  const double calculerPrix() const override;
 	const double calculerPrix() const override;
 
-//TODO: des getters et des setters si necessaire
+	//DONE: des getters et des setters si necessaire
 	void setDiagnostique(std::string diagnostique);
 	std::string getDiagnostique()const;
 
