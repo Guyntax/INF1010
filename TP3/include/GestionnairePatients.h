@@ -33,7 +33,7 @@ public:
 
 
     const std::vector<std::shared_ptr<Patient>>& getPatients() const;
-    std::vector<std::shared_ptr<PatientEtudiant>> getPatientsEtudiants() const;
+    std::vector<PatientEtudiant*> getPatientsEtudiants() const;
     size_t getNbPatients() const;
     size_t getNbPatientsEtudiants() const;
 
