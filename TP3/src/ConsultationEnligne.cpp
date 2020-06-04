@@ -19,7 +19,6 @@ ConsultationEnligne::ConsultationEnligne(Medecin& medecin, Patient& patient, con
 {} 
 
 //! Méthode qui calcule le prix de la consultation du médecin
-//! \return le prix de la consultaion
 const double ConsultationEnligne::calculerPrix() const  {
 	double prix = medecin_->getPrixConsultation();
 	if (dynamic_cast<PatientEtudiant*>(patient_)) // Vérifie si le patient est un patient étudiant
@@ -28,6 +27,7 @@ const double ConsultationEnligne::calculerPrix() const  {
 	}
 	prix = prix * (1 - rabaisConsultationEnLigne_ );
 
+	//! \return le prix de la consultaion
 	return prix;
 }
 

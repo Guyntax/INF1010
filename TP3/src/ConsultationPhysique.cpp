@@ -18,13 +18,13 @@ ConsultationPhysique::ConsultationPhysique(Medecin& medecin, Patient& patient, c
 
 
 //! Méthode qui calcule le prix de la consultation
-//! \return  le prix de la consultation
 const double ConsultationPhysique::calculerPrix() const {
 	double prix = medecin_->getPrixConsultation();
 	if (dynamic_cast<PatientEtudiant*>(patient_))// Vérifier si le patient est un patient étudiant
 	{
 		prix = prix * (1 - dynamic_cast<PatientEtudiant*>(patient_)->getTauxRabais());
 	}
+	//! \return  le prix de la consultation
 	return prix;
 }
 

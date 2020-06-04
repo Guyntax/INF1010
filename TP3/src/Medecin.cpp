@@ -21,12 +21,12 @@ Medecin::Medecin(const std::string& nom, const std::string& numeroLicence, Speci
 //! \return       Un bool qui indique si l'opération a bien fonctionnée
 bool Medecin::operator+=(Patient* patient)
 {
+	// Si le patient n'est pas suivi par le medecin, on l'ajoute
 	if (patient && !chercherPatient(patient->getNumeroAssuranceMaladie())) {
 		patientsAssocies_.push_back(patient);
 
 		return true;
 	}
-
 	return false;
 }
 
@@ -40,9 +40,8 @@ bool Medecin::operator-=(const std::string& numeroAssuranceMaladiePatient)
 	{
 		return false;
 	}
-
+	// Le patient est retiré seulement si il est suivi par le medecin
 	patientsAssocies_.erase(patientsAssocies_.begin() + indexPatient);
-
 	return true;
 }
 
@@ -78,18 +77,17 @@ void Medecin::afficher(std::ostream& stream) const
 
 //! Méhode qui cherche un patient par numero d'assurance maladie
 //! \param numeroAssuranceMaladie Le numero d'assurance maladie Le numero d'assurance maladie du patient à chercher
-//! \return Un pointeur vers le patient. Le pointeur est nullptr si le patient n'existe pas dans la liste des patients.
+
 Patient* Medecin::chercherPatient(const std::string& numeroAssuranceMaladie)
 {
 	for (auto& patientsAssocie : patientsAssocies_)
 	{
 		if (*patientsAssocie == numeroAssuranceMaladie)
 		{
-			return patientsAssocie;
+			return patientsAssocie; // return Un pointeur vers le patient. 
 		}
 	}
-
-	return nullptr;
+	return nullptr;// Le pointeur est nullptr si le patient n'existe pas dans la liste des patients.
 }
 
 //! Méthode qui incrémente le nombre de consultations d'un médecin 
@@ -100,21 +98,19 @@ void Medecin::incrementNombreConsultations()
 
 
 //! Méthode qui retourne le salaire annuel du médecin
-//! \return Le salaire annuel du médecin (= salaire de base du médecin + nombre de consultations * le prix de consultation)
-
 double Medecin::getSalaireAnnuel() const 
 {
 	double salaireAnnuel;
 	salaireAnnuel = SALAIRE_DE_BASE_MEDECIN + nbConsultations_ * getPrixConsultation();
+	//! \return Le salaire annuel du médecin (= salaire de base du médecin + nombre de consultations * le prix de consultation)
 	return salaireAnnuel;
-
 }
 
 
 //! Méthode retourne le prix de la consultation qui dépend de la spécialité du médecin.
-//! \return prix de la consultation
 double Medecin::getPrixConsultation() const 
 {
+	//! \return prix de la consultation
 	switch (specialite_) {
 	case Specialite::Pediatre:
 		return 80;
@@ -136,6 +132,7 @@ double Medecin::getPrixConsultation() const
 
 }
 
+//! Méthode qui retourne le nombre de consultations du medecin
 size_t Medecin::getNombreConsultations() const
 {
 	return nbConsultations_;
@@ -143,27 +140,23 @@ size_t Medecin::getNombreConsultations() const
 
 
 //! Méthode qui retourne la specialite du medecin
-//! \return la specialite des medecins
 const Medecin::Specialite Medecin::getSpecialite() const
 {
-
-	return specialite_;
+	return specialite_; //! \return la specialite des medecins
 }
 
 //! Méthode qui retourne le nombre de patients associés
-//! \return le nombre de patients associés
 const size_t Medecin::getNombrePatientsAssocies() const
 {
 
-	return patientsAssocies_.size();
+	return patientsAssocies_.size(); //! \return le nombre de patients associés
 }
 
 
 //! Méthode qui retourne la liste des patients associes au medecin
-//! \return la liste des patients
 const std::vector<Patient*>& Medecin::getPatientsAssocies() const
 {
-	return patientsAssocies_;
+	return patientsAssocies_; //! \return la liste des patients
 }
 
 
@@ -177,7 +170,6 @@ void Medecin::setSpecialite(Specialite specialite)
 
 //! Méthode  qui permet de trouver l'index d'un medecin dans la liste des medecins
 //! \param numeroLicence   numero de licence du medecin
-//! \return             int bool qui indique l'index du medecin et MEDECIN_INEXSISTANT si le medecin est inexistant
 int Medecin::trouverIndexPatient(const std::string& numeroAssuranceMaladie)
 {
 	for (std::size_t i = 0; i < patientsAssocies_.size(); i++)
@@ -187,5 +179,6 @@ int Medecin::trouverIndexPatient(const std::string& numeroAssuranceMaladie)
 			return static_cast<int>(i);
 		}
 	}
+	//! \return int bool qui indique l'index du medecin et MEDECIN_INEXSISTANT si le medecin est inexistants
 	return PATIENT_INEXSISTANT;
 }

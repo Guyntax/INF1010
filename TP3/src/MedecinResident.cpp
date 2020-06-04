@@ -29,14 +29,17 @@ void MedecinResident::afficher(std::ostream& stream) const
 	Medecin::afficher(stream);
 	stream << "\n\t";
 	Etudiant::afficher(stream);
+
+	// Le stream est passé par référence, donc pas de valeur de retour
 }
 
 //! Méthode qui retourne le salaire annuel du médecin résident
-//! \return salaire annuel du médecin résident (=salaire de base du médecin résidant + nombre de consultations * le prix de consultation du médecin)
 double MedecinResident::getSalaireAnnuel() const
 {
 	double salaireAnnuel;
 	salaireAnnuel = SALAIRE_DE_BASE_MEDECIN_RESIDENT + nbConsultations_ * getPrixConsultation();
+
+	//! \return salaire annuel du médecin résident (=salaire de base du médecin résidant + nombre de consultations * le prix de consultation du médecin)
 	return salaireAnnuel;
 }
 

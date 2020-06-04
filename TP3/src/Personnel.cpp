@@ -15,10 +15,9 @@ Personnel::Personnel(const std::string& nom, const std::string& id) : nom_(nom),
 
 //! Opérateur qui compare un string avec l'identifiant du personnel avec un personnel comme opérande de gauche
 //! \param id  L'identifiant  avec le quel on veut comparé le personnel
-//! \return vrai si  Les identifiants sont identiques, faux sinon
 bool Personnel::operator==(const std::string& id) const
 {
-	return (id_ == id);
+	return (id_ == id);//! \return vrai si  Les identifiants sont identiques, faux sinon
 }
 
 //! Opérateur qui comparel'identifiant du personnel avec l'identifiant opérande de gauche.
@@ -26,7 +25,7 @@ bool Personnel::operator==(const std::string& id) const
 //! \param personnel le personne avec lequel on compare  de l'identifiant
 bool operator==(const std::string& id, const Personnel& personnel)
 {
-	return (id == personnel.id_);
+	return (id == personnel.id_);//! \return vrai si  Les identifiants sont identiques, faux sinon
 }
 
 //! Méthode qui affiche les informations du personnel 
@@ -41,31 +40,28 @@ void Personnel::afficher(std::ostream& os) const
 		<< "\n\tType: " << typePersonnel
 		<< "\n\tIdentifiant: " << id_
 		<< "\n\tStatut: " << (estActif_ ? "Actif" : "Inactif");
+
+	// Le stream est passé par référence, donc pas de valeur de retour
 }
 
 //! Méthode qui retourne le nom du personnel
-//! \return le nom du personnel 
 const std::string& Personnel::getNom() const
 {
-
-	return nom_;
+	return nom_; //! \return le nom du personnel 
 }
 
 
 //! Méthode qui retourne l'identifiant du personnel
-//! \return id_ l'identifiant du personnel
 const std::string& Personnel::getId() const
 {
-
-	return id_;
+	return id_; //! \return id_ l'identifiant du personnel
 }
 
 //! Méthode qui retourne le status du personnel
-//! \return estActif_ le status du personnel
 bool Personnel::getEstActif() const
 {
 
-	return estActif_;
+	return estActif_; //! \return estActif_ le status du personnel
 }
 
 //! Méthode qui met a jours le nom  du personnel

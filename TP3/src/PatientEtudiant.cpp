@@ -28,6 +28,7 @@ void PatientEtudiant::afficher(std::ostream& stream)const {
 	Etudiant::afficher(stream);
 	stream << " | Taux de rabais: "<< tauxRabais_<< "\n";
 
+	// Le stream est passé par référence, donc pas besoin de le retourner
 };
 
 

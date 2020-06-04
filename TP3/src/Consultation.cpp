@@ -63,4 +63,6 @@ void Consultation::afficher(std::ostream& os) const
 		<< "\n\t\t" << typePatient//Extraire le nom de la classe du string typePatient 
 		<< ": " << patient_->getNumeroAssuranceMaladie()// afficher le numero d'assurance maladie du patient
 		<< "\n\t\t" << "Date de consultation: " << date_ << "\n"; //Afficher date_
+
+	// le ostream est passé par référence, donc pas besoin de return
 }

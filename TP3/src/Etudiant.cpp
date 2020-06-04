@@ -20,9 +20,9 @@ Etudiant::Etudiant(const std::string& nom, const std::string& dateDeNaissance, c
 
 //! Méthode qui affiche les informations de l'étudiant
 //! \param os Le stream dans lequel afficher
-//! \return le stream qui contient les informations
 void Etudiant::afficher(std::ostream& stream) const
 {
+    //! \return le stream qui contient les informations
 	stream << "Matricule: " << matricule_ << "\n\tEtablissement: " << etablissement_;
 }
 

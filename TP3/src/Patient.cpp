@@ -9,7 +9,6 @@
 #include <typeinfo>
 
 
-
 //! Constructeur par paramètre  de la classe de base Patient
 //! \param nom                    Le nom du patient
 //! \param dateDeNaissance        La date de naissance du patient
@@ -23,9 +22,9 @@ Patient::Patient(const std::string& nom, const std::string& dateDeNaissance, con
 
 //! Opérateur qui compare un string avec le numero d'assurance maladie du patient avec patient comme opérande de gauche
 //! \param numeroAssuranceMaladie le numero d'assurance  avec le quel on veut comparé le patient
-//! \return vrai si les les numeros d'assurance sont identiques, faux sinon
 bool Patient::operator==(const std::string& numeroAssuranceMaladie) const
 {
+	//! \return vrai si les les numeros d'assurance sont identiques, faux sinon
 	return (numeroAssuranceMaladie_ == numeroAssuranceMaladie);
 }
 
@@ -34,6 +33,7 @@ bool Patient::operator==(const std::string& numeroAssuranceMaladie) const
 //! \param patient le patient avec lequel on compare le numero d'assurance
 bool operator==(const std::string& numeroAssuranceMaladie, const Patient& patient)
 {
+	//! \return vrai si les les numeros d'assurance sont identiques, faux sinon
 	return (numeroAssuranceMaladie == patient.numeroAssuranceMaladie_);
 }
 
@@ -49,13 +49,14 @@ void Patient::afficher(std::ostream& stream) const
 	stream << "\n\tType: " << typePatient<<"\n";//Extraire le nom de la classe du string typePatient;
 	stream << "\n\tNom: " << nom_ << " | Date de naissance: " << dateDeNaissance_
 		<< " | Numero d\'assurance maladie: " << numeroAssuranceMaladie_;
+
+	// le stream est passé par référence, donc pas besoin de le retoruner
 }
 
 //! Méthode qui retourne le nom du patient
 //! \return nom_ le nom du patient
 const std::string& Patient::getNom() const
 {
-
 	return nom_;
 }
 

@@ -23,10 +23,10 @@ Patient* GestionnairePatients::chercherPatient(const std::string& numeroAssuranc
 	{
 		if (*patient == numeroAssuranceMaladie)
 		{
-			return patient.get();
+			return patient.get(); // retourne un pointeur vers le patient trouvé
 		}
 	}
-	return nullptr;
+	return nullptr; // retourne un ptr null i le patient n'est pas trouvé
 }
 
 //! Méthode  qui permet de charger les informations des patients depuis un fichier
@@ -41,17 +41,17 @@ bool GestionnairePatients::chargerDepuisFichier(const std::string& nomFichier)
 		std::string ligne;
 		while (getline(fichier, ligne))
 		{
-			if (!lireLignePatient(ligne))
+			if (!lireLignePatient(ligne)) // Lit chaque ligne et retourne false si il y a un probleme
 			{
-				return true; 
+				return false;
 			}
 		}
-		return false;
+		return true; // retourne true si toutes les ignes on été lues sans problemes
 	}
 	std::cerr << "Le fichier " << nomFichier
 		<< " n'existe pas. Assurez vous de le mettre au bon endroit.\n";
 
-	return false;
+	return false; // retourne false si le ficher ne s'ouvre pas
 }
 
 //! Operateur qui ajoute un patient à la liste des patients
@@ -61,20 +61,23 @@ bool GestionnairePatients::operator+=(Patient* patient)
 {
 	if (patient && !chercherPatient(patient->getNumeroAssuranceMaladie())) {
 
-		if (patients_.size() >= NB_PATIENT_MAX)
+		if (patients_.size() >= NB_PATIENT_MAX) // on verifie si il y a de la place
 		{
-			return false;
+			return false; // return false si il ny a pas de place
 		}
-
+		// Vérifier si Patient est un PatientEtudiant ou un patient normal, pour l'ajouter correctement
 		if (dynamic_cast<PatientEtudiant*>(patient)) {
-			patients_.push_back(std::make_shared<PatientEtudiant>(*dynamic_cast<PatientEtudiant*>(patient))); // revoir et comprendre
+			patients_.push_back(std::make_shared<PatientEtudiant>(*dynamic_cast<PatientEtudiant*>(patient))); 
 		}
-		else {
+		else if (dynamic_cast<Patient*>(patient)) {
 			patients_.push_back(std::make_shared<Patient>(*patient)); 
 		}
-		return true;
+		else {
+			assert(false);
+		}
+		return true; // return true si il ya de la place pour la patient
 	}
-	return false;
+	return false; // retourne false si le patient existe deja dans le gesttionnaire
 }
 
 //! opérateur qui affiche les patients
@@ -87,16 +90,15 @@ std::ostream& operator<<(std::ostream& os, const GestionnairePatients& gestionna
 		patient->afficher(os);
 		os << '\n';
 	}
-
-	return os;
+	return os; // retourne le ostream par référence
 }
 
 
 //! Méthode qui retourne tous les  patients
-//! \return patients_ les patients
+
 const std::vector<std::shared_ptr<Patient>>& GestionnairePatients::getPatients() const
 {
-	return patients_;
+	return patients_; //! \return patients_ les patients
 }
 
 
@@ -109,7 +111,7 @@ std::vector<PatientEtudiant*> GestionnairePatients::getPatientsEtudiants() const
 			vecteur.push_back(dynamic_cast<PatientEtudiant*>(patient.get())); 
 		}
 	}
-	return  vecteur;
+	return  vecteur; // retourne le vecteur de patientEtudiant par valeur
 }
 
 
@@ -128,6 +130,7 @@ size_t GestionnairePatients::getNbPatientsEtudiants() const {
 
 //! Méthode qui lit les attributs d'un patient
 //! \param ligne  Le string qui contient les attributs
+//! \return bool qui dit si la ligne a bien été lue
 bool GestionnairePatients::lireLignePatient(const std::string& ligne)
 {
 	std::istringstream stream(ligne);
@@ -139,23 +142,23 @@ bool GestionnairePatients::lireLignePatient(const std::string& ligne)
 	std::string matricule;
 	std::string etablissement;
 
-	
 	if (stream >> indexTypePatient >> std::quoted(nomPatient) >> std::quoted(anneeDeNaissance) >> std::quoted(numeroAssuranceMaladie)){ 
 		
 		GestionnairePatients::TypePatient typePatient = to_enum<GestionnairePatients::TypePatient, int>(indexTypePatient);
-
-		if (typePatient == GestionnairePatients::TypePatient::Patient) {
+		
+		switch (typePatient) {
+		case GestionnairePatients::TypePatient::Patient : 
+			// Ajoute le pointer nouvelment créé et retoune true, si c'est un succès
 			return (*this) += std::make_shared<Patient>(Patient(nomPatient, anneeDeNaissance, numeroAssuranceMaladie)).get();
-		}
 
-		else if (typePatient == GestionnairePatients::TypePatient::PatientEtudiant) {
+		case GestionnairePatients::TypePatient::PatientEtudiant : 
 			stream >> std::quoted(matricule) >> std::quoted(etablissement);
-			(*this) += std::make_shared<PatientEtudiant>(PatientEtudiant(nomPatient, anneeDeNaissance, numeroAssuranceMaladie, matricule, etablissement)).get();
-		}
-		else {
+			// Ajoute le pointer nouvelment créé et retoune true, si c'est un succès
+			return (*this) += std::make_shared<PatientEtudiant>(PatientEtudiant(nomPatient, anneeDeNaissance, numeroAssuranceMaladie, matricule, etablissement)).get();
+		
+		default :
 			assert(false); // ne devrait pas passer avec le fichier fourni
 		}
-
 	}
-	return false;
+	return false; // retourne false si on ne peut pas lire à partir du stream
 }
