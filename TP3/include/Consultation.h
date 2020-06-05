@@ -21,6 +21,7 @@ public:
 
     void afficher(std::ostream& os) const;
 
+    // méthode virtuelle pure
     virtual const double calculerPrix() const =0;
 
     const double PRIX_DE_BASE = 50;

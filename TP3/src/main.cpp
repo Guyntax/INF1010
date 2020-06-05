@@ -32,7 +32,6 @@ int main()
 {
 	initDebogageMemoire();
 
-	
 	GestionnairePersonnels gestionnairePersonnels;
 	GestionnairePatients gestionnairePatients;
 	Patient patientTest = Patient("Simon", "25/10/92", "P003");
@@ -40,7 +39,6 @@ int main()
 	Medecin medecinTest = Medecin("Tamard", "M003", Medecin::Specialite::Cardiologue);
 	MedecinResident medecinResidentTest = MedecinResident("Tira", "12/11/1991", "111113", "University Of Toronto", "MR003", Medecin::Specialite::Gynecologue);
 	
-
 	std::vector<bool> tests;
 
 	// Test 1 : tester la classe PatientEtudiant , Patient et implicaitement Etudiant
@@ -206,7 +204,7 @@ int main()
 	// Tester getPatientsEtudiants() et getNbPatientsEtudiants()
 	tests.push_back(gestionnairePatients.getNbPatientsEtudiants() == 1
 		&& gestionnairePatients.chercherPatient(gestionnairePatients.getPatientsEtudiants()[0]->getNumeroAssuranceMaladie()) == gestionnairePatients.getPatients()[2].get());
-	
+
 #else
 	tests.push_back(false);
 	tests.push_back(false);
@@ -250,6 +248,7 @@ int main()
 
 	// Test 5 : tester la classe ConsultationEnLigne, ConsultationPhysique et implicitement Consultation
 #if true
+
 	// Tester l 'affichage de la consultation
 	ConsultationEnligne consultationEnLigneTest = ConsultationEnligne(medecinResidentTest, patientEtudiantTest, "02/05/2020");
 	ConsultationPhysique consultationPhysiqueTest = ConsultationPhysique(medecinTest, patientTest, "02/05/2020");
@@ -265,7 +264,7 @@ int main()
 		std::remove_if(consultationString.begin(), consultationString.end(),
 			[](unsigned char c) { return std::isspace(c); }),
 		consultationString.end());
-
+	
 	std::cout << consultationEnLigneTest.calculerPrix() << " " << consultationPhysiqueTest.calculerPrix();
 
 	tests.push_back(sortieAttendueConsultation == consultationString);
@@ -322,7 +321,6 @@ int main()
 											0.5, 0.5,
 											0.75
 	};
-
 	// Affichage
 	float totalPoints = 0;
 	for (std::size_t i = 0; i < tests.size(); i++)

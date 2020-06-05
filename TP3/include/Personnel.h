@@ -22,6 +22,7 @@ public:
 
 	virtual void afficher(std::ostream& stream) const;
 
+	// Methode virtuelle pure
 	virtual double getSalaireAnnuel() const = 0;
 
 	const std::string& getNom() const;
