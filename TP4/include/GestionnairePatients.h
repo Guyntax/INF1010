@@ -6,6 +6,8 @@
 #include <memory>
 #include "vector"
 #include "PatientEtudiant.h"
+#include "utils.h"
+#include "Foncteurs.h"
 
 
 class GestionnairePatients
@@ -26,12 +28,13 @@ public:
 
     // TODO: Remplacer l'opérateur par la méthode générique ajouterPatient
     // La méthode prend une référence vers l'objet à ajouter
-    bool operator+=(Patient* patient);
+    template<typename T>
+    bool ajouterPatient(const T& patient);
 
     // TODO : Ajouter la méthode supprimerPatient
     // Les paramètres : numero d'assurance Maladie de type string
     // Retourne un booléan
-
+    
 
     friend std::ostream& operator<<(std::ostream& os, const GestionnairePatients& gestionnairePatient);
 

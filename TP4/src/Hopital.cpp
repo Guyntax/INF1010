@@ -112,7 +112,7 @@ bool Hopital::operator+=(Personnel& personnel)
 //! \return        Un bool qui indique si l'opération a bien fonctionnée
 bool Hopital::operator+=(Patient& patient)
 {
-	return gestionnairePatients_ += &patient;
+	return gestionnairePatients_.ajouterPatient(patient);
 }
 
 //! Méthode qui retourne le nom de l'hopital

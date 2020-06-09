@@ -18,7 +18,13 @@ GestionnairePatients::GestionnairePatients() : patients_(std::vector<std::shared
 // Le nombre des lignes de code maximale est 4 lignes (sans compter la signature, les lignes vides et les lignes avec accolades)
 Patient* GestionnairePatients::chercherPatient(const std::string& numeroAssuranceMaladie)
 {
-	for (auto& patient : patients_)
+	std::vector<std::shared_ptr<Patient>>::iterator iter = std::find_if(patients_.begin(), patients_.end(), ComparateurEstEgalAvecId<Patient>(numeroAssuranceMaladie));
+	if (iter != patients_.end())
+	{
+		return (*iter).get();
+	}
+	else { return nullptr; }
+	/*for (auto& patient : patients_)
 	{
 		if (*patient == numeroAssuranceMaladie)
 		{
@@ -26,7 +32,7 @@ Patient* GestionnairePatients::chercherPatient(const std::string& numeroAssuranc
 		}
 	}
 
-	return nullptr;
+	return nullptr;*/
 }
 
 //! Méthode  qui permet de charger les informations des patients depuis un fichier
@@ -54,25 +60,25 @@ bool GestionnairePatients::chargerDepuisFichier(const std::string& nomFichier)
 	return false;
 }
 
-// TODO: Remplacer l'opérateur par la méthode générique ajouterPatient
+// DONE: Remplacer l'opérateur par la méthode générique ajouterPatient
 // La méthode prend une référence vers l'objet à jouter
 // L'implémentation doit être modifié aussi
 // Le nombre des lignes de code maximale est 6 lignes (sans compter la signature, les lignes vides et les lignes avec accolades)
-bool GestionnairePatients::operator+=(Patient* patient)
+template<typename T>
+bool GestionnairePatients::ajouterPatient(const T& patient)
 {
-	if (patient && !chercherPatient(patient->getNumeroAssuranceMaladie())) {
+	/*L’opérateur += doit être remplacé par la méthode générique ajouterPatient qui
+permet d’ajouter un patient au vecteur patients_ s’il n’y existe pas déjà. Elle utilise
+la méthode chercherPatient. Elle prend comme paramètre une référence vers le
+patient à ajouter.*/
+	if (patient && !chercherPatient(patient.getNumeroAssuranceMaladie())) {
 
 		if (patients_.size() >= NB_PATIENT_MAX)
 		{
 			return false;
 		}
 
-		if (dynamic_cast<PatientEtudiant*>(patient)) {
-			patients_.push_back(std::make_shared<PatientEtudiant>(*dynamic_cast<PatientEtudiant*>(patient)));
-		}
-		else {
-			patients_.push_back(std::make_shared<Patient>(*patient));
-		}
+			patients_.push_back(std::make_shared<T>(patient));
 
 		return true;
 	}
@@ -145,7 +151,7 @@ size_t GestionnairePatients::getNbPatientsEtudiants() const
 	return getPatientsEtudiants().size();
 }
 
-// TODO : Méthode à modifier
+// DONE: Méthode à modifier
 // Utiliser la fonction convertirStringDate implémentée dans utils.h  pour convertir dateAdhesion de string à tm
 bool GestionnairePatients::lireLignePatient(const std::string& ligne)
 {
@@ -159,14 +165,14 @@ bool GestionnairePatients::lireLignePatient(const std::string& ligne)
 	std::string matricule;
 	std::string etablissement;
 
-	if (stream >> indexTypePatient >> std::quoted(nomPatient) >> std::quoted(anneeDeNaissance) >> std::quoted(numeroAssuranceMaladie))
+	if (stream >> indexTypePatient >> std::quoted(nomPatient) >> std::quoted(anneeDeNaissance) >> std::quoted(numeroAssuranceMaladie) >> std::quoted(dateAdhesion))
 	{
 		switch (to_enum<GestionnairePatients::TypePatient, int>(indexTypePatient)) {
 		case TypePatient::Patient:
-			return (*this) += std::make_shared<Patient>(Patient(nomPatient, anneeDeNaissance, numeroAssuranceMaladie)).get();
+			return ajouterPatient(Patient(nomPatient, anneeDeNaissance, numeroAssuranceMaladie,convertirStringDate(dateAdhesion)));
 		case TypePatient::PatientEtudiant:
 			stream >> std::quoted(matricule) >> std::quoted(etablissement);
-			return (*this) += std::make_shared<PatientEtudiant>(PatientEtudiant(nomPatient, anneeDeNaissance, numeroAssuranceMaladie, matricule, etablissement)).get();
+			return ajouterPatient(PatientEtudiant(nomPatient, anneeDeNaissance, numeroAssuranceMaladie, convertirStringDate(dateAdhesion), matricule, etablissement));
 		default:
 			assert(false); // ne devrait pas se passer avec le fichier fourni
 		}

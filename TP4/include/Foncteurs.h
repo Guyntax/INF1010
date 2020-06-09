@@ -5,6 +5,10 @@
 
 #include <memory>
 #include <utility>
+#include "GestionnairePersonnels.h"
+#include "Hopital.h"
+#include "utils.h"
+#include "GestionnairePatients.h"
 
 
 // DONE : Foncteur ComparateurSecondElementPaire
@@ -13,7 +17,7 @@
 // Le template de classe prend deux paramètres, soit les types T1 et T2 tenus par une paire std::pair<T1, T2>.
 // L’opérateur() doit prendre en paramètre deux références constantes vers des paires dont les éléments sont de type T1 et T2.
 // Il retourne true si le second élément de la première paire est strictement inférieur au second élément de la deuxième paire, false sinon.
-template <typename T1, typename T1 >
+template <typename T1, typename T2 >
 class ComparateurSecondElementPaire {
 public:
 	//ComparateurSecondElementPaire()
@@ -34,9 +38,9 @@ private:
 template <typename T>
 class ComparateurEstEgalAvecId{
 public:
-	ComparateurEstEgalAvecId(std::string id) :id_(id) {}
-	bool operator()(shared_ptr<T> personne) {
-		return *personne == id;
+	ComparateurEstEgalAvecId(const std::string& id) :id_(id) {}
+	bool operator()(std::shared_ptr<T> personne) {
+		return (*personne == id_);
 	}
 private:
 	std::string id_;
