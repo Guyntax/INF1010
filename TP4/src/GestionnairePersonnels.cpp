@@ -5,24 +5,23 @@
 #include <iomanip>
 #include <iostream>
 #include <sstream>
+#include <unordered_map>
+#include <algorithm>
 #include "typesafe_enum.h"
+#include "Foncteurs.h"
 
 constexpr int PERSONNEL_INEXSISTANT = -1;
 
-//TODO : Modifier cette méthode 
-// Cette méthode doit utiliserla fonction find
+//DONE : Modifier cette méthode		
+// Cette méthode doit utiliser la fonction find
 // Consulter l'énoncer pour cette méthode pour voir plus d'explication
 // Le nombre des lignes de code maximale est 4 lignes (sans compter la signature, les lignes vides et les lignes avec accolades)
 Personnel* GestionnairePersonnels::chercherPersonnel(const std::string& id) const
 {
-	for (auto& personnel : personnels_)
-	{
-		if (*personnel == id)
-		{
-			return personnel.get();
-		}
+	std::unordered_map<std::string, std::shared_ptr<Personnel>>::const_iterator iterator = personnels_.find(id);
+	if (iterator != personnels_.end()){
+		return iterator->second.get();
 	}
-
 	return nullptr;
 }
 
@@ -51,41 +50,28 @@ bool GestionnairePersonnels::chargerDepuisFichier(const std::string& nomFichier)
 	return false;
 }
 
-// TODO: Remplacer l'opérateur par la méthode générique ajouterPatient
-// La méthode prend une référence vers l'objet à jouter
+// DONE: Remplacer l'opérateur par la méthode générique ajouterPersonnel
+// La méthode prend une référence vers l'objet à ajouter
 // L'implémentation doit être modifié aussi
 // Le nombre des lignes de code maximale est 3 lignes (sans compter la signature, les lignes vides et les lignes avec accolades)
-bool GestionnairePersonnels::operator+=(Personnel* personnel)
+template <typename T>
+bool GestionnairePersonnels::ajouterPersonnel(const T& objet)
 {
-	if (personnel && !chercherPersonnel(personnel->getId()))
-	{
-		if (dynamic_cast<MedecinResident*>(personnel)) {
-			personnels_.push_back(std::make_shared<MedecinResident>(*dynamic_cast<MedecinResident*>(personnel)));
-		}
-		else if (dynamic_cast<Medecin*>(personnel)) {
-			personnels_.push_back(std::make_shared<Medecin>(*dynamic_cast<Medecin*>(personnel)));
-		}
-		else {
-			assert(false);
-		}
-
-		return true;
+	if (dynamic_cast<Personnel*>(std::make_shared<T>(objet).get()) && !chercherPersonnel.(objet.getId() ) {
+		return personnels_[objet.getId()] = std::make_shared<T>(objet);
 	}
-
 	return false;
 }
 
-// TODO: Remplacer l'opérateur par la méthode supprimerPesonnel
+// DONE: Remplacer l'opérateur par la méthode supprimerPesonnel
 // La méthode prend un string qui est l'id de personnel à supprimer
-bool GestionnairePersonnels::operator-=(const std::string& id)
-{
+template <typename T>
+bool GestionnairePersonnels::supprimerPesonnel(std::string id){
 	//TODO : utiliser la méthode chercherPersonnel
-	if ()
-	{
-		personnels_[indexPersonnel]->setEstActif(false);
+	if (chercherPersonnel.(id)){
+		personnels_[id)]->setEstActif(false);
 		return true;
 	}
-
 	return false;
 }
 
@@ -94,41 +80,63 @@ bool GestionnairePersonnels::operator-=(const std::string& id)
 //! \param gestionnairePersonnels  Le gestionnaire personnels à afficher
 std::ostream& operator<<(std::ostream& os, const GestionnairePersonnels& gestionnairePersonnels)
 {
-	// Code fourni
+	// Code fourni A ENELVER
 	if constexpr (false)
 	{
-		for (auto it = gp.personnels_.cbegin(); it != gp.personnels_.cend(); ++it)
+		for (auto it = gestionnairePersonnels.personnels_.cbegin(); it != gestionnairePersonnels.personnels_.cend(); ++it)
 		{
 			it->second->afficher(os);
 			os << '\n';
 		}
 		return os;
 	}
-	// TODO
+	// TODO: ENELVER CE QUI PRECEDE
 	else
 	{
-		//TODO : Utiliser une boucle for ranged-based
+		//DONE : Utiliser une boucle for ranged-based
+		for (auto& it : gestionnairePersonnels.personnels_) {
+			it.second->afficher(os);
+			os << '\n';
+		}
+		return os;
 	}
 }
 
-//TODO : à adapter au changement du type de l'attribut personnels_
-const std::vector<std::shared_ptr<Personnel>>& GestionnairePersonnels::getPersonnels() const
+//DONE : à adapter au changement du type de l'attribut personnels_
+const std::unordered_map<std::string, std::shared_ptr<Personnel>>& GestionnairePersonnels::getPersonnels() const
 {
 	return personnels_;
 }
 
-/// TODO : Ajouter la méthode générique getPersonnelsAvecType()
+/// DONE : Ajouter la méthode générique getPersonnelsAvecType()
 // Elle retourne unordered_map de string et un pointeur vers le personnel
 // La méthode parcours personnels_ et retourne un unordered_map de type désiré
+template <typename T>
+const std::unordered_map<std::string, std::shared_ptr<Personnel>>& GestionnairePersonnels::getPersonnelsAvecType() const {
+	std::unordered_map<std::string, std::shared_ptr<Personnel>> map
+		for (auto& it : gestionnairePersonnels.personnels_) {
+			if ((dynamic_cast<T*>(it.get()))) {
+				map[objet.getId()] = std::make_shared<T>(dynamic_cast<T*>(it.get()));
+			}
+		}
+	return map;
+}
 
-// TODO : Ajouter la méthode getPersonnelsTriesSuivantSalaireAnnuel
+// DONE : Ajouter la méthode getPersonnelsTriesSuivantSalaireAnnuel
 // Elle trie le personnel de l’hôpital suivant le salaire annuel
 // Elle retourne un vecteur de pair de string est shared_ptr<Pesonnel>
 // On doit tout d’abord copier les éléments de la map personels_  dans un vecteur de std::pair<std::string, std::shared_ptr<Personnel>> 
 // On utilise un algorithme de trie pour trier les éléments du vecteur. 
 // Elle utilise le foncteur ComparateurSecondElementPaire.
+std::vector<std::pair<std::string, std::shared_ptr<Personnel>>> GestionnairePersonnels::getPersonnelsTriesSuivantSalaireAnnuel() const {
+	std::vector<std::pair<std::string, std::shared_ptr<Personnel>>> vecteur;
+	std::copy(personnels_.begin()->second, personnels_.end()->second,vecteur.begin());
+	ComparateurSecondElementPaire<std::string, std::shared_ptr<Personnel>> comp;
+	std::sort(vecteur.begin(), vecteur.end(),comp);
+	return vecteur;
+}
 
-
+/*
 //! Méthode qui retourne la liste des médecins de l'hôpital
 //! \return la liste des médecins
 std::vector<Medecin*> GestionnairePersonnels::getMedecins() const
@@ -158,6 +166,7 @@ std::vector<MedecinResident*> GestionnairePersonnels::getMedecinsResidents() con
 
 	return medecinsResidents;
 }
+*/
 
 //! Méthode qui retourne le nombre des personnels
 //! \return le nombre de tous le pesonnels
@@ -166,16 +175,17 @@ size_t GestionnairePersonnels::getNbPersonnels() const
 	return personnels_.size();
 }
 
-// TODO : à modifier
+// DONE : à modifier
+
 size_t GestionnairePersonnels::getNbMedecins() const
 {
-	return getMedecins().size();
+	return getPersonnelsAvecType<Medecin>().size();
 }
 
-// TODO : à modifier
+// DONE : à modifier
 size_t GestionnairePersonnels::getNbMedecinsResidents() const
 {
-	return getMedecinsResidents().size();
+	return getPersonnelsAvecType<MedecinResident>().size();
 }
 
 
@@ -200,10 +210,10 @@ bool GestionnairePersonnels::lireLignePersonnel(const std::string& ligne)
 		switch (to_enum<GestionnairePersonnels::TypePersonnel, int>(indexTypePersonnel)) {
 		case TypePersonnel::Medecin:
 			stream >> indexSpecialite;
-			return (*this) += std::make_shared<Medecin>(Medecin(nomPersonnel, id, to_enum<Medecin::Specialite, int>(indexSpecialite))).get();
+			return ajouterPersonnel(Medecin(nomPersonnel, id, to_enum<Medecin::Specialite, int>(indexSpecialite)));
 		case TypePersonnel::MedecinResident:
 			stream >> std::quoted(dateDeNaissance) >> std::quoted(matricule) >> std::quoted(etablissement) >> indexSpecialite;
-			return (*this) += std::make_shared<MedecinResident>(MedecinResident(nomPersonnel, dateDeNaissance, matricule, etablissement, id, to_enum<Medecin::Specialite, int>(indexSpecialite))).get();
+			return ajouterPersonnel(MedecinResident(nomPersonnel, dateDeNaissance, matricule, etablissement, id, to_enum<Medecin::Specialite, int>(indexSpecialite)));
 		default:
 			assert(false); // ne devrait pas se passer avec le fichier fourni
 		}
@@ -212,6 +222,7 @@ bool GestionnairePersonnels::lireLignePersonnel(const std::string& ligne)
 	return false;
 }
 
+/*
 //! Méthode  qui permet de trouver l'index un medecin dans la liste des medecins
 //! \param numeroLicence   numero de licence du medecin
 //! \return             int bool qui indique l'index du medecin et MEDECIN_INEXSISTANT si le medecin est inexistant
@@ -226,3 +237,4 @@ int GestionnairePersonnels::trouverIndexPersonnel(const std::string& id)
 	}
 	return PERSONNEL_INEXSISTANT;
 }
+*/

@@ -2,6 +2,7 @@
 #define GESTIONNAIREPERSONNELS_H
 
 #include <memory>
+#include <unordered_map>
 #include "Medecin.h"
 #include "MedecinResident.h"
 
@@ -21,28 +22,33 @@ public:
 	Personnel* chercherPersonnel(const std::string& id) const;
 	bool chargerDepuisFichier(const std::string& nomFichiers);
 
-	// TODO: Remplacer l'opérateur par la méthode générique ajouterPatient
+	// DONE: Remplacer l'opérateur par la méthode générique ajouterPatient
 	// La méthode prend une référence vers l'objet à ajouter
-	bool operator+=(Personnel* personnel);
+	template <typename T>
+	bool ajouterPersonnel(const T& t); // const ne devrait pas etre la
 
 	// TODO: Remplacer l'opérateur par la méthode supprimerPesonnel
 	// La méthode prend un string qui est l'id de personnel à supprimer
-	bool operator-=(const std::string& id);
+	template <typename T>
+	bool supprimerPesonnel(std::string id);
 
 	friend std::ostream& operator<<(std::ostream& os, const GestionnairePersonnels& gestionnairePesonnel);
 
-	//TODO : à adapter au changement du type de l'attribut personnels_
-	const std::vector<std::shared_ptr<Personnel>>& getPersonnels() const;
+	//DONE : à adapter au changement du type de l'attribut personnels_
+	const std::unordered_map<std::string, std::shared_ptr<Personnel>>& getPersonnels() const;
 
-	// TODO : Ajouter la méthode générique getPersonnelsAvecType()
+	// DONE : Ajouter la méthode générique getPersonnelsAvecType()
 	// Elle retourne unordered_map de string et un pointeur vers le personnel
+	template <typename T>
+	const std::unordered_map<std::string, std::shared_ptr<Personnel>>& getPersonnelsAvecType() const;
 
-	// TODO : Ajouter la méthode getPersonnelsTriesSuivantSalaireAnnuel
+	// DONE : Ajouter la méthode getPersonnelsTriesSuivantSalaireAnnuel
 	// Elle retourne un vecteur de pair de string est shared_ptr<Pesonnel>
-	
+	std::vector<std::pair<std::string, std::shared_ptr<Personnel>>> getPersonnelsTriesSuivantSalaireAnnuel() const;
+
 	//Les deux méthodes à enlever.
-	std::vector<Medecin*> getMedecins() const;
-	std::vector<MedecinResident*> getMedecinsResidents() const;
+	//std::vector<Medecin*> getMedecins() const;
+	//std::vector<MedecinResident*> getMedecinsResidents() const;
 
 	size_t getNbPersonnels() const;
 	size_t getNbMedecins() const;
@@ -51,9 +57,9 @@ public:
 private:
 	bool lireLignePersonnel(const std::string& ligne);
 
-	// TODO : Changer le type de l'attribut pesonnel.
+	// DONE : Changer le type de l'attribut pesonnel.
 	// Il doit être unordered_map : std::string, std::shared_ptr<Personnel>
-	std::vector<std::shared_ptr<Personnel>> personnels_;
+	std::unordered_map<std::string, std::shared_ptr<Personnel>> personnels_;
 };
 
 #endif // GESTIONNAIREPERSONNELS_H

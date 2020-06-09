@@ -11,8 +11,8 @@ class Personnel
 public:
 
 	Personnel() = default;
-	//TODO : Modifier le constructeur pour prendre en considération l'attribut ajouté
-	Personnel(const std::string& nom, const std::string& id);
+	//DONE : Modifier le constructeur pour prendre en considération l'attribut ajouté
+	Personnel(const std::string& nom, const std::string& id, const tm& dateAdhesion);
 
 	friend bool operator==(const std::string& id, const Personnel& personnel);
 	bool operator==(const std::string& id) const;
@@ -37,7 +37,8 @@ protected:
 	std::string nom_;
 	std::string id_;
 	bool estActif_ = true;
-	//TODO : Ajouter l'attribut dateAdhesion_
+	//DONE : Ajouter l'attribut dateAdhesion_
+	tm dateAdhesion_;
 };
 
 #endif // PERSONNEL_H
