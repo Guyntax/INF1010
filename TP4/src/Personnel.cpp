@@ -3,7 +3,7 @@
 #include <typeinfo>
 
 //TODO : Modifier le constructeur pour prendre en considération l'attribut ajouté
-Personnel::Personnel(const std::string& nom, const std::string& id) : nom_(nom), id_(id)
+Personnel::Personnel(const std::string& nom, const std::string& id, const tm& dateAdhesion) : nom_(nom), id_(id), dateAdhesion_(dateAdhesion)
 {
 }
 
