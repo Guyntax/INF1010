@@ -26,6 +26,7 @@ public:
 	const std::string& getNom() const;
 	const std::string& getId() const;
 	bool getEstActif() const;
+	const tm& getDateAdhesion() const;
 
 	void setNom(const std::string& nom);
 	void setId(const std::string& id);
