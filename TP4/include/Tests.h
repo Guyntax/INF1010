@@ -5,9 +5,9 @@
 #ifndef TESTS_H
 #define TESTS_H
 
-#define TEST_GESTIONNAIRE_PATIENTS_ACTIF false
+#define TEST_GESTIONNAIRE_PATIENTS_ACTIF true
 #define TEST_GESTIONNAIRE_PERSONNELS_ACTIF false
-#define TEST_HOPITAL_ACTIF false
+#define TEST_HOPITAL_ACTIF true
 #define AFFICHER_QUESTION_BONUS false
 
 namespace Tests
