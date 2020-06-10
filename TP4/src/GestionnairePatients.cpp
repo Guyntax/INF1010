@@ -71,14 +71,14 @@ bool GestionnairePatients::ajouterPatient(const T& patient)
 permet d’ajouter un patient au vecteur patients_ s’il n’y existe pas déjà. Elle utilise
 la méthode chercherPatient. Elle prend comme paramètre une référence vers le
 patient à ajouter.*/
-	if (patient && !chercherPatient(patient.getNumeroAssuranceMaladie())) {
+	if (!chercherPatient(patient.getNumeroAssuranceMaladie())) {
 
 		if (patients_.size() >= NB_PATIENT_MAX)
 		{
 			return false;
 		}
 
-			patients_.push_back(std::make_shared<T>(patient));
+		patients_.push_back(std::make_shared<T>(patient));
 
 		return true;
 	}
@@ -145,7 +145,7 @@ const std::vector<std::shared_ptr<Patient>>& GestionnairePatients::getPatients()
 std::vector<std::shared_ptr<Patient>> GestionnairePatients::getPatientsEtudiants() const
 {
 	std::vector<std::shared_ptr<Patient>> patientsEtudiants;
-	std::copy_if(patients_.begin(), patients_.end(), patientsEtudiants, ComparateurTypePatient<PatientEtudiant>());
+	std::copy_if(patients_.begin(), patients_.end(), back_inserter(patientsEtudiants), ComparateurTypePatient<PatientEtudiant>());
 
 	return patientsEtudiants;
 }

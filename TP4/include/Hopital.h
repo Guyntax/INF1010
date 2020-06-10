@@ -49,7 +49,7 @@ public:
     template <typename perso>
     bool ajouterPersonnel(perso& personnel)
     {
-        return gestionnairePersonnels_.GestionnairePersonnels::ajouterPersonnel(personnel);
+        return gestionnairePersonnels_.ajouterPersonnel<perso>(personnel);
     }
 
     // DONE: Remplacer l'opérateur par la méthode générique ajouterPatient
@@ -59,7 +59,7 @@ public:
     template <typename pat>
     bool ajouterPatient(pat& patient)
     {
-        return gestionnairePatients_.GestionnairePatients::ajouterPatient(patient);
+        return gestionnairePatients_.ajouterPatient<pat>(patient);
     }
 
     const std::string& getNom() const;

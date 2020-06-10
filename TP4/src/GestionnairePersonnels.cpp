@@ -134,8 +134,8 @@ std::unordered_map<std::string, std::shared_ptr<T>> GestionnairePersonnels::getP
 std::vector<std::pair<std::string, std::shared_ptr<Personnel>>> GestionnairePersonnels::getPersonnelsTriesSuivantSalaireAnnuel() const {
 	std::vector<std::pair<std::string, std::shared_ptr<Personnel>>> vecteur;
 	std::copy(personnels_.begin(), personnels_.end(), vecteur.begin());
-	ComparateurSecondElementPaire<std::string, std::shared_ptr<Personnel>> comp;
-	//std::sort(vecteur.begin(), vecteur.end(), comp());
+
+	std::sort(vecteur.begin(), vecteur.end(), ComparateurSecondElementPaire<std::string, std::shared_ptr<Personnel>>());
 	return vecteur;
 }
 

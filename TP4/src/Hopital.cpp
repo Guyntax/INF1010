@@ -68,7 +68,7 @@ double Hopital::getAncienneteMoyenneDesPersonnels()
 std::vector<std::shared_ptr<Consultation>> Hopital::getConsultationsEntreDates(tm& date1, tm& date2)
 {
 	std::vector<std::shared_ptr<Consultation>> consult;
-	std::copy_if(consultations_.begin(), consultations_.end(), consult, EstDansIntervalleDatesConsultation(date1,date2) );
+	std::copy_if(consultations_.begin(), consultations_.end(), back_inserter(consult), EstDansIntervalleDatesConsultation(date1,date2) );
 	return consult;
 }
 

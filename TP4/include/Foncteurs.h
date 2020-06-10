@@ -5,10 +5,10 @@
 
 #include <memory>
 #include <utility>
-#include "GestionnairePersonnels.h"
-#include "Hopital.h"
 #include "utils.h"
-#include "GestionnairePatients.h"
+#include <Personnel.h>
+#include <Patient.h>
+#include <Consultation.h>
 
 
 // DONE : Foncteur ComparateurSecondElementPaire
@@ -22,7 +22,7 @@ class ComparateurSecondElementPaire {
 public:
 	//ComparateurSecondElementPaire()
 	bool operator()(const std::pair<T1,T2>& lft,const std::pair<T1, T2>& rht) {
-		return (lft.second < rht.second);
+		return *(lft.second) < *(rht.second);
 	}
 };
 
@@ -36,7 +36,7 @@ class ComparateurEstEgalAvecId{
 public:
 	ComparateurEstEgalAvecId(std::string id) :id_(id) {}
 	bool operator()(std::shared_ptr<T> personne) {
-		return *personne == id;
+		return *personne == id_;
 	}
 private:
 	std::string id_;
@@ -76,13 +76,8 @@ template <typename T>
 class ComparateurTypePatient {
 public:
 	bool operator()(std::shared_ptr<Patient> patient){
-		if (dynamic_cast<T*>(patient.get())) {
-			return true;
-		}
-		return false;
+		return  (dynamic_cast<T*>(patient.get()));
 	}
-private:
-
 };
 
 // DONE : EstDansIntervalleDatesConsultation
