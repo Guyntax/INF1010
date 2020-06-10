@@ -12,7 +12,7 @@ GestionnairePatients::GestionnairePatients() : patients_(std::vector<std::shared
 {
 }
 
-//TODO : Modifier cette méthode 
+//DONE : Modifier cette méthode 
 // Cette méthode doit utiliserla fonction find_if et le foncteur ComparateurEstEgalAvecId.
 // Consulter l'énoncer pour cette méthode pour voir plus d'explication
 // Le nombre des lignes de code maximale est 4 lignes (sans compter la signature, les lignes vides et les lignes avec accolades)
@@ -89,6 +89,20 @@ patient à ajouter.*/
 // Les paramètres : numero d'assurance Maladie de type string patient à supprimer
 // Retourn un booléan
 //Elle utilise les fonctions erase, remove_if et le foncteur ComparateurEstEgalAvecId.
+bool GestionnairePatients::supprimerPatient(const std::string& numeroAssMaladie)
+{
+	size_t temp = patients_.size();
+	(patients_.erase(std::remove_if(patients_.begin(),patients_.end(),ComparateurEstEgalAvecId<Patient>(numeroAssMaladie))));
+	if (patients_.size()!=temp)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+
+}
 
 
 
@@ -107,7 +121,13 @@ std::ostream& operator<<(std::ostream& os, const GestionnairePatients& gestionna
 	// TODO
 	else
 	{
-		//TODO : utiliser une boucle for range-based
+		//Pas sûre, on verra si ça marche
+		for (auto it : gestionnairePatients.patients_)
+		{
+			(it)->afficher(os);
+			os << '\n';
+		}
+		return os;
 	}
 }
 
@@ -118,21 +138,14 @@ const std::vector<std::shared_ptr<Patient>>& GestionnairePatients::getPatients()
 	return patients_;
 }
 
-// TODO Modifier cette méthode.
+// DONE Modifier cette méthode.
 // Elle retourne un vecteur de pointeur shared_ptr vers Patient
 // Elle utilise copy_if, back_inserter et le foncteur ComparateurTypePatient
 // Le nombre des lignes de code maximale est 3 lignes (sans compter la signature, les lignes vides et les lignes avec accolades)
-std::vector<PatientEtudiant*> GestionnairePatients::getPatientsEtudiants() const
+std::vector<std::shared_ptr<Patient>> GestionnairePatients::getPatientsEtudiants() const
 {
-	std::vector<PatientEtudiant*> patientsEtudiants;
-	for (const auto& patient : patients_) 
-	{
-		PatientEtudiant* patientEtudiant = dynamic_cast<PatientEtudiant*>(patient.get());
-		if (patientEtudiant) 
-		{
-			patientsEtudiants.push_back(patientEtudiant);
-		}
-	}
+	std::vector<std::shared_ptr<Patient>> patientsEtudiants;
+	std::copy_if(patients_.begin(), patients_.end(), patientsEtudiants, ComparateurTypePatient<PatientEtudiant>());
 
 	return patientsEtudiants;
 }

@@ -34,15 +34,15 @@ public:
     // TODO : Ajouter la méthode supprimerPatient
     // Les paramètres : numero d'assurance Maladie de type string
     // Retourne un booléan
+    bool supprimerPatient(const std::string& numeroAssMaladie);
     
-
     friend std::ostream& operator<<(std::ostream& os, const GestionnairePatients& gestionnairePatient);
 
     const std::vector<std::shared_ptr<Patient>>& getPatients() const;
 
-    // TODO Modifier cette méthode.
+    // DONE Modifier cette méthode.
     // Elle retourne un vecteur de pointeur shared_ptr vers Patient
-    std::vector<PatientEtudiant*>getPatientsEtudiants() const;
+    std::vector<std::shared_ptr<Patient>> getPatientsEtudiants() const;
 
     size_t getNbPatients() const;
     size_t getNbPatientsEtudiants() const;

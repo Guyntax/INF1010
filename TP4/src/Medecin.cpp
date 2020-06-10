@@ -12,8 +12,8 @@ constexpr int PATIENT_INEXSISTANT = -1;
 //! \param nom              Le nom du medecin
 //! \param numeroLicence    Le numero de licence du medecin
 //! \param specialite       La specialite du medecin
-Medecin::Medecin(const std::string& nom, const std::string& numeroLicence, Specialite specialite)
-	: Personnel(nom, numeroLicence)
+Medecin::Medecin(const std::string& nom, const std::string& numeroLicence, Specialite specialite, const tm& dateAdhesion)
+	: Personnel(nom, numeroLicence, dateAdhesion)
 	, specialite_(specialite)
 	, patientsAssocies_(std::vector<Patient*>())
 	, nombreConsultations_(0)

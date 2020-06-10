@@ -39,7 +39,7 @@ template <typename T>
 class ComparateurEstEgalAvecId{
 public:
 	ComparateurEstEgalAvecId(std::string id) :id_(id) {}
-	bool operator()(shared_ptr<T> personne) {
+	bool operator()(std::shared_ptr<T> personne) {
 		return *personne == id;
 	}
 private:

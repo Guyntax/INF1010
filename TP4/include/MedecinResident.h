@@ -13,7 +13,7 @@ class MedecinResident : public Etudiant, public Medecin
 {
 public:
     MedecinResident() = default;
-    MedecinResident(const std::string& nom, const std::string& dateDeNaissance, const std::string& matricule, const std::string& etablissement, const std::string NumeroLicenceProvisoire, Specialite specialite);
+    MedecinResident(const std::string& nom, const std::string& dateDeNaissance, const std::string& matricule, const std::string& etablissement, const std::string NumeroLicenceProvisoire, Specialite specialite, const tm& dateAdhesion);
 
     void afficher(std::ostream& stream) const override;
 
