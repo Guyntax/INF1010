@@ -92,7 +92,7 @@ patient à ajouter.*/
 bool GestionnairePatients::supprimerPatient(const std::string& numeroAssMaladie)
 {
 	size_t temp = patients_.size();
-	(patients_.erase(std::remove_if(patients_.begin(),patients_.end(),ComparateurEstEgalAvecId<Patient>(numeroAssMaladie))));
+	(patients_.erase(std::remove_if(patients_.begin(),patients_.end(),ComparateurEstEgalAvecId<Patient>(numeroAssMaladie)), patients_.end()));
 	if (patients_.size()!=temp)
 	{
 		return true;
@@ -182,10 +182,10 @@ bool GestionnairePatients::lireLignePatient(const std::string& ligne)
 	{
 		switch (to_enum<GestionnairePatients::TypePatient, int>(indexTypePatient)) {
 		case TypePatient::Patient:
-			return ajouterPatient(Patient(nomPatient, anneeDeNaissance, numeroAssuranceMaladie,convertirStringDate(dateAdhesion)));
+			return ajouterPatient<Patient>(Patient(nomPatient, anneeDeNaissance, numeroAssuranceMaladie,convertirStringDate(dateAdhesion)));
 		case TypePatient::PatientEtudiant:
 			stream >> std::quoted(matricule) >> std::quoted(etablissement);
-			return ajouterPatient(PatientEtudiant(nomPatient, anneeDeNaissance, numeroAssuranceMaladie, convertirStringDate(dateAdhesion), matricule, etablissement));
+			return ajouterPatient<PatientEtudiant>(PatientEtudiant(nomPatient, anneeDeNaissance, numeroAssuranceMaladie, convertirStringDate(dateAdhesion), matricule, etablissement));
 		default:
 			assert(false); // ne devrait pas se passer avec le fichier fourni
 		}

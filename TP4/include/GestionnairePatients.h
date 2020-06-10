@@ -47,7 +47,7 @@ public:
     size_t getNbPatients() const;
     size_t getNbPatientsEtudiants() const;
 
-    static constexpr size_t NB_PATIENT_MAX = 16;
+    static constexpr size_t NB_PATIENT_MAX = 100;
 
 private:
     bool lireLignePatient(const std::string& ligne);
