@@ -14,9 +14,9 @@
 //! \param NumeroLicenceProvisoire    Le numero de licence provisoir du medecin résidant
 //! \param specialite				  La specialite du medecin résidant
 MedecinResident::MedecinResident(const std::string& nom, const std::string& dateDeNaissance, const std::string& matricule,
-	const std::string& etablissement, const std::string NumeroLicenceProvisoire, Specialite specialite)
+	const std::string& etablissement, const std::string NumeroLicenceProvisoire, Specialite specialite, const tm& dateAdhesion)
 	:Etudiant(nom, dateDeNaissance, matricule, etablissement)
-	, Medecin(nom, NumeroLicenceProvisoire, specialite)
+	, Medecin(nom, NumeroLicenceProvisoire, specialite, dateAdhesion)
 {
 }
 

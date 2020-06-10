@@ -40,7 +40,7 @@ public:
 	// DONE : Ajouter la méthode générique getPersonnelsAvecType()
 	// Elle retourne unordered_map de string et un pointeur vers le personnel
 	template <typename T>
-	const std::unordered_map<std::string, std::shared_ptr<Personnel>>& getPersonnelsAvecType() const;
+	std::unordered_map<std::string, std::shared_ptr<T>> getPersonnelsAvecType() const;
 
 	// DONE : Ajouter la méthode getPersonnelsTriesSuivantSalaireAnnuel
 	// Elle retourne un vecteur de pair de string est shared_ptr<Pesonnel>

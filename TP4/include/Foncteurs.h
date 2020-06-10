@@ -20,12 +20,8 @@ class ComparateurSecondElementPaire {
 public:
 	//ComparateurSecondElementPaire()
 	bool operator()(const std::pair<T1,T2>& lft,const std::pair<T1, T2>& rht) {
-		if (lft.second < rht.second) {
-			return true;
-		}
-		return false;
+		return (lft.second < rht.second);
 	}
-private:
 };
 
 // DONE : Foncteur ComparateurEstEgalAvecId

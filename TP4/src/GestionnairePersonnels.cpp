@@ -57,8 +57,10 @@ bool GestionnairePersonnels::chargerDepuisFichier(const std::string& nomFichier)
 template <typename T>
 bool GestionnairePersonnels::ajouterPersonnel(const T& objet)
 {
-	if (dynamic_cast<Personnel*>(std::make_shared<T>(objet).get()) && !chercherPersonnel.(objet.getId() ) {
-		return personnels_[objet.getId()] = std::make_shared<T>(objet);
+	std::shared_ptr<T> ptr = std::make_shared<T>(objet);
+	if (dynamic_cast<Personnel*>(ptr.get()) && !chercherPersonnel(objet.getId()) ) {
+		personnels_[objet.getId()] = ptr;
+		return true;
 	}
 	return false;
 }
@@ -68,8 +70,8 @@ bool GestionnairePersonnels::ajouterPersonnel(const T& objet)
 template <typename T>
 bool GestionnairePersonnels::supprimerPesonnel(std::string id){
 	//TODO : utiliser la méthode chercherPersonnel
-	if (chercherPersonnel.(id)){
-		personnels_[id)]->setEstActif(false);
+	if (chercherPersonnel(id)){
+		personnels_[id]->setEstActif(false);
 		return true;
 	}
 	return false;
@@ -108,21 +110,22 @@ const std::unordered_map<std::string, std::shared_ptr<Personnel>>& GestionnaireP
 	return personnels_;
 }
 
-/// DONE : Ajouter la méthode générique getPersonnelsAvecType()
+/// TODO : Ajouter la méthode générique getPersonnelsAvecType()
 // Elle retourne unordered_map de string et un pointeur vers le personnel
 // La méthode parcours personnels_ et retourne un unordered_map de type désiré
 template <typename T>
-const std::unordered_map<std::string, std::shared_ptr<Personnel>>& GestionnairePersonnels::getPersonnelsAvecType() const {
-	std::unordered_map<std::string, std::shared_ptr<Personnel>> map
-		for (auto& it : gestionnairePersonnels.personnels_) {
-			if ((dynamic_cast<T*>(it.get()))) {
-				map[objet.getId()] = std::make_shared<T>(dynamic_cast<T*>(it.get()));
-			}
+std::unordered_map<std::string, std::shared_ptr<T>> GestionnairePersonnels::getPersonnelsAvecType() const {
+	std::unordered_map<std::string, std::shared_ptr<T>> map;
+	for (auto& element : personnels_) {//gestionnairePersonnels.personnels_
+		if ((dynamic_cast<T*>(element.second.get()))) {
+			std::cout << element.first;
+		//map[element.first] = std::make_shared<T>(dynamic_cast<T*>(element.second.get()));
 		}
+	}
 	return map;
 }
 
-// DONE : Ajouter la méthode getPersonnelsTriesSuivantSalaireAnnuel
+// TODO : Ajouter la méthode getPersonnelsTriesSuivantSalaireAnnuel
 // Elle trie le personnel de l’hôpital suivant le salaire annuel
 // Elle retourne un vecteur de pair de string est shared_ptr<Pesonnel>
 // On doit tout d’abord copier les éléments de la map personels_  dans un vecteur de std::pair<std::string, std::shared_ptr<Personnel>> 
@@ -130,9 +133,9 @@ const std::unordered_map<std::string, std::shared_ptr<Personnel>>& GestionnaireP
 // Elle utilise le foncteur ComparateurSecondElementPaire.
 std::vector<std::pair<std::string, std::shared_ptr<Personnel>>> GestionnairePersonnels::getPersonnelsTriesSuivantSalaireAnnuel() const {
 	std::vector<std::pair<std::string, std::shared_ptr<Personnel>>> vecteur;
-	std::copy(personnels_.begin()->second, personnels_.end()->second,vecteur.begin());
+	std::copy(personnels_.begin(), personnels_.end(), vecteur.begin());
 	ComparateurSecondElementPaire<std::string, std::shared_ptr<Personnel>> comp;
-	std::sort(vecteur.begin(), vecteur.end(),comp);
+	//std::sort(vecteur.begin(), vecteur.end(), comp());
 	return vecteur;
 }
 
@@ -205,15 +208,15 @@ bool GestionnairePersonnels::lireLignePersonnel(const std::string& ligne)
 
 	int indexSpecialite;
 
-	if (stream >> indexTypePersonnel >> std::quoted(nomPersonnel) >> std::quoted(id))
+	if (stream >> indexTypePersonnel >> std::quoted(nomPersonnel) >> std::quoted(id) >> std::quoted(dateAdhesion))
 	{
 		switch (to_enum<GestionnairePersonnels::TypePersonnel, int>(indexTypePersonnel)) {
 		case TypePersonnel::Medecin:
 			stream >> indexSpecialite;
-			return ajouterPersonnel(Medecin(nomPersonnel, id, to_enum<Medecin::Specialite, int>(indexSpecialite)));
+			return ajouterPersonnel(Medecin(nomPersonnel, id, to_enum<Medecin::Specialite, int>(indexSpecialite), convertirStringDate(dateAdhesion)));
 		case TypePersonnel::MedecinResident:
 			stream >> std::quoted(dateDeNaissance) >> std::quoted(matricule) >> std::quoted(etablissement) >> indexSpecialite;
-			return ajouterPersonnel(MedecinResident(nomPersonnel, dateDeNaissance, matricule, etablissement, id, to_enum<Medecin::Specialite, int>(indexSpecialite)));
+			return ajouterPersonnel(MedecinResident(nomPersonnel, dateDeNaissance, matricule, etablissement, id, to_enum<Medecin::Specialite, int>(indexSpecialite), convertirStringDate(dateAdhesion)));
 		default:
 			assert(false); // ne devrait pas se passer avec le fichier fourni
 		}
