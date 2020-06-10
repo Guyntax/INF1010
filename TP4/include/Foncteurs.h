@@ -42,7 +42,7 @@ private:
 	std::string id_;
 };
 
-// TODO : Foncteur AccumulateurPeriodePersonnel
+// DONE : Foncteur AccumulateurPeriodePersonnel
 // Foncteur qui se charge de l'ajout de la p�riode pass�e par les personnels � l'h�pital � une somme.
 // L�op�rateur() prend 3  param�tres : 
 //      somme de type double 
@@ -52,17 +52,19 @@ private:
 class AccumulateurPeriodePersonnel{
 public:
 	AccumulateurPeriodePersonnel(double somme): somme_(somme){}
-	double operator()(double somme, std::pair<const std::string, std::shared_ptr<Personnel>> pair) {
-		/*
-		if (comparerDate(getDateCourante(), pair.second->getDateAdhesion())) {
-			return somme_ + getDateCourante() - pair.second->getDateAdhesion();
+	int operator()(int somme, std::pair<const std::string, std::shared_ptr<Personnel>> pair) {
+
+		tm TM1 = getDateCourante();
+		tm TM2 = pair.second->getDateAdhesion();
+		
+		if (comparerDate(TM1, TM2 )) {
+			return somme_ + getDateCourante().tm_year - pair.second->getDateAdhesion().tm_year;
 		}
-		*/
-		return 0; // erreur
+		return 0; // si erreur
 
 	}
 private:
-	double somme_;
+	int somme_;
 };
 
 
@@ -90,11 +92,7 @@ public:
 	EstDansIntervalleDatesConsultation(const tm& debut, const tm& fin) :debut_(debut), fin_(fin) {}
 	bool operator()(const std::shared_ptr<Consultation>& consultation) {
 		tm dateConsultation  = convertirStringDate(consultation->getDate());
-
-		if (comparerDate(dateConsultation, debut_) && comparerDate(fin_, dateConsultation)) {
-			return true;
-		}
-		return false;
+		return comparerDate(dateConsultation, debut_) && comparerDate(fin_, dateConsultation);
 	}
 private:
 	tm debut_;

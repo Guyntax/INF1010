@@ -66,6 +66,13 @@ bool Personnel::getEstActif() const
 	return estActif_;
 }
 
+//! Méthode qui retourne la date d'adhésion du personnel
+//! \return dateAdhesion_ la date d'adhésion du personnel
+const tm& Personnel::getDateAdhesion() const {
+	return dateAdhesion_;
+}
+
+
 //! Méthode qui met a jours le nom  du personnel
 //! \pararm  nom  Le nom du personnel
 void Personnel::setNom(const std::string& nom)
