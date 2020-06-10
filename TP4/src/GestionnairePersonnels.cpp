@@ -133,7 +133,7 @@ std::unordered_map<std::string, T*> GestionnairePersonnels::getPersonnelsAvecTyp
 // Elle utilise le foncteur ComparateurSecondElementPaire.
 std::vector<std::pair<std::string, std::shared_ptr<Personnel>>> GestionnairePersonnels::getPersonnelsTriesSuivantSalaireAnnuel() const {
 	std::vector<std::pair<std::string, std::shared_ptr<Personnel>>> vecteur;
-	std::copy(personnels_.begin(), personnels_.end(), vecteur.begin());
+	std::copy(personnels_.begin(), personnels_.end(), back_inserter(vecteur));
 
 	std::sort(vecteur.begin(), vecteur.end(), ComparateurSecondElementPaire<std::string, std::shared_ptr<Personnel>>());
 	return vecteur;
