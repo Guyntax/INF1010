@@ -10,7 +10,7 @@ public:
     Patient() = default;
 
     //TODO : Modifier le constructeur pour prendre en considération l'attribut ajouté
-    Patient(const std::string& nom, const std::string& dateDeNaissance, const std::string& numeroAssuranceMaladie);
+    Patient(const std::string& nom, const std::string& dateDeNaissance, const std::string& numeroAssuranceMaladie, const tm& dateAdhesion);
 
     bool operator==(const std::string& numeroAssuranceMaladie) const;
     friend bool operator==(const std::string& nom, const Patient& patient);
@@ -29,6 +29,7 @@ protected:
     std::string nom_;
     std::string numeroAssuranceMaladie_;
     std::string dateDeNaissance_;
+    tm dateAdhesion_;
     //TODO : Ajouter attribut dateAdhesion_ de type tm
 };
 

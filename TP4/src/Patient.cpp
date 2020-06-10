@@ -5,10 +5,11 @@
 #include <string>
 
 //TODO : Modifier le constructeur pour prendre en considération l'attribut ajouté
-Patient::Patient(const std::string& nom, const std::string& dateDeNaissance, const std::string& numeroAssuranceMaladie)
+Patient::Patient(const std::string& nom, const std::string& dateDeNaissance, const std::string& numeroAssuranceMaladie, const tm& dateAdhesion)
 	: nom_(nom)
 	, numeroAssuranceMaladie_(numeroAssuranceMaladie)
 	, dateDeNaissance_(dateDeNaissance)
+	, dateAdhesion_(dateAdhesion)
 {
 }
 

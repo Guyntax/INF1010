@@ -28,7 +28,7 @@ public:
     };
 
     Medecin() = default;
-    Medecin(const std::string& nom, const std::string& numeroLicence, Specialite specialite, const tm& dateAdhesion);
+    Medecin(const std::string& nom, const std::string& numeroLicence,  Specialite specialite, const tm& dateAdhesion);
 
     bool operator+=(Patient* patient);
     bool operator-=(const std::string& numeroAssuranceMaladiePatient);

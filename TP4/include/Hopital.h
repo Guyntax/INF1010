@@ -22,35 +22,45 @@ public:
     Hopital() = default;
     Hopital(const std::string& nom, const std::string& adresse);
 
-    // TODO : Ajouter un paramètre à la méthode. Ce paramètre est le nom du fichier consultation
-    bool chargerBaseDeDonnees(const std::string& nomFichierPersonnels, const std::string& nomFichierPatients);
+    // DONE : Ajouter un paramètre à la méthode. Ce paramètre est le nom du fichier consultation
+    bool chargerBaseDeDonnees(const std::string& nomFichierPersonnels, const std::string& nomFichierPatients, const std::string& nomFichierConsultations);
 
     bool chargerDepuisFichierConsultation(const std::string& nomFichiers);
 
-    // TODO : Ajouter la méthode getAncienneteMoyenneDesPersonnels 
+    // DONE : Ajouter la méthode getAncienneteMoyenneDesPersonnels 
     // Elle retourne la moyenne de l'ancienneté des personnels de type double
+    double getAncienneteMoyenneDesPersonnels();
 
-    // TODO : Ajouter la méthode getCosultationsEntreDates
+    // DONE : Ajouter la méthode getConsultationsEntreDates
     // Deux paramètres : références constantes vers des objets de type tm
-    // Elle retourne la moyenne de l'ancienneté des personnels de type double
     // Elle retourne un vecteur de shared_ptr vers Consultation
+    std::vector<std::shared_ptr<Consultation>> getConsultationsEntreDates(tm& date1, tm& date2);
 
 
-    // TODO: Remplacer l'opérateur par la méthode générique ajouterConsultation
+    // DONE: Remplacer l'opérateur par la méthode générique ajouterConsultation
     // La méthode prend une référence vers l'objet à ajouter
-    bool operator+=(Consultation& consultation);
+    template <typename consult>
+    bool ajouterConsultation(consult& consultation);
  
-    // TODO: Remplacer l'opérateur par la méthode générique ajouterPersonnel
+    // DONE: Remplacer l'opérateur par la méthode générique ajouterPersonnel
     // La méthode prend une référence vers l'objet à ajouter
     // L'impémentation de cette méthode doit se faire ici.
     // // Le nombre des lignes de code maximale 1 ligne
-    bool operator+=(Personnel& personnel);
+    template <typename perso>
+    bool ajouterPersonnel(perso& personnel)
+    {
+        return gestionnairePersonnels_.GestionnairePersonnels::ajouterPersonnel(personnel);
+    }
 
-    // TODO: Remplacer l'opérateur par la méthode générique ajouterPatient
+    // DONE: Remplacer l'opérateur par la méthode générique ajouterPatient
     // La méthode prend une référence vers l'objet à ajouter
     // L'impémentation de cette méthode doit se faire ici.
     // // Le nombre des lignes de code maximale 1 ligne
-    bool operator+=(Patient& patient);
+    template <typename pat>
+    bool ajouterPatient(pat& patient)
+    {
+        return gestionnairePatients_.GestionnairePatients::ajouterPatient(patient);
+    }
 
     const std::string& getNom() const;
     const std::string& getAdresse() const;

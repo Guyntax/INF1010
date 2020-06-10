@@ -1,20 +1,22 @@
-//TODO Entête du fichier
+//TODO Entï¿½te du fichier
 
 #ifndef FONCTEURS_H
 #define FONCTEURS_H
 
 #include <memory>
 #include <utility>
+#include "GestionnairePersonnels.h"
+#include "Hopital.h"
 #include "utils.h"
-#include "Consultation.h"
+#include "GestionnairePatients.h"
 
 
 // DONE : Foncteur ComparateurSecondElementPaire
-// Foncteur prédicat binaire comparant les seconds éléments de paires pour déterminer si elles sont en ordre.
-// Le foncteur est une classe générique.
-// Le template de classe prend deux paramètres, soit les types T1 et T2 tenus par une paire std::pair<T1, T2>.
-// L’opérateur() doit prendre en paramètre deux références constantes vers des paires dont les éléments sont de type T1 et T2.
-// Il retourne true si le second élément de la première paire est strictement inférieur au second élément de la deuxième paire, false sinon.
+// Foncteur prï¿½dicat binaire comparant les seconds ï¿½lï¿½ments de paires pour dï¿½terminer si elles sont en ordre.
+// Le foncteur est une classe gï¿½nï¿½rique.
+// Le template de classe prend deux paramï¿½tres, soit les types T1 et T2 tenus par une paire std::pair<T1, T2>.
+// Lï¿½opï¿½rateur() doit prendre en paramï¿½tre deux rï¿½fï¿½rences constantes vers des paires dont les ï¿½lï¿½ments sont de type T1 et T2.
+// Il retourne true si le second ï¿½lï¿½ment de la premiï¿½re paire est strictement infï¿½rieur au second ï¿½lï¿½ment de la deuxiï¿½me paire, false sinon.
 template <typename T1, typename T2 >
 class ComparateurSecondElementPaire {
 public:
@@ -25,28 +27,28 @@ public:
 };
 
 // DONE : Foncteur ComparateurEstEgalAvecId
-// Foncteur prédicat unaire servant à comparer un objet(Patient ou Personnel) avec un id de type string.
-// Le foncteur est une classe générique.
-// Le template de classe prend un seul paramètre de type T.
-// L’opérateur() doit prendre en paramètre un pointeur shared_ptr tenant un élément de type T.Il retourne true si l’objet égale à l’id et false si non.
+// Foncteur prï¿½dicat unaire servant ï¿½ comparer un objet(Patient ou Personnel) avec un id de type string.
+// Le foncteur est une classe gï¿½nï¿½rique.
+// Le template de classe prend un seul paramï¿½tre de type T.
+// Lï¿½opï¿½rateur() doit prendre en paramï¿½tre un pointeur shared_ptr tenant un ï¿½lï¿½ment de type T.Il retourne true si lï¿½objet ï¿½gale ï¿½ lï¿½id et false si non.
 template <typename T>
 class ComparateurEstEgalAvecId{
 public:
 	ComparateurEstEgalAvecId(std::string id) :id_(id) {}
 	bool operator()(std::shared_ptr<T> personne) {
-		return *personne == id_;
+		return *personne == id;
 	}
 private:
 	std::string id_;
 };
 
 // TODO : Foncteur AccumulateurPeriodePersonnel
-// Foncteur qui se charge de l'ajout de la période passée par les personnels à l'hôpital à une somme.
-// L’opérateur() prend 3  paramètres : 
+// Foncteur qui se charge de l'ajout de la pï¿½riode passï¿½e par les personnels ï¿½ l'hï¿½pital ï¿½ une somme.
+// Lï¿½opï¿½rateur() prend 3  paramï¿½tres : 
 //      somme de type double 
 //      pair de type pair de string et shared_ptr de Personnel
-//      Il retourne la somme du paramètre somme et  de l’ancienneté du personnel passé en paramètre.
-// Indice : utiliser les fonctions getDateCourante et getDateAdhesion pour calculer l’ancienneté en prenant en compte juste les années.
+//      Il retourne la somme du paramï¿½tre somme et  de lï¿½anciennetï¿½ du personnel passï¿½ en paramï¿½tre.
+// Indice : utiliser les fonctions getDateCourante et getDateAdhesion pour calculer lï¿½anciennetï¿½ en prenant en compte juste les annï¿½es.
 class AccumulateurPeriodePersonnel{
 public:
 	AccumulateurPeriodePersonnel(double somme): somme_(somme){}
@@ -65,11 +67,11 @@ private:
 
 
 // DONE : Foncteur ComparateurTypePatient
-// Foncteur prédicat unaire servant à comparer un objet de type Patient à n’importe quel autre objet.
-// Le foncteur est une classe générique.
-// Le template de classe prend un seul paramètre de type T.
-// L’opérateur() doit prendre en paramètre un pointeur shared_ptr tenant un élément de type Patient
-// Il retourne true si l’objet est de type Patient et false si non. Hint : conversion dynamique
+// Foncteur prï¿½dicat unaire servant ï¿½ comparer un objet de type Patient ï¿½ nï¿½importe quel autre objet.
+// Le foncteur est une classe gï¿½nï¿½rique.
+// Le template de classe prend un seul paramï¿½tre de type T.
+// Lï¿½opï¿½rateur() doit prendre en paramï¿½tre un pointeur shared_ptr tenant un ï¿½lï¿½ment de type Patient
+// Il retourne true si lï¿½objet est de type Patient et false si non. Hint : conversion dynamique
 template <typename T>
 class ComparateurTypePatient {
 public:
@@ -84,10 +86,10 @@ private:
 };
 
 // DONE : EstDansIntervalleDatesConsultation
-// Foncteur prédicat unaire servant à déterminer si une consultation est réalisée entre deux dates.
-// Constructeur par paramètres initalisant l'intervalle de dates. Il prend deux références constantes vers deux objets de type tm.
-// L’opérateur() une référence constante vers un shared_ptr de Consultation.
-// Utiliser les deux fonctions définis dans utils.h convertirStringDate pour convertir une date de sting vers tm et comparerDate pour comparer deux dates.
+// Foncteur prï¿½dicat unaire servant ï¿½ dï¿½terminer si une consultation est rï¿½alisï¿½e entre deux dates.
+// Constructeur par paramï¿½tres initalisant l'intervalle de dates. Il prend deux rï¿½fï¿½rences constantes vers deux objets de type tm.
+// Lï¿½opï¿½rateur() une rï¿½fï¿½rence constante vers un shared_ptr de Consultation.
+// Utiliser les deux fonctions dï¿½finis dans utils.h convertirStringDate pour convertir une date de sting vers tm et comparerDate pour comparer deux dates.
 class EstDansIntervalleDatesConsultation {
 public:
 	EstDansIntervalleDatesConsultation(const tm& debut, const tm& fin) :debut_(debut), fin_(fin) {}

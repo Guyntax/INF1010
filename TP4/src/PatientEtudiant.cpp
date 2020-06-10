@@ -13,8 +13,8 @@
 //! \param matricule		      Le matricule de l'étudiant
 //! \param etablissement          L'établissement d'étude de l'étudiant
 PatientEtudiant::PatientEtudiant(const std::string& nom, const std::string& dateDeNaissance, const std::string& numeroAssuranceMaladie,
-	const std::string& matricule, const std::string& etablissement)
-	:Patient(nom, dateDeNaissance, numeroAssuranceMaladie)
+	const tm& dateAdhesion, const std::string& matricule, const std::string& etablissement)
+	:Patient(nom, dateDeNaissance, numeroAssuranceMaladie, dateAdhesion)
 	, Etudiant(nom, dateDeNaissance, matricule, etablissement)
 {
 }

@@ -12,7 +12,7 @@ class PatientEtudiant : public Patient, public Etudiant
 {
 public:
 	PatientEtudiant() = default;
-	PatientEtudiant(const std::string& nom, const std::string& dateDeNaissance, const std::string& numeroAssuranceMaladie, const std::string& matricule, const std::string& etablissement);
+	PatientEtudiant(const std::string& nom, const std::string& dateDeNaissance, const std::string& numeroAssuranceMaladie, const tm& dateAdhesion, const std::string& matricule, const std::string& etablissement);
 
 	void afficher(std::ostream& stream) const override;
 
