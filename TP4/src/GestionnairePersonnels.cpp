@@ -114,12 +114,12 @@ const std::unordered_map<std::string, std::shared_ptr<Personnel>>& GestionnaireP
 // Elle retourne unordered_map de string et un pointeur vers le personnel
 // La méthode parcours personnels_ et retourne un unordered_map de type désiré
 template <typename T>
-std::unordered_map<std::string, std::shared_ptr<T>> GestionnairePersonnels::getPersonnelsAvecType() const {
-	std::unordered_map<std::string, std::shared_ptr<T>> map;
+std::unordered_map<std::string, T*> GestionnairePersonnels::getPersonnelsAvecType() const {
+	std::unordered_map<std::string, T*> map;
 	for (auto& element : personnels_) {//gestionnairePersonnels.personnels_
-		if ((dynamic_cast<T*>(element.second.get()))) {
-			std::cout << element.first;
-		//map[element.first] = std::make_shared<T>(dynamic_cast<T*>(element.second.get()));
+		T* casted_element = (dynamic_cast<T*>(element.second.get()));
+		if (casted_element) {
+			map.emplace(casted_element->getId(), casted_element);
 		}
 	}
 	return map;
