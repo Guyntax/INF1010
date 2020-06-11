@@ -61,8 +61,8 @@ public:
 		
 		if (comparerDate(TM1, TM2 )) {
 			return somme_ + getDateCourante().tm_year - pair.second->getDateAdhesion().tm_year;
-		}
-		return 0; // si erreur
+		//}
+		//return 0; // si erreur
 
 	}
 private:
