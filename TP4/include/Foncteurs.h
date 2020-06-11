@@ -1,4 +1,6 @@
-//TODO Ent�te du fichier
+//! Implémentations des foncteurs
+//! \authors Didier Blach-Lafleche & Maude Tremblay
+//! \date 14 juin 2020
 
 #ifndef FONCTEURS_H
 #define FONCTEURS_H

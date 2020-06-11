@@ -1,4 +1,6 @@
-//TODO Entête du fichier
+//! Implémentation de la classe GestionnairePersonnels qui permet de gérer les personnels de l'hôpital
+//! \authors Didier Blach-Lafleche & Maude Tremblay
+//! \date 14 juin 2020
 
 #include "GestionnairePersonnels.h"
 #include <fstream>

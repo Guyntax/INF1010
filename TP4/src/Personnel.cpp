@@ -1,8 +1,15 @@
+//! Implémentation de la classe Personnel qui permet représente un personnel de l'hôpital
+//! \authors Didier Blach-Lafleche & Maude Tremblay
+//! \date 14 juin 2020
+
 #include "Personnel.h"
 #include <iostream>
 #include <typeinfo>
 
-//TODO : Modifier le constructeur pour prendre en considération l'attribut ajouté
+//! Constructeur par paramètre  de la classe Medecin
+//! \param nom              Le nom du personnel
+//! \param id			    L'id du personnel
+//! \param dateAdhesion		La date d'adhésion du personnel à l'hôpital
 Personnel::Personnel(const std::string& nom, const std::string& id, const tm& dateAdhesion) : nom_(nom), id_(id), dateAdhesion_(dateAdhesion)
 {
 }

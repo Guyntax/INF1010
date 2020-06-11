@@ -13,6 +13,7 @@
 //! \param etablissement              L'établissement d'étude du medecin résidant
 //! \param NumeroLicenceProvisoire    Le numero de licence provisoir du medecin résidant
 //! \param specialite				  La specialite du medecin résidant
+//! \param dateAdhesion				  La date d'adhésion du médecin résident à l'hôpital
 MedecinResident::MedecinResident(const std::string& nom, const std::string& dateDeNaissance, const std::string& matricule,
 	const std::string& etablissement, const std::string NumeroLicenceProvisoire, Specialite specialite, const tm& dateAdhesion)
 	:Etudiant(nom, dateDeNaissance, matricule, etablissement)

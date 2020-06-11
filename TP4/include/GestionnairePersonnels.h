@@ -1,3 +1,6 @@
+//! Définition de la classe GestionnairePersonnels qui permet de gérer le personnel de l'hôpital
+//! \authors Didier Blach-Lafleche & Maude Tremblay
+//! \date 14 juin 2020
 #ifndef GESTIONNAIREPERSONNELS_H
 #define GESTIONNAIREPERSONNELS_H
 

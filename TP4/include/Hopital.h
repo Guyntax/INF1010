@@ -1,3 +1,6 @@
+//! Définition de la classe Hôpital qui permet la gestion de l'hôpital
+//! \authors Didier Blach-Lafleche & Maude Tremblay
+//! \date 14 juin 2020
 #ifndef HOPITAL_H
 #define HOPITAL_H
 
@@ -22,40 +25,26 @@ public:
     Hopital() = default;
     Hopital(const std::string& nom, const std::string& adresse);
 
-    // DONE : Ajouter un paramètre à la méthode. Ce paramètre est le nom du fichier consultation
     bool chargerBaseDeDonnees(const std::string& nomFichierPersonnels, const std::string& nomFichierPatients, const std::string& nomFichierConsultations);
-
     bool chargerDepuisFichierConsultation(const std::string& nomFichiers);
-
-    // DONE : Ajouter la méthode getAncienneteMoyenneDesPersonnels 
-    // Elle retourne la moyenne de l'ancienneté des personnels de type double
     double getAncienneteMoyenneDesPersonnels();
-
-    // DONE : Ajouter la méthode getConsultationsEntreDates
-    // Deux paramètres : références constantes vers des objets de type tm
-    // Elle retourne un vecteur de shared_ptr vers Consultation
     std::vector<std::shared_ptr<Consultation>> getCosultationsEntreDates(tm& date1, tm& date2);
 
-
-    // DONE: Remplacer l'opérateur par la méthode générique ajouterConsultation
-    // La méthode prend une référence vers l'objet à ajouter
     template <typename consult>
     bool ajouterConsultation(consult& consultation);
- 
-    // DONE: Remplacer l'opérateur par la méthode générique ajouterPersonnel
-    // La méthode prend une référence vers l'objet à ajouter
-    // L'impémentation de cette méthode doit se faire ici.
-    // // Le nombre des lignes de code maximale 1 ligne
+
+    //! Operateur qui ajoute un personnel à un hopital
+    //! \param personnel Personnel à ajouter
+    //! \return       Un bool qui indique si l'opération a bien fonctionnée
     template <typename perso>
     bool ajouterPersonnel(perso& personnel)
     {
         return gestionnairePersonnels_.ajouterPersonnel<perso>(personnel);
     }
 
-    // DONE: Remplacer l'opérateur par la méthode générique ajouterPatient
-    // La méthode prend une référence vers l'objet à ajouter
-    // L'impémentation de cette méthode doit se faire ici.
-    // // Le nombre des lignes de code maximale 1 ligne
+    //! Operateur qui ajoute un patient à un hopital
+    //! \param patient Patient à ajouter
+    //! \return       Un bool qui indique si l'opération a bien fonctionnée
     template <typename pat>
     bool ajouterPatient(pat& patient)
     {

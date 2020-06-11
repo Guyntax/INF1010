@@ -1,4 +1,6 @@
-//TODO Entête du fichier
+//! Implémentation de la classe Hopital qui permet de gérer l'hôpital
+//! \authors Didier Blach-Lafleche & Maude Tremblay
+//! \date 14 juin 2020
 
 #include "Hopital.h"
 #include "ConsultationEnligne.h"
@@ -18,8 +20,9 @@ Hopital::Hopital(const std::string& nom, const std::string& adresse) :nom_(nom),
 {
 }
 
-// DONE: A mofidier pour qu'elle prenne aussi le nom du fichier des consulations.
-// Elle doit charger les consultations en faisant appel à la fonction chargerDepuisFichierConsultation 
+//! Methode pour charger la base de donnees de l'hopital
+//! \param nomFichierMedecins  le nom du fichier qui contient les informations des medecins
+//! \param adresse  nomFichierPatients le nom du fichier qui contient les informations des patients
 bool Hopital::chargerBaseDeDonnees(const std::string& nomFichierPersonnels, const std::string& nomFichierPatients, const std::string& nomFichierConsultations)
 {
 	return gestionnairePersonnels_.chargerDepuisFichier(nomFichierPersonnels)
@@ -51,10 +54,8 @@ bool Hopital::chargerDepuisFichierConsultation(const std::string& nomFichier)
 	return false;
 }
 
-// DONE : Ajouter la méthode getAncienneteMoyenneDesPersonnels 
-// Elle retourne la moyenne de l'ancienneté des personnels de type double
-// Elle utilise la fonction accumulate de la STL et le foncteur AccumulateurPeriodePersonnel
-// Le nombre des lignes de code maximale est 1 ligne (sans compter la signature, les lignes vides et les lignes avec accolades)
+//! Méthode qui retourne la moyenne d'ancienneté des personnels de l'hôpital
+//! \return la moyenne de l'ancienneté des personnels
 double Hopital::getAncienneteMoyenneDesPersonnels()
 {
 	return (std::accumulate((gestionnairePersonnels_.getPersonnels()).begin(), (gestionnairePersonnels_.getPersonnels()).end(),0,AccumulateurPeriodePersonnel(0))/ static_cast<double>(gestionnairePersonnels_.getPersonnels().size()));
@@ -62,9 +63,10 @@ double Hopital::getAncienneteMoyenneDesPersonnels()
 
 
 // DONE : Ajouter la méthode getCosultationsEntreDates
-// Deux paramètres : références constantes vers des objets de type tm
-// Elle retourne un vecteur de shared_ptr vers Consultation
-// Elle utilise la fonction copy_if, back_inserter et le foncteur EstDansIntervalleDatesConsultation.
+//! Méthode qui permet d'obtenir la liste des consultations ayant eu lieu entre 2 dates
+//! \param date1 La première date
+//! \param date2 La deuxième date
+//! \return vecteur de shared_ptr des consultations
 std::vector<std::shared_ptr<Consultation>> Hopital::getCosultationsEntreDates(tm& date1, tm& date2)
 {
 	std::vector<std::shared_ptr<Consultation>> consult;
@@ -73,9 +75,9 @@ std::vector<std::shared_ptr<Consultation>> Hopital::getCosultationsEntreDates(tm
 }
 
 
-// DONE: Remplacer l'opérateur par la méthode générique ajouterConsultation
-// La méthode prend une référence vers l'objet à ajouter
-// L'implémentation de la méthode à modifier pour s'adapter à la fonction générique
+//! Méthode qui ajoute une consultation à un hopital
+//! \param consultation consultation à ajouter
+//! \return       Un bool qui indique si l'opération a bien fonctionnée
 template <typename consult>
 bool Hopital::ajouterConsultation(consult& consultation)
 {

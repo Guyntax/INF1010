@@ -1,4 +1,6 @@
-﻿//TODO Entête du fichier
+﻿//! Implémentation de la classe GestionnairePatients qui permet de gérer les patients
+//! \authors Didier Blach-Lafleche & Maude Tremblay
+//! \date 14 juin 2020
 
 #include "GestionnairePatients.h"
 #include <fstream>
@@ -12,10 +14,9 @@ GestionnairePatients::GestionnairePatients() : patients_(std::vector<std::shared
 {
 }
 
-//DONE : Modifier cette méthode 
-// Cette méthode doit utiliserla fonction find_if et le foncteur ComparateurEstEgalAvecId.
-// Consulter l'énoncer pour cette méthode pour voir plus d'explication
-// Le nombre des lignes de code maximale est 4 lignes (sans compter la signature, les lignes vides et les lignes avec accolades)
+//! Méthode qui cherche un patient avec son numéro d'assurance maladie
+//! \param numeroAssuranceMaladie Numéro d'assurance maladie du patient
+//! \return un pointeur vers le patient s'il est trouvé, sinon nullptr
 Patient* GestionnairePatients::chercherPatient(const std::string& numeroAssuranceMaladie)
 {
 	std::vector<std::shared_ptr<Patient>>::iterator iter = std::find_if(patients_.begin(), patients_.end(), ComparateurEstEgalAvecId<Patient>(numeroAssuranceMaladie));
@@ -24,15 +25,6 @@ Patient* GestionnairePatients::chercherPatient(const std::string& numeroAssuranc
 		return (*iter).get();
 	}
 	else { return nullptr; }
-	/*for (auto& patient : patients_)
-	{
-		if (*patient == numeroAssuranceMaladie)
-		{
-			return patient.get();
-		}
-	}
-
-	return nullptr;*/
 }
 
 //! Méthode  qui permet de charger les informations des patients depuis un fichier
@@ -60,17 +52,12 @@ bool GestionnairePatients::chargerDepuisFichier(const std::string& nomFichier)
 	return false;
 }
 
-// DONE: Remplacer l'opérateur par la méthode générique ajouterPatient
-// La méthode prend une référence vers l'objet à jouter
-// L'implémentation doit être modifié aussi
-// Le nombre des lignes de code maximale est 6 lignes (sans compter la signature, les lignes vides et les lignes avec accolades)
+//! Méthode qui ajoute un patient à l'objet GestionnairePatient
+//! \param patient référence vers l'objet à jouter
+//! \return true si le patient a été ajouté, false sinon
 template<typename T>
 bool GestionnairePatients::ajouterPatient(const T& patient)
 {
-	/*L’opérateur += doit être remplacé par la méthode générique ajouterPatient qui
-permet d’ajouter un patient au vecteur patients_ s’il n’y existe pas déjà. Elle utilise
-la méthode chercherPatient. Elle prend comme paramètre une référence vers le
-patient à ajouter.*/
 	if (!chercherPatient(patient.getNumeroAssuranceMaladie())) {
 
 		if (patients_.size() >= NB_PATIENT_MAX)
@@ -85,10 +72,9 @@ patient à ajouter.*/
 	return false;
 }
 
-// TODO : Ajouter la méthode supprimerPatient
-// Les paramètres : numero d'assurance Maladie de type string patient à supprimer
-// Retourn un booléan
-//Elle utilise les fonctions erase, remove_if et le foncteur ComparateurEstEgalAvecId.
+//! Méthode qui supprime un patient
+//! \param numeroAssMaladie Le numero d'assurance Maladie de type string du patient à supprimer
+//! \return true si le patient a été supprimé, false sinon
 bool GestionnairePatients::supprimerPatient(const std::string& numeroAssMaladie)
 {
 	size_t temp = patients_.size();
@@ -105,7 +91,10 @@ bool GestionnairePatients::supprimerPatient(const std::string& numeroAssMaladie)
 }
 
 
-
+//! opérateur qui permet d'afficher la liste des patients
+//! \param os Le stream dans lequel on veut afficher les informations
+//! \param gestionnairePatients L'objet dont on veut afficher les information
+//! \return le tream qui contient les informations
 std::ostream& operator<<(std::ostream& os, const GestionnairePatients& gestionnairePatients)
 {
 	// Code fourni
@@ -118,10 +107,8 @@ std::ostream& operator<<(std::ostream& os, const GestionnairePatients& gestionna
 		}
 		return os;
 	}
-	// TODO
 	else
 	{
-		//Pas sûre, on verra si ça marche
 		for (auto it : gestionnairePatients.patients_)
 		{
 			(it)->afficher(os);
@@ -138,10 +125,8 @@ const std::vector<std::shared_ptr<Patient>>& GestionnairePatients::getPatients()
 	return patients_;
 }
 
-// DONE Modifier cette méthode.
-// Elle retourne un vecteur de pointeur shared_ptr vers Patient
-// Elle utilise copy_if, back_inserter et le foncteur ComparateurTypePatient
-// Le nombre des lignes de code maximale est 3 lignes (sans compter la signature, les lignes vides et les lignes avec accolades)
+//! Méthode qui retourne la liste de tous les PatientEtudiant 
+//! \return un vecteur de pointeur shared_ptr vers Patient
 std::vector<std::shared_ptr<Patient>> GestionnairePatients::getPatientsEtudiants() const
 {
 	std::vector<std::shared_ptr<Patient>> patientsEtudiants;
@@ -164,8 +149,9 @@ size_t GestionnairePatients::getNbPatientsEtudiants() const
 	return getPatientsEtudiants().size();
 }
 
-// DONE: Méthode à modifier
-// Utiliser la fonction convertirStringDate implémentée dans utils.h  pour convertir dateAdhesion de string à tm
+//! Méthode qui lit les attributs d'un patient
+//! \param ligne  Le string qui contient les attributs
+//! \return bool qui dit si la ligne a bien été lue
 bool GestionnairePatients::lireLignePatient(const std::string& ligne)
 {
 	std::istringstream stream(ligne);

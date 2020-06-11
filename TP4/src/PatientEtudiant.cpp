@@ -7,9 +7,10 @@
 #include <string>
 
 //! Constructeur par paramétre  de la classe PatientEtudiant
-//! \param nom                    Le nom du patient
-//! \param dateDeNaissance		  La date de naissance du patient
-//! \param numeroAssuranceMaladie Le umero d'assurance maladie du patient
+//! \param nom                    Le nom du patient etudiant
+//! \param dateDeNaissance		  La date de naissance du patient etudiant
+//! \param numeroAssuranceMaladie Le numero d'assurance maladie du patient etudiant
+//! \param dateAdhesion			  La date d'adhésion du patient étudiant à l'hôpital
 //! \param matricule		      Le matricule de l'étudiant
 //! \param etablissement          L'établissement d'étude de l'étudiant
 PatientEtudiant::PatientEtudiant(const std::string& nom, const std::string& dateDeNaissance, const std::string& numeroAssuranceMaladie,

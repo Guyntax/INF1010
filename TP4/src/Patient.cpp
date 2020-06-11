@@ -1,10 +1,16 @@
-// TODO : Entête du fichier
+//! Implémentation de la classe Patient qui permet représente un patient de l'hôpital
+//! \authors Didier Blach-Lafleche & Maude Tremblay
+//! \date 14 juin 2020
 
 #include "Patient.h"
 #include <iostream>
 #include <string>
 
-//TODO : Modifier le constructeur pour prendre en considération l'attribut ajouté
+//! Constructeur par paramétre  de la classe Patient
+//! \param nom                    Le nom du patient
+//! \param dateDeNaissance		  La date de naissance du patient
+//! \param numeroAssuranceMaladie Le umero d'assurance maladie du patient
+//! \param dateAdhesion			  La date d'adhésion du patient étudiant à l'hôpital
 Patient::Patient(const std::string& nom, const std::string& dateDeNaissance, const std::string& numeroAssuranceMaladie, const tm& dateAdhesion)
 	: nom_(nom)
 	, numeroAssuranceMaladie_(numeroAssuranceMaladie)

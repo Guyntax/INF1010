@@ -1,3 +1,6 @@
+//! Définition de la classe Personnel qui représente un personnel de l'hôpital
+//! \authors Didier Blach-Lafleche & Maude Tremblay
+//! \date 14 juin 2020
 #ifndef PERSONNEL_H
 #define PERSONNEL_H
 
@@ -11,7 +14,6 @@ class Personnel
 public:
 
 	Personnel() = default;
-	//DONE : Modifier le constructeur pour prendre en considération l'attribut ajouté
 	Personnel(const std::string& nom, const std::string& id, const tm& dateAdhesion);
 
 	friend bool operator==(const std::string& id, const Personnel& personnel);
@@ -38,7 +40,6 @@ protected:
 	std::string nom_;
 	std::string id_;
 	bool estActif_ = true;
-	//DONE : Ajouter l'attribut dateAdhesion_
 	tm dateAdhesion_;
 };
 

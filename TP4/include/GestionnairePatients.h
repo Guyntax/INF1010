@@ -1,3 +1,7 @@
+//! Définition de la classe GestionnairePatients qui permet de gérer les patients
+//! \authors Didier Blach-Lafleche & Maude Tremblay
+//! \date 14 juin 2020
+
 #ifndef GESTIONNAIREPATIENTS_H
 #define GESTIONNAIREPATIENTS_H
 
@@ -26,22 +30,12 @@ public:
     Patient* chercherPatient(const std::string& numeroAssuranceMaladie);
     bool chargerDepuisFichier(const std::string& nomFichier);
 
-    // TODO: Remplacer l'opérateur par la méthode générique ajouterPatient
-    // La méthode prend une référence vers l'objet à ajouter
     template<typename T>
     bool ajouterPatient(const T& patient);
 
-    // TODO : Ajouter la méthode supprimerPatient
-    // Les paramètres : numero d'assurance Maladie de type string
-    // Retourne un booléan
     bool supprimerPatient(const std::string& numeroAssMaladie);
-    
     friend std::ostream& operator<<(std::ostream& os, const GestionnairePatients& gestionnairePatient);
-
     const std::vector<std::shared_ptr<Patient>>& getPatients() const;
-
-    // DONE Modifier cette méthode.
-    // Elle retourne un vecteur de pointeur shared_ptr vers Patient
     std::vector<std::shared_ptr<Patient>> getPatientsEtudiants() const;
 
     size_t getNbPatients() const;
