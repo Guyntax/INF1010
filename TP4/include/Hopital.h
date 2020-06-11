@@ -34,7 +34,7 @@ public:
     // DONE : Ajouter la méthode getConsultationsEntreDates
     // Deux paramètres : références constantes vers des objets de type tm
     // Elle retourne un vecteur de shared_ptr vers Consultation
-    std::vector<std::shared_ptr<Consultation>> getConsultationsEntreDates(tm& date1, tm& date2);
+    std::vector<std::shared_ptr<Consultation>> getCosultationsEntreDates(tm& date1, tm& date2);
 
 
     // DONE: Remplacer l'opérateur par la méthode générique ajouterConsultation

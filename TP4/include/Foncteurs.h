@@ -52,8 +52,8 @@ private:
 class AccumulateurPeriodePersonnel{
 public:
 	AccumulateurPeriodePersonnel(double somme): somme_(somme){}
-	int operator()(int somme, std::pair<const std::string, std::shared_ptr<Personnel>> pair) {
-
+	double operator()(double somme, std::pair<const std::string, std::shared_ptr<Personnel>> pair) {
+		somme_ = somme;
 		tm TM1 = getDateCourante();
 		tm TM2 = pair.second->getDateAdhesion();
 		
@@ -64,7 +64,7 @@ public:
 
 	}
 private:
-	int somme_;
+	double somme_;
 };
 
 

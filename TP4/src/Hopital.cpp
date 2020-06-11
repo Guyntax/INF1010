@@ -57,7 +57,7 @@ bool Hopital::chargerDepuisFichierConsultation(const std::string& nomFichier)
 // Le nombre des lignes de code maximale est 1 ligne (sans compter la signature, les lignes vides et les lignes avec accolades)
 double Hopital::getAncienneteMoyenneDesPersonnels()
 {
-	return (std::accumulate((gestionnairePersonnels_.GestionnairePersonnels::getPersonnels()).begin(), (gestionnairePersonnels_.GestionnairePersonnels::getPersonnels()).end(),0,AccumulateurPeriodePersonnel(0))/(gestionnairePersonnels_.GestionnairePersonnels::getPersonnels()).size());
+	return (std::accumulate((gestionnairePersonnels_.getPersonnels()).begin(), (gestionnairePersonnels_.getPersonnels()).end(),0,AccumulateurPeriodePersonnel(0))/ static_cast<double>(gestionnairePersonnels_.getPersonnels().size()));
 }
 
 
@@ -65,7 +65,7 @@ double Hopital::getAncienneteMoyenneDesPersonnels()
 // Deux paramètres : références constantes vers des objets de type tm
 // Elle retourne un vecteur de shared_ptr vers Consultation
 // Elle utilise la fonction copy_if, back_inserter et le foncteur EstDansIntervalleDatesConsultation.
-std::vector<std::shared_ptr<Consultation>> Hopital::getConsultationsEntreDates(tm& date1, tm& date2)
+std::vector<std::shared_ptr<Consultation>> Hopital::getCosultationsEntreDates(tm& date1, tm& date2)
 {
 	std::vector<std::shared_ptr<Consultation>> consult;
 	std::copy_if(consultations_.begin(), consultations_.end(), back_inserter(consult), EstDansIntervalleDatesConsultation(date1,date2) );
