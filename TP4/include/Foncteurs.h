@@ -22,7 +22,9 @@
 template <typename T1, typename T2 >
 class ComparateurSecondElementPaire {
 public:
-	//ComparateurSecondElementPaire()
+	//! \param lft			Première paire de types <T1,T2>
+	//! \param rht			Seconde paire de types <T1,T2>
+	//! \return				Un bool qui indique si le second élément de la premiére paire est strictement inférieur au second élément de la deuxiéme paire
 	bool operator()(const std::pair<T1,T2>& lft,const std::pair<T1, T2>& rht) {
 		return *(lft.second) < *(rht.second);
 	}
@@ -36,7 +38,11 @@ public:
 template <typename T>
 class ComparateurEstEgalAvecId{
 public:
+	//! \param id			L'identifiant à comparer
 	ComparateurEstEgalAvecId(std::string id) :id_(id) {}
+
+	//! \param personne		Une personne (Patient ou Medecin)
+	//! \return				Un bool qui indique l'id de la perosnne correspons à l'id en attribut
 	bool operator()(std::shared_ptr<T> personne) {
 		return *personne == id_;
 	}
@@ -53,16 +59,21 @@ private:
 // Indice : utiliser les fonctions getDateCourante et getDateAdhesion pour calculer l�anciennet� en prenant en compte juste les ann�es.
 class AccumulateurPeriodePersonnel{
 public:
+	//! \param somme			L'initialisaiton de l'attribut somme_
 	AccumulateurPeriodePersonnel(double somme): somme_(somme){}
+
+	//! \param somme			Somme courante de periode de personnel
+	//! \param pair				Pair de l'id d'un personel et du shared_ptr de celui-ci
+	//! \return					La nouvelle somme de periode de personnel. Retourne -1 si erreure
 	double operator()(double somme, std::pair<const std::string, std::shared_ptr<Personnel>> pair) {
 		somme_ = somme;
 		tm TM1 = getDateCourante();
 		tm TM2 = pair.second->getDateAdhesion();
 		
-		if (comparerDate(TM1, TM2 )) {
+		if (comparerDate(TM1, TM2 )) { //  vérifie que data d'adhésion est avant la date courante
 			return somme_ + getDateCourante().tm_year - pair.second->getDateAdhesion().tm_year;
-		//}
-		//return 0; // si erreur
+		}
+		return -1; // si getDateAdhesion est après getDateCourante = > impossible
 
 	}
 private:
@@ -79,6 +90,8 @@ private:
 template <typename T>
 class ComparateurTypePatient {
 public:
+	//! \param patient			shared_ptr du patient dont on veut comparer le type
+	//! \param pair				un bool qui indique si le patient est du type du type testé
 	bool operator()(std::shared_ptr<Patient> patient){
 		return  (dynamic_cast<T*>(patient.get()));
 	}
@@ -91,7 +104,12 @@ public:
 // Utiliser les deux fonctions d�finis dans utils.h convertirStringDate pour convertir une date de sting vers tm et comparerDate pour comparer deux dates.
 class EstDansIntervalleDatesConsultation {
 public:
+	//! \param debut				date de début de l'intervalle
+	//! \param fin					date de din de l'intervalle
 	EstDansIntervalleDatesConsultation(const tm& debut, const tm& fin) :debut_(debut), fin_(fin) {}
+
+	//! \param consultation			shared_ptr de la consultation à vérifer
+	//! \param bool					un bool qui indique si la consultation est dans l'intervalle
 	bool operator()(const std::shared_ptr<Consultation>& consultation) {
 		tm dateConsultation  = convertirStringDate(consultation->getDate());
 		return comparerDate(dateConsultation, debut_) && comparerDate(fin_, dateConsultation);

@@ -75,7 +75,7 @@ bool Personnel::getEstActif() const
 
 //! Méthode qui retourne la date d'adhésion du personnel
 //! \return dateAdhesion_ la date d'adhésion du personnel
-tm Personnel::getDateAdhesion() const {
+const tm& Personnel::getDateAdhesion() const {
 	return dateAdhesion_;
 }
 

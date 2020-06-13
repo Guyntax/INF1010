@@ -56,65 +56,55 @@ bool GestionnairePersonnels::chargerDepuisFichier(const std::string& nomFichier)
 // La méthode prend une référence vers l'objet à ajouter
 // L'implémentation doit être modifié aussi
 // Le nombre des lignes de code maximale est 3 lignes (sans compter la signature, les lignes vides et les lignes avec accolades)
+//! \param objet		Le personnel que l'on veut ajouter
+//! \return             Un bool qui indique si le personnel a ajouté avec succès
 template <typename T>
 bool GestionnairePersonnels::ajouterPersonnel(const T& objet)
 {
-	std::shared_ptr<T> ptr = std::make_shared<T>(objet);
-	if (dynamic_cast<Personnel*>(ptr.get()) && !chercherPersonnel(objet.getId()) ) {
-		personnels_[objet.getId()] = ptr;
-		return true;
+	if (dynamic_cast<Personnel*>(std::make_shared<T>(objet).get()) && !chercherPersonnel(objet.getId()) ) {
+		return personnels_.emplace(objet.getId(), std::make_shared<T>(objet)).second;
 	}
 	return false;
 }
 
 // DONE: Remplacer l'opérateur par la méthode supprimerPesonnel
 // La méthode prend un string qui est l'id de personnel à supprimer
+//! \param id			Le id du personnel à supprimer
+//! \return             Un bool qui indique si le personnel a supprimer avec succès
 template <typename T>
 bool GestionnairePersonnels::supprimerPesonnel(std::string id){
-	//TODO : utiliser la méthode chercherPersonnel
+	//	DONE : utiliser la méthode chercherPersonnel
 	if (chercherPersonnel(id)){
-		personnels_[id]->setEstActif(false);
-		return true;
+		return personnels_[id]->setEstActif(false);	
 	}
-	return false;
 }
 
 //! Operateur qui permet d'afficher les informations des personnels 
 //! \param os					   Le stream dans lequel afficher
 //! \param gestionnairePersonnels  Le gestionnaire personnels à afficher
+//! \return						   Le stream dans lequel afficher
+template <typename T>
 std::ostream& operator<<(std::ostream& os, const GestionnairePersonnels& gestionnairePersonnels)
 {
-	// Code fourni A ENELVER
-	if constexpr (false)
-	{
-		for (auto it = gestionnairePersonnels.personnels_.cbegin(); it != gestionnairePersonnels.personnels_.cend(); ++it)
-		{
-			it->second->afficher(os);
-			os << '\n';
-		}
-		return os;
+	//DONE : Utiliser une boucle for ranged-based
+	for (auto& it : gestionnairePersonnels.personnels_) {
+		it.second->afficher(os);
+		os << '\n';
 	}
-	// TODO: ENELVER CE QUI PRECEDE
-	else
-	{
-		//DONE : Utiliser une boucle for ranged-based
-		for (auto& it : gestionnairePersonnels.personnels_) {
-			it.second->afficher(os);
-			os << '\n';
-		}
-		return os;
-	}
+	return os;
 }
 
 //DONE : à adapter au changement du type de l'attribut personnels_
+//! \return             Une unordered_map de share_ptr de personnels dont les clés sont leur id
 const std::unordered_map<std::string, std::shared_ptr<Personnel>>& GestionnairePersonnels::getPersonnels() const
 {
 	return personnels_;
 }
 
-/// TODO : Ajouter la méthode générique getPersonnelsAvecType()
+/// DONE : Ajouter la méthode générique getPersonnelsAvecType()
 // Elle retourne unordered_map de string et un pointeur vers le personnel
 // La méthode parcours personnels_ et retourne un unordered_map de type désiré
+//! \return             Une unordered_map de pointeur de personnels dont les clés sont leur id
 template <typename T>
 std::unordered_map<std::string, T*> GestionnairePersonnels::getPersonnelsAvecType() const {
 	std::unordered_map<std::string, T*> map;
@@ -127,51 +117,19 @@ std::unordered_map<std::string, T*> GestionnairePersonnels::getPersonnelsAvecTyp
 	return map;
 }
 
-// TODO : Ajouter la méthode getPersonnelsTriesSuivantSalaireAnnuel
+// DONE : Ajouter la méthode getPersonnelsTriesSuivantSalaireAnnuel
 // Elle trie le personnel de l’hôpital suivant le salaire annuel
 // Elle retourne un vecteur de pair de string est shared_ptr<Pesonnel>
 // On doit tout d’abord copier les éléments de la map personels_  dans un vecteur de std::pair<std::string, std::shared_ptr<Personnel>> 
 // On utilise un algorithme de trie pour trier les éléments du vecteur. 
 // Elle utilise le foncteur ComparateurSecondElementPaire.
+//! \return				Le vecteur de pairs contenant l'identifiant et le shared_ptr du personnel
 std::vector<std::pair<std::string, std::shared_ptr<Personnel>>> GestionnairePersonnels::getPersonnelsTriesSuivantSalaireAnnuel() const {
 	std::vector<std::pair<std::string, std::shared_ptr<Personnel>>> vecteur;
 	std::copy(personnels_.begin(), personnels_.end(), back_inserter(vecteur));
-
 	std::sort(vecteur.begin(), vecteur.end(), ComparateurSecondElementPaire<std::string, std::shared_ptr<Personnel>>());
 	return vecteur;
 }
-
-/*
-//! Méthode qui retourne la liste des médecins de l'hôpital
-//! \return la liste des médecins
-std::vector<Medecin*> GestionnairePersonnels::getMedecins() const
-{
-	std::vector<Medecin*> medecins;
-	for (const auto& personnel : personnels_) {
-		Medecin* medecin = dynamic_cast<Medecin*>(personnel.get());
-		if (medecin) {
-			medecins.push_back(medecin);
-		}
-	}
-
-	return medecins;
-}
-
-//! Méthode qui retourne la liste des médecins résidants de l'hôpital
-//! \return la liste des médecins résidants
-std::vector<MedecinResident*> GestionnairePersonnels::getMedecinsResidents() const
-{
-	std::vector<MedecinResident*> medecinsResidents;
-	for (const auto& personnel : personnels_) {
-		MedecinResident* medecinResident = dynamic_cast<MedecinResident*>(personnel.get());
-		if (medecinResident) {
-			medecinsResidents.push_back(medecinResident);
-		}
-	}
-
-	return medecinsResidents;
-}
-*/
 
 //! Méthode qui retourne le nombre des personnels
 //! \return le nombre de tous le pesonnels
@@ -181,21 +139,24 @@ size_t GestionnairePersonnels::getNbPersonnels() const
 }
 
 // DONE : à modifier
-
+//! \return le nombre de Medecins
 size_t GestionnairePersonnels::getNbMedecins() const
 {
 	return getPersonnelsAvecType<Medecin>().size();
 }
 
 // DONE : à modifier
+//! \return le nombre de Medecins Résidents
 size_t GestionnairePersonnels::getNbMedecinsResidents() const
 {
 	return getPersonnelsAvecType<MedecinResident>().size();
 }
 
 
-// TODO : Méthode à modifier
+// DONE : Méthode à modifier
 // Utiliser la fonction convertirStringDate implémentée dans utils.h  pour convertir dateAdhesion de string à tm
+//! \param ligne		La ligne du fichier à lire à lire
+//! \return				Un bool qui indique si la ligne a été lue avec succès
 bool GestionnairePersonnels::lireLignePersonnel(const std::string& ligne)
 {
 	std::istringstream stream(ligne);
@@ -223,23 +184,5 @@ bool GestionnairePersonnels::lireLignePersonnel(const std::string& ligne)
 			assert(false); // ne devrait pas se passer avec le fichier fourni
 		}
 	}
-
 	return false;
 }
-
-/*
-//! Méthode  qui permet de trouver l'index un medecin dans la liste des medecins
-//! \param numeroLicence   numero de licence du medecin
-//! \return             int bool qui indique l'index du medecin et MEDECIN_INEXSISTANT si le medecin est inexistant
-int GestionnairePersonnels::trouverIndexPersonnel(const std::string& id)
-{
-	for (std::size_t i = 0; i < personnels_.size(); i++)
-	{
-		if (*personnels_[i] == id)
-		{
-			return static_cast<int>(i);
-		}
-	}
-	return PERSONNEL_INEXSISTANT;
-}
-*/
