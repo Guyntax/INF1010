@@ -14,9 +14,9 @@
 
 constexpr int PERSONNEL_INEXSISTANT = -1;
 	
-// Cette méthode doit utiliser la fonction find
-// Consulter l'énoncer pour cette méthode pour voir plus d'explication
-// Le nombre des lignes de code maximale est 4 lignes (sans compter la signature, les lignes vides et les lignes avec accolades)
+//! Méthode qui permet de chercher un personnel avec son id
+//! \param id	ID du personnel
+//! \return pointeur vers le personnel
 Personnel* GestionnairePersonnels::chercherPersonnel(const std::string& id) const
 {
 	std::unordered_map<std::string, std::shared_ptr<Personnel>>::const_iterator iterator = personnels_.find(id);
@@ -68,18 +68,14 @@ std::ostream& operator<<(std::ostream& os, const GestionnairePersonnels& gestion
 }
 
 
+//! Méthode qui permet d'obtenir la liste du personnel de l'hôpital
 //! \return             Une unordered_map de share_ptr de personnels dont les clés sont leur id
 const std::unordered_map<std::string, std::shared_ptr<Personnel>>& GestionnairePersonnels::getPersonnels() const
 {
 	return personnels_;
 }
 
-
-// Elle trie le personnel de l’hôpital suivant le salaire annuel
-// Elle retourne un vecteur de pair de string est shared_ptr<Pesonnel>
-// On doit tout d’abord copier les éléments de la map personels_  dans un vecteur de std::pair<std::string, std::shared_ptr<Personnel>> 
-// On utilise un algorithme de trie pour trier les éléments du vecteur. 
-// Elle utilise le foncteur ComparateurSecondElementPaire.
+//! Méthode qui permet d'obtenir la liste de personnel de l'hôpital trié suivant le salaire annuel
 //! \return				Le vecteur de pairs contenant l'identifiant et le shared_ptr du personnel
 std::vector<std::pair<std::string, std::shared_ptr<Personnel>>> GestionnairePersonnels::getPersonnelsTriesSuivantSalaireAnnuel() const {
 	std::vector<std::pair<std::string, std::shared_ptr<Personnel>>> vecteur;
@@ -95,12 +91,14 @@ size_t GestionnairePersonnels::getNbPersonnels() const
 	return personnels_.size();
 }
 
+//! Méthode qui permet d'obtenir le nombre de médecins de l'hôpital
 //! \return le nombre de Medecins
 size_t GestionnairePersonnels::getNbMedecins() const
 {
 	return getPersonnelsAvecType<Medecin>().size();
 }
 
+//! Méthode qui permet d'obtenir le nombre de médecins résidents de l'hôpital
 //! \return le nombre de Medecins Résidents
 size_t GestionnairePersonnels::getNbMedecinsResidents() const
 {
@@ -108,7 +106,7 @@ size_t GestionnairePersonnels::getNbMedecinsResidents() const
 }
 
 
-// Utiliser la fonction convertirStringDate implémentée dans utils.h  pour convertir dateAdhesion de string à tm
+//! Méthode qui lit les attributs d'un patient
 //! \param ligne		La ligne du fichier à lire à lire
 //! \return				Un bool qui indique si la ligne a été lue avec succès
 bool GestionnairePersonnels::lireLignePersonnel(const std::string& ligne)
