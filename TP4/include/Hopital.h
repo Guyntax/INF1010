@@ -30,8 +30,35 @@ public:
     double getAncienneteMoyenneDesPersonnels();
     std::vector<std::shared_ptr<Consultation>> getCosultationsEntreDates(tm& date1, tm& date2);
 
+    //! Méthode qui ajoute une consultation à un hopital
+    //! \param consultation consultation à ajouter
+    //! \return       Un bool qui indique si l'opération a bien fonctionnée
     template <typename consult>
-    bool ajouterConsultation(consult& consultation);
+    bool ajouterConsultation(consult& consultation)
+    {
+        Medecin* medecin = dynamic_cast<Medecin*>(gestionnairePersonnels_.chercherPersonnel(consultation.getMedecin()->getId()));
+        if (medecin && medecin->getEstActif())
+        {
+            Patient* patient = gestionnairePatients_.chercherPatient(consultation.getPatient()->getNumeroAssuranceMaladie());
+            if (!patient)
+            {
+                return false;
+            }
+
+            consultations_.push_back(std::make_shared<consult>(consultation));
+
+            Patient* patientDuMedecin = medecin->chercherPatient(patient->getNumeroAssuranceMaladie());
+            if (!patientDuMedecin)
+            {
+                *medecin += patient;
+            }
+            medecin->incrementNombreConsultations();
+
+            return true;
+        }
+
+        return false;
+    };
 
     //! Operateur qui ajoute un personnel à un hopital
     //! \param personnel Personnel à ajouter

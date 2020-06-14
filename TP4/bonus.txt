@@ -1,0 +1,16 @@
+La liste de patients dans GestionnairePatient est un vecteur de shared_ptr
+de patients tandis que la liste de personnels dans GestionnairePersonnels est 
+une unordered_map de shared_ptr de personnels. La méthode chercherPatient
+utilise la fonction find_if tandis que la méthode chercherPersonnel utilise
+la méthode find de unordered_map.
+
+La unordered_map fait le lien entre les clés et l'emplacement des données avec un fonction hash.
+Lorsqu'on cherche un membre du personnel avec son id qui est la clé, on ne fait qu'un seul appel de la fonciton hash avec l'id qui retourne
+l'emplacement désiré, ou un empalcement invalide, le cas échéant.
+Ainsi la recherhe d'un élment dans un unordered_map prends un temps constant.
+
+Cepandnant, lorsqu'on cherche dans le vecteur de patients, il faut
+regarder les patients du vecteur un à un pour voir si leur numéro 
+d'assurance maladie correspond à celui qu'on cherche. Comme on cherche un 
+numéro qui n'existe pas, ce processus est long, car on doit vérifier tous 
+les patients. Ainsi, le temps de recherche d'un élément dans un vecteur augement avec le nombre d'éléments.

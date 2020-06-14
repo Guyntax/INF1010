@@ -25,33 +25,54 @@ public:
 	Personnel* chercherPersonnel(const std::string& id) const;
 	bool chargerDepuisFichier(const std::string& nomFichiers);
 
-	// DONE: Remplacer l'opérateur par la méthode générique ajouterPatient
 	// La méthode prend une référence vers l'objet à ajouter
+	// L'implémentation doit être modifié aussi
+	// Le nombre des lignes de code maximale est 3 lignes (sans compter la signature, les lignes vides et les lignes avec accolades)
+	//! \param objet		Le personnel que l'on veut ajouter
+	//! \return             Un bool qui indique si le personnel a ajouté avec succès
 	template <typename T>
-	bool ajouterPersonnel(const T& t); // const ne devrait pas etre la
+	bool ajouterPersonnel(const T& objet)
+	{
+		if (dynamic_cast<Personnel*>(std::make_shared<T>(objet).get()) && !chercherPersonnel(objet.getId())) {
+			return personnels_.emplace(objet.getId(), std::make_shared<T>(objet)).second;
+		}
+		return false;
+	};
 
-	// TODO: Remplacer l'opérateur par la méthode supprimerPesonnel
 	// La méthode prend un string qui est l'id de personnel à supprimer
+	//! \param id			Le id du personnel à supprimer
+	//! \return             Un bool qui indique si le personnel a supprimer avec succès
 	template <typename T>
-	bool supprimerPesonnel(std::string id);
+	bool supprimerPesonnel(std::string id) {
+		if (chercherPersonnel(id)) {
+			return personnels_[id]->setEstActif(false);
+		}
+	};
 
 	friend std::ostream& operator<<(std::ostream& os, const GestionnairePersonnels& gestionnairePesonnel);
 
-	//DONE : à adapter au changement du type de l'attribut personnels_
+
 	const std::unordered_map<std::string, std::shared_ptr<Personnel>>& getPersonnels() const;
 
-	// DONE : Ajouter la méthode générique getPersonnelsAvecType()
-	// Elle retourne unordered_map de string et un pointeur vers le personnel
-	template <typename T>
-	std::unordered_map<std::string, T*> getPersonnelsAvecType() const;
 
-	// DONE : Ajouter la méthode getPersonnelsTriesSuivantSalaireAnnuel
-	// Elle retourne un vecteur de pair de string est shared_ptr<Pesonnel>
+	// Elle retourne unordered_map de string et un pointeur vers le personnel
+	// La méthode parcours personnels_ et retourne un unordered_map de type désiré
+	//! \return             Une unordered_map de pointeur de personnels dont les clés sont leur id
+	template <typename T>
+	std::unordered_map<std::string, T*> getPersonnelsAvecType() const {
+		std::unordered_map<std::string, T*> map;
+		for (auto& element : personnels_) {
+			T* casted_element = (dynamic_cast<T*>(element.second.get()));
+			if (casted_element) {
+				map.emplace(casted_element->getId(), casted_element);
+			}
+		}
+		return map;
+	};
+
+
 	std::vector<std::pair<std::string, std::shared_ptr<Personnel>>> getPersonnelsTriesSuivantSalaireAnnuel() const;
 
-	//Les deux méthodes à enlever.
-	//std::vector<Medecin*> getMedecins() const;
-	//std::vector<MedecinResident*> getMedecinsResidents() const;
 
 	size_t getNbPersonnels() const;
 	size_t getNbMedecins() const;
@@ -60,8 +81,6 @@ public:
 private:
 	bool lireLignePersonnel(const std::string& ligne);
 
-	// DONE : Changer le type de l'attribut pesonnel.
-	// Il doit être unordered_map : std::string, std::shared_ptr<Personnel>
 	std::unordered_map<std::string, std::shared_ptr<Personnel>> personnels_;
 };
 

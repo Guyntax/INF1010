@@ -12,8 +12,6 @@
 #include <Patient.h>
 #include <Consultation.h>
 
-
-// DONE : Foncteur ComparateurSecondElementPaire
 // Foncteur pr�dicat binaire comparant les seconds �l�ments de paires pour d�terminer si elles sont en ordre.
 // Le foncteur est une classe g�n�rique.
 // Le template de classe prend deux param�tres, soit les types T1 et T2 tenus par une paire std::pair<T1, T2>.
@@ -30,7 +28,6 @@ public:
 	}
 };
 
-// DONE : Foncteur ComparateurEstEgalAvecId
 // Foncteur pr�dicat unaire servant � comparer un objet(Patient ou Personnel) avec un id de type string.
 // Le foncteur est une classe g�n�rique.
 // Le template de classe prend un seul param�tre de type T.
@@ -50,7 +47,6 @@ private:
 	std::string id_;
 };
 
-// DONE : Foncteur AccumulateurPeriodePersonnel
 // Foncteur qui se charge de l'ajout de la p�riode pass�e par les personnels � l'h�pital � une somme.
 // L�op�rateur() prend 3  param�tres : 
 //      somme de type double 
@@ -80,8 +76,6 @@ private:
 	double somme_;
 };
 
-
-// DONE : Foncteur ComparateurTypePatient
 // Foncteur pr�dicat unaire servant � comparer un objet de type Patient � n�importe quel autre objet.
 // Le foncteur est une classe g�n�rique.
 // Le template de classe prend un seul param�tre de type T.
@@ -97,7 +91,6 @@ public:
 	}
 };
 
-// DONE : EstDansIntervalleDatesConsultation
 // Foncteur pr�dicat unaire servant � d�terminer si une consultation est r�alis�e entre deux dates.
 // Constructeur par param�tres initalisant l'intervalle de dates. Il prend deux r�f�rences constantes vers deux objets de type tm.
 // L�op�rateur() une r�f�rence constante vers un shared_ptr de Consultation.

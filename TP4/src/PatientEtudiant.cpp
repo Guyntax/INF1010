@@ -1,6 +1,6 @@
-//! Class PatientEtudiant
-//! \authors Ahmed Hammami & Youssef Ben Taleb
-//! \date 05 juin 2020
+//! Implémentation de la classe ¸PatientEtudiant qui représente un patientEtudiant de l'hôpital
+//! \authors Didier Blach-Lafleche & Maude Tremblay
+//! \date 14 juin 2020
 
 #include "PatientEtudiant.h"
 #include <iostream>

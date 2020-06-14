@@ -75,36 +75,6 @@ std::vector<std::shared_ptr<Consultation>> Hopital::getCosultationsEntreDates(tm
 }
 
 
-//! Méthode qui ajoute une consultation à un hopital
-//! \param consultation consultation à ajouter
-//! \return       Un bool qui indique si l'opération a bien fonctionnée
-template <typename consult>
-bool Hopital::ajouterConsultation(consult& consultation)
-{
-	Medecin* medecin = dynamic_cast<Medecin*>(gestionnairePersonnels_.chercherPersonnel(consultation.getMedecin()->getId()));
-	if (medecin && medecin->getEstActif())
-	{
-		Patient* patient = gestionnairePatients_.chercherPatient(consultation.getPatient()->getNumeroAssuranceMaladie());
-		if (!patient)
-		{
-			return false;
-		}
-
-		consultations_.push_back(std::make_shared<consult>(consultation));
-
-		Patient* patientDuMedecin = medecin->chercherPatient(patient->getNumeroAssuranceMaladie());
-		if (!patientDuMedecin)
-		{
-			*medecin += patient;
-		}
-		medecin->incrementNombreConsultations();
-
-		return true;
-	}
-
-	return false;
-}
-
 //! Méthode qui retourne le nom de l'hopital
 //! \return nom_ le nom de l'hopital 
 const std::string& Hopital::getNom() const
@@ -189,10 +159,7 @@ bool Hopital::lireLigneConsultation(const std::string& ligne)
 				assert(false); // ne devrait pas se passer avec le fichier fourni
 			}
 		}
-		else {
 			return false;
-		}
 	}
-
 	return false;
 }

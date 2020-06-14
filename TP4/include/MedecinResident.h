@@ -1,6 +1,6 @@
-//! Class MedecinResident
-//! \authors Ahmed Hammami & Youssef Ben Taleb
-//! \date 05 juin 2020
+//! Définition de la classe MedecinResident qui représente un medecinResident de l'hôpital
+//! \authors Didier Blach-Lafleche & Maude Tremblay
+//! \date 14 juin 2020
 
 #ifndef MEDECINRESIDENT_H
 #define MEDECINRESIDENT_H

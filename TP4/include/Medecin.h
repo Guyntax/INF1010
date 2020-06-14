@@ -1,6 +1,6 @@
-//! Class Medecin
-//! \authors Ahmed Hammami & Youssef Ben Taleb
-//! \date 05 juin 2020
+//! Définition de la classe Medecin qui représente un medecin de l'hôpital
+//! \authors Didier Blach-Lafleche & Maude Tremblay
+//! \date 14 juin 2020
 
 #ifndef MEDECIN_H
 #define MEDECIN_H

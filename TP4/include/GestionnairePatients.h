@@ -30,8 +30,22 @@ public:
     Patient* chercherPatient(const std::string& numeroAssuranceMaladie);
     bool chargerDepuisFichier(const std::string& nomFichier);
 
+    //! Méthode qui ajoute un patient à l'objet GestionnairePatient
+    //! \param patient référence vers l'objet à jouter
+    //! \return true si le patient a été ajouté, false sinon
     template<typename T>
-    bool ajouterPatient(const T& patient);
+    bool ajouterPatient(const T& patient) {
+        if (!chercherPatient(patient.getNumeroAssuranceMaladie())) {
+
+            if (patients_.size() >= NB_PATIENT_MAX)
+            {
+                return false;
+            }
+            patients_.push_back(std::make_shared<T>(patient));
+            return true;
+        }
+        return false;
+    };
 
     bool supprimerPatient(const std::string& numeroAssMaladie);
     friend std::ostream& operator<<(std::ostream& os, const GestionnairePatients& gestionnairePatient);

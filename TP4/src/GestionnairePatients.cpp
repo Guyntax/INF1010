@@ -52,25 +52,7 @@ bool GestionnairePatients::chargerDepuisFichier(const std::string& nomFichier)
 	return false;
 }
 
-//! Méthode qui ajoute un patient à l'objet GestionnairePatient
-//! \param patient référence vers l'objet à jouter
-//! \return true si le patient a été ajouté, false sinon
-template<typename T>
-bool GestionnairePatients::ajouterPatient(const T& patient)
-{
-	if (!chercherPatient(patient.getNumeroAssuranceMaladie())) {
 
-		if (patients_.size() >= NB_PATIENT_MAX)
-		{
-			return false;
-		}
-
-		patients_.push_back(std::make_shared<T>(patient));
-
-		return true;
-	}
-	return false;
-}
 
 //! Méthode qui supprime un patient
 //! \param numeroAssMaladie Le numero d'assurance Maladie de type string du patient à supprimer
@@ -94,7 +76,7 @@ bool GestionnairePatients::supprimerPatient(const std::string& numeroAssMaladie)
 //! opérateur qui permet d'afficher la liste des patients
 //! \param os Le stream dans lequel on veut afficher les informations
 //! \param gestionnairePatients L'objet dont on veut afficher les information
-//! \return le tream qui contient les informations
+//! \return le stream qui contient les informations
 std::ostream& operator<<(std::ostream& os, const GestionnairePatients& gestionnairePatients)
 {
 	// Code fourni

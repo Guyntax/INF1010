@@ -25,6 +25,7 @@ bool Personnel::operator==(const std::string& id) const
 //! Opérateur qui comparel'identifiant du personnel avec l'identifiant opérande de gauche.
 //! \param id l'identifiant avec le quel on veut comparé le personnel
 //! \param personnel le personne avec lequel on compare  de l'identifiant
+//! \return un bool qui indique si la comparaison est bonne
 bool operator==(const std::string& id, const Personnel& personnel)
 {
 	return (id == personnel.id_);
@@ -32,6 +33,7 @@ bool operator==(const std::string& id, const Personnel& personnel)
 
 //! Opérateur qui compare deux personnels par leur salaire annuel
 //! \param personnel  la référence vers le Personnel
+//! \return un bool qui indique si le premier élément est plus petit
 bool Personnel::operator<(const Personnel& personnel)
 {
 	return getSalaireAnnuel() < personnel.getSalaireAnnuel();
